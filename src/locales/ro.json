@@ -23,6 +23,9 @@
     "amount": "Sumă",
     "noteOptional": "Notă (opțional)",
     "saveExpense": "Salvează cheltuiala",
-    "expenseSaved": "Cheltuială salvată!"
-  
+    "expenseSaved": "Cheltuială salvată!",
+    "Rovinieta": "Rovinietă",
+    "OtherCategory": "Altă categorie",
+    "enterCustomCategory": "Introdu o categorie nouă"
+
   }

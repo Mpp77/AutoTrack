@@ -6,10 +6,12 @@ import { useTranslation } from "react-i18next";
 export default function ExpenseForm() {
   const { t, i18n } = useTranslation();
   const [category, setCategory] = useState("");
+  const [customCategory, setCustomCategory] = useState(""); // 🔹 pentru categorie nouă
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
 
+  // 🔹 Am adăugat "Rovinieta"
   const categories = [
     "Fuel",
     "Service",
@@ -17,21 +19,30 @@ export default function ExpenseForm() {
     "ITP",
     "Oil Change",
     "Tuning",
-    "Unexpected Repairs"
+    "Unexpected Repairs",
+    "Rovinieta",
+    "OtherCategory", // 🔹 opțiune pentru categorie personalizată
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!category || !amount) return;
 
+    // 🔹 dacă user-ul alege "Altă categorie", folosește textul din input
+    const finalCategory =
+      category === "OtherCategory" && customCategory
+        ? customCategory
+        : category;
+
     await addDoc(collection(db, "expenses"), {
-      category,
+      category: finalCategory,
       amount: parseFloat(amount),
       note,
       createdAt: serverTimestamp(),
     });
 
     setCategory("");
+    setCustomCategory("");
     setAmount("");
     setNote("");
     setMessage(t("expenseSaved"));
@@ -45,6 +56,7 @@ export default function ExpenseForm() {
       className="flex flex-col items-center gap-3 text-white"
     >
       <div className="flex flex-col w-full gap-2">
+        {/* 🔹 Select pentru categorie */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -58,6 +70,18 @@ export default function ExpenseForm() {
           ))}
         </select>
 
+        {/* 🔹 Input pentru categorie personalizată */}
+        {category === "OtherCategory" && (
+          <input
+            type="text"
+            placeholder={t("enterCustomCategory")}
+            value={customCategory}
+            onChange={(e) => setCustomCategory(e.target.value)}
+            className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
+          />
+        )}
+
+        {/* 🔹 Suma */}
         <input
           type="number"
           placeholder={t("amount")}
@@ -66,6 +90,7 @@ export default function ExpenseForm() {
           className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
         />
 
+        {/* 🔹 Notă opțională */}
         <input
           type="text"
           placeholder={t("noteOptional")}

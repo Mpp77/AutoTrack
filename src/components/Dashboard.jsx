@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { db } from "../firebase/config";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import ExpenseForm from "./ExpenseForm";
@@ -7,10 +7,13 @@ import ExpenseList from "./ExpenseList";
 import { useTranslation } from "react-i18next";
 import "../App.css";
 
-const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d"];
+const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d", "#32cd32", "#ff69b4", "#8a2be2"];
 
 export default function Dashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currencySymbol = i18n.language === "ro" ? "lei" : "€";
+  const exchangeRate = 0.20; // 1 leu ≈ 0.20 euro
+
   const [expenses, setExpenses] = useState([]);
 
   // 🔹 Preluare date din Firestore
@@ -23,21 +26,26 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, []);
 
-  // 🔹 Grupare cheltuieli pe categorii
+  // 🔹 Grupare cheltuieli pe categorii + validare valori
   const data = expenses.reduce((acc, expense) => {
-    const existing = acc.find((item) => item.name === expense.category);
+    const amount = parseFloat(expense.amount);
+    if (isNaN(amount) || amount <= 0) return acc;
+
+    const category = expense.category || t("Unknown");
+
+    const existing = acc.find((item) => item.name === category);
     if (existing) {
-      existing.value += parseFloat(expense.amount);
+      existing.value += amount;
     } else {
       acc.push({
-        name: expense.category,
-        value: parseFloat(expense.amount),
+        name: category,
+        value: amount,
       });
     }
     return acc;
   }, []);
 
-  // 🔹 Etichete personalizate — ca să apară corect textul cu diacritice
+  // 🔹 Etichete personalizate (două rânduri, centrate)
   const renderCustomizedLabel = ({
     cx,
     cy,
@@ -46,39 +54,37 @@ export default function Dashboard() {
     outerRadius,
     index,
   }) => {
-    const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 1.55;
+    const RADIAN = Math.PI / 130;
+    const radius = innerRadius + (outerRadius - innerRadius) * 1.20;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-    if (!data[index]) return null;
 
-    // 🔹 Textul complet, fără a fi tăiat
+    if (!data[index]) return null;
     const label = t(data[index].name);
 
+    const words = label.split(" ");
+    const firstLine = words[0];
+    const secondLine = words.slice(1).join(" ");
+
     return (
-      <foreignObject
-        x={x - 60}
-        y={y - 10}
-        width={120}
-        height={30}
-        style={{
-          overflow: "visible",
-          textAlign: "center",
-        }}
+      <text
+        x={x}
+        y={y}
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+        fill={COLORS[index % COLORS.length]}
+        fontSize={13}
+        fontFamily="'Inter', 'Roboto', sans-serif"
       >
-        <div
-          xmlns="http://www.w3.org/1999/xhtml"
-          style={{
-            fontFamily: "'Inter', 'Roboto', sans-serif",
-            fontSize: "13px",
-            color: COLORS[index % COLORS.length],
-            whiteSpace: "nowrap",
-            textShadow: "0 0 3px rgba(0,0,0,0.8)",
-          }}
-        >
-          {label}
-        </div>
-      </foreignObject>
+        <tspan x={x} dy="-0.4em">
+          {firstLine}
+        </tspan>
+        {secondLine && (
+          <tspan x={x} dy="1.2em">
+            {secondLine}
+          </tspan>
+        )}
+      </text>
     );
   };
 
@@ -88,19 +94,19 @@ export default function Dashboard() {
         {t("expenseOverview")}
       </h2>
 
-      {/* 🔹 Grafic circular */}
-      <div className="bg-[#0b1320]/70 p-6 rounded-2xl shadow-xl border border-[#1e3a8a]/50 mb-8">
+      {/* 🔹 Grafic circular mare, centrat */}
+      <div className="bg-[#0b1320]/70 p-6 rounded-2xl shadow-xl border border-[#1e3a8a]/50 mb-8 flex justify-center items-center">
         {data.length > 0 ? (
-          <ResponsiveContainer width={320} height={280}>
+          <ResponsiveContainer width={400} height={550}>
             <PieChart>
               <Pie
                 data={data}
                 dataKey="value"
                 cx="50%"
-                cy="70%"
-                outerRadius={85}
+                cy="80%"           // 🔹 ridicat ușor, să nu fie tăiat jos
+                outerRadius={80}  // 🔹 mai mare, clar vizibil
                 labelLine={false}
-                label={renderCustomizedLabel}
+                //label={renderCustomizedLabel}
               >
                 {data.map((entry, index) => (
                   <Cell
@@ -110,14 +116,28 @@ export default function Dashboard() {
                 ))}
               </Pie>
               <Tooltip
-                formatter={(value, name) => [
-                  `${value} €`,
-                  t(name),
-                ]}
+                formatter={(value, name) => {
+                  const displayValue =
+                    i18n.language === "ro"
+                      ? value
+                      : (value * exchangeRate).toFixed(2);
+                  return [`${displayValue} ${currencySymbol}`, t(name)];
+                }}
                 contentStyle={{
                   backgroundColor: "#0d1a2f",
                   border: "1px solid #1e3a8a",
                   color: "#fff",
+                }}
+              />
+              <Legend
+                verticalAlign="bottom"
+                align="center"
+                iconType="circle"
+                iconSize={10}
+                wrapperStyle={{
+                  marginTop: "10px",
+                  color: "#fff",
+                  fontSize: "13px",
                 }}
               />
             </PieChart>

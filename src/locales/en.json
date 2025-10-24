@@ -11,12 +11,15 @@
     "addExpense": "Add New Expense",
     "expenseList": "Expense List",
     "noData": "No expenses recorded yet.",
-    "currency": "RON",
+    "currency": "€",
     "Fuel": "Fuel",
     "Service": "Service",
     "Insurance": "Insurance",
     "ITP": "Technical Inspection",
     "Oil Change": "Oil Change",
     "Tuning": "Tuning",
-    "Unexpected Repairs": "Unexpected Repairs"
+    "Unexpected Repairs": "Unexpected Repairs",
+    "Rovinieta": "Road Toll",
+    "OtherCategory": "Other category",
+    "enterCustomCategory": "Enter a new category"
   }

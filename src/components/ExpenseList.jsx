@@ -7,6 +7,7 @@ export default function ExpenseList() {
   const [expenses, setExpenses] = useState([]);
   const { t } = useTranslation();
 
+
   useEffect(() => {
     const q = query(collection(db, "expenses"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
