@@ -91,14 +91,14 @@ export default function Dashboard() {
       {/* 🔹 Grafic circular */}
       <div className="bg-[#0b1320]/70 p-6 rounded-2xl shadow-xl border border-[#1e3a8a]/50 mb-8">
         {data.length > 0 ? (
-          <ResponsiveContainer width={300} height={250}>
+          <ResponsiveContainer width={320} height={280}>
             <PieChart>
               <Pie
                 data={data}
                 dataKey="value"
                 cx="50%"
                 cy="70%"
-                outerRadius={70}
+                outerRadius={85}
                 labelLine={false}
                 label={renderCustomizedLabel}
               >
