@@ -47,8 +47,8 @@ export default function Login() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="glass-card">
-        <h1 className="text-4xl font-bold mb-2 auto-logo">🚗 AutoTrack</h1>
-        <h2 className="text-lg mb-6">
+      <h1 className="app-title">AutoTrack</h1>
+      <h2 className="text-lg mb-6">
           {isCreatingAccount ? "Create Account" : "Sign In"}
         </h2>
 

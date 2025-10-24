@@ -36,8 +36,8 @@ export default function Register() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="glass-card">
-        <h1 className="text-4xl font-bold mb-2 auto-logo">🚗 AutoTrack</h1>
-        <h2 className="text-lg mb-6">Create Account</h2>
+      <h1 className="app-title">AutoTrack</h1>
+      <h2 className="text-lg mb-6">Create Account</h2>
 
         <form onSubmit={handleRegister} className="flex flex-col items-center">
           <input
