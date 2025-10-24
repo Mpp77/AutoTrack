@@ -4,6 +4,7 @@ import { auth } from "../firebase/config";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
+import "../App.css";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
 

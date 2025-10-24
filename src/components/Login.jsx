@@ -5,6 +5,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../firebase/config";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import "../App.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,24 +19,20 @@ export default function Login() {
 
     try {
       if (isCreatingAccount) {
-        // 🔹 Creează un cont nou
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
-
         const user = userCredential.user;
 
-        // 🔹 Salvează în Firestore
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           createdAt: serverTimestamp(),
         });
 
-        setMessage("✅ Account created and saved in Firestore!");
+        setMessage("✅ Account created successfully!");
       } else {
-        // 🔹 Login
         await signInWithEmailAndPassword(auth, email, password);
         setMessage("✅ Logged in successfully!");
       }
@@ -48,57 +45,69 @@ export default function Login() {
   };
 
   return (
-    <div style={{ textAlign: "center", color: "white", marginTop: "100px" }}>
-      <h1>🚗 AutoTrack</h1>
-      <h2>{isCreatingAccount ? "Create Account" : "Login"}</h2>
-
-      <form onSubmit={handleSubmit} style={{ display: "inline-block" }}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ padding: "8px", margin: "5px" }}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ padding: "8px", margin: "5px" }}
-        />
-        <button type="submit" style={{ padding: "8px 16px", margin: "5px" }}>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="glass-card">
+        <h1 className="text-4xl font-bold mb-2 auto-logo">🚗 AutoTrack</h1>
+        <h2 className="text-lg mb-6">
           {isCreatingAccount ? "Create Account" : "Sign In"}
-        </button>
-      </form>
+        </h2>
 
-      <p>
-        {isCreatingAccount ? (
-          <>
-            Already have an account?{" "}
-            <button
-              onClick={() => setIsCreatingAccount(false)}
-              style={{ background: "none", border: "none", color: "lightblue" }}
-            >
-              Sign In
-            </button>
-          </>
-        ) : (
-          <>
-            Don't have an account?{" "}
-            <button
-              onClick={() => setIsCreatingAccount(true)}
-              style={{ background: "none", border: "none", color: "lightblue" }}
-            >
-              Create one
-            </button>
-          </>
-        )}
-      </p>
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">
+            {isCreatingAccount ? "Create Account" : "Sign In"}
+          </button>
+        </form>
 
-      {message && <p style={{ marginTop: "20px" }}>{message}</p>}
+        <p className="mt-4 text-sm text-gray-300">
+          {isCreatingAccount ? (
+            <>
+              Already have an account?{" "}
+              <button
+                onClick={() => setIsCreatingAccount(false)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#60a5fa",
+                  cursor: "pointer",
+                }}
+              >
+                Sign In
+              </button>
+            </>
+          ) : (
+            <>
+              Don't have an account?{" "}
+              <button
+                onClick={() => setIsCreatingAccount(true)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#60a5fa",
+                  cursor: "pointer",
+                }}
+              >
+                Create one
+              </button>
+            </>
+          )}
+        </p>
+
+        {message && <p className="mt-4 text-sm">{message}</p>}
+      </div>
     </div>
   );
 }

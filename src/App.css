@@ -1,42 +1,153 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+/* =========================
+   🌌 AutoTrack – Modern Glass UI
+   Inspired by official AutoTrack design
+   ========================= */
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+   body {
+     margin: 0;
+     font-family: "Inter", sans-serif;
+     background: radial-gradient(
+         circle at 20% 20%,
+         rgba(37, 99, 235, 1) 0%,
+         rgba(17, 24, 39, 1) 30%,
+         rgba(88, 28, 135, 1) 70%,
+         rgba(249, 115, 22, 0.9) 100%
+       ),
+       #111827;
+     background-attachment: fixed;
+     background-size: cover;
+     background-position: center;
+     color: #f8fafc;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: flex-start;
+   }
+   
+   /* ✅ Root container */
+   #root {
+     max-width: 1280px;
+     margin: 0 auto;
+     padding: 2rem;
+     text-align: center;
+   }
+   
+   /* =========================
+      💎 Glass Components
+      ========================= */
+   
+   .glass-card {
+     background: rgba(255, 255, 255, 0.08);
+     border: 1px solid rgba(255, 255, 255, 0.15);
+     border-radius: 20px;
+     padding: 40px;
+     backdrop-filter: blur(12px);
+     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+     transition: all 0.3s ease;
+     max-width: 400px;
+     margin: 40px auto;
+   }
+   
+   .glass-card:hover {
+     transform: scale(1.02);
+   }
+   
+   /* =========================
+      ✏️ Inputs & Buttons
+      ========================= */
+   
+   input {
+     background: rgba(255, 255, 255, 0.1);
+     color: white;
+     border: none;
+     border-radius: 10px;
+     padding: 12px;
+     width: 90%;
+     margin: 8px 0;
+     font-size: 15px;
+   }
+   
+   input::placeholder {
+     color: #cbd5e1;
+   }
+   
+   button {
+     background: linear-gradient(90deg, #2563eb, #9333ea);
+     border: none;
+     border-radius: 10px;
+     padding: 12px 25px;
+     color: white;
+     font-weight: 600;
+     transition: 0.3s ease;
+     margin-top: 10px;
+   }
+   
+   button:hover {
+     background: linear-gradient(90deg, #3b82f6, #a855f7);
+     transform: scale(1.05);
+   }
+   
+   /* =========================
+      📊 Dashboard Style
+      ========================= */
+   
+   .dashboard-container {
+     background: rgba(255, 255, 255, 0.08);
+     border-radius: 20px;
+     backdrop-filter: blur(10px);
+     padding: 40px;
+     margin: 60px auto;
+     max-width: 900px;
+     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+     color: #f1f5f9;
+   }
+   
+   .dashboard-container h1,
+   .dashboard-container h2,
+   .dashboard-container h3 {
+     color: #f9fafb;
+     text-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+   }
+   
+   /* =========================
+      🌈 Extra Effects
+      ========================= */
+   
+   .card {
+     padding: 2em;
+   }
+   
+   .read-the-docs {
+     color: #94a3b8;
+   }
+   
+   .logo {
+     height: 6em;
+     padding: 1.5em;
+     transition: filter 300ms;
+   }
+   
+   .logo:hover {
+     filter: drop-shadow(0 0 2em #60a5fa);
+   }
+   
+   /* Simple animation for brand icons */
+   @keyframes float {
+     0% {
+       transform: translateY(0px);
+     }
+     50% {
+       transform: translateY(-5px);
+     }
+     100% {
+       transform: translateY(0px);
+     }
+   }
+   
+   .auto-logo {
+     animation: float 3s ease-in-out infinite;
+   }
+   

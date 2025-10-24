@@ -1,43 +1,64 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { auth, db } from "../firebase/config";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import "../App.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [message, setMessage] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setMessage("");
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert("✅ Account created successfully!");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        createdAt: serverTimestamp(),
+      });
+
+      setMessage("✅ Account created successfully!");
+      setEmail("");
+      setPassword("");
     } catch (err) {
-      setError(err.message);
+      setMessage("❌ " + err.message);
     }
   };
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <h2 className="text-2xl font-semibold mb-4">Register</h2>
-      <form onSubmit={handleRegister} className="flex flex-col gap-3 w-64">
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-2 rounded"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" className="bg-green-500 text-white p-2 rounded">
-          Create Account
-        </button>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-      </form>
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="glass-card">
+        <h1 className="text-4xl font-bold mb-2 auto-logo">🚗 AutoTrack</h1>
+        <h2 className="text-lg mb-6">Create Account</h2>
+
+        <form onSubmit={handleRegister} className="flex flex-col items-center">
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Create Account</button>
+        </form>
+
+        {message && <p className="mt-4 text-sm">{message}</p>}
+      </div>
     </div>
   );
 }
