@@ -1,70 +1,90 @@
 import { useState } from "react";
 import { db } from "../firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 
 export default function ExpenseForm() {
+  const { t, i18n } = useTranslation();
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const categories = [
+    "Fuel",
+    "Service",
+    "Insurance",
+    "ITP",
+    "Oil Change",
+    "Tuning",
+    "Unexpected Repairs"
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    try {
-      await addDoc(collection(db, "expenses"), {
-        category,
-        amount: parseFloat(amount),
-        note,
-        createdAt: serverTimestamp(),
-      });
-      setMessage("✅ Expense saved!");
-      setCategory("");
-      setAmount("");
-      setNote("");
-    } catch (err) {
-      setMessage("❌ Error saving expense: " + err.message);
-    } finally {
-      setLoading(false);
-    }
+    if (!category || !amount) return;
+
+    await addDoc(collection(db, "expenses"), {
+      category,
+      amount: parseFloat(amount),
+      note,
+      createdAt: serverTimestamp(),
+    });
+
+    setCategory("");
+    setAmount("");
+    setNote("");
+    setMessage(t("expenseSaved"));
+
+    setTimeout(() => setMessage(""), 2000);
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto border rounded-xl mt-10">
-      <h2 className="text-xl font-semibold mb-4">Add Expense</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input
-          type="text"
-          placeholder="Category"
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col items-center gap-3 text-white"
+    >
+      <div className="flex flex-col w-full gap-2">
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="border p-2 rounded"
-        />
+          className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
+        >
+          <option value="">{t("selectCategory")}</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {t(cat)}
+            </option>
+          ))}
+        </select>
+
         <input
           type="number"
-          placeholder="Amount"
+          placeholder={t("amount")}
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="border p-2 rounded"
+          className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
         />
+
         <input
           type="text"
-          placeholder="Note (optional)"
+          placeholder={t("noteOptional")}
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          className="border p-2 rounded"
+          className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
         />
+
         <button
           type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white p-2 rounded"
+          className="bg-gradient-to-r from-[#007bff] to-[#00bfff] hover:opacity-90 rounded-lg px-4 py-2 font-semibold transition"
         >
-          {loading ? "Saving..." : "Save Expense"}
+          {t("saveExpense")}
         </button>
-      </form>
-      {message && <p className="mt-3 text-center">{message}</p>}
-    </div>
+      </div>
+
+      {message && (
+        <p className="text-green-400 font-medium mt-2">{message}</p>
+      )}
+    </form>
   );
 }

@@ -1,0 +1,22 @@
+{
+    "signIn": "Sign In",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "noAccount": "Don’t have an account? Create one",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "accountCreated": "Account created successfully!",
+    "loggedIn": "Logged in successfully!",
+    "expenseOverview": "Expense Overview",
+    "addExpense": "Add New Expense",
+    "expenseList": "Expense List",
+    "noData": "No expenses recorded yet.",
+    "currency": "RON",
+    "Fuel": "Fuel",
+    "Service": "Service",
+    "Insurance": "Insurance",
+    "ITP": "Technical Inspection",
+    "Oil Change": "Oil Change",
+    "Tuning": "Tuning",
+    "Unexpected Repairs": "Unexpected Repairs"
+  }

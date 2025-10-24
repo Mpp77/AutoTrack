@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -8,6 +10,9 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import "../App.css";
 
 export default function Login() {
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
@@ -19,11 +24,7 @@ export default function Login() {
 
     try {
       if (isCreatingAccount) {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         await setDoc(doc(db, "users", user.uid), {
@@ -31,10 +32,11 @@ export default function Login() {
           createdAt: serverTimestamp(),
         });
 
-        setMessage("✅ Account created successfully!");
+        setMessage("✅ " + t("accountCreated"));
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        setMessage("✅ Logged in successfully!");
+        setMessage("✅ " + t("loggedIn"));
+        navigate("/dashboard");
       }
 
       setEmail("");
@@ -45,68 +47,83 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="glass-card">
-      <h1 className="app-title">AutoTrack</h1>
-      <h2 className="text-lg mb-6">
-          {isCreatingAccount ? "Create Account" : "Sign In"}
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#031628] via-[#0a2242] to-[#142f5d]">
+      <div className="bg-[#0b1320]/70 backdrop-blur-xl shadow-2xl rounded-3xl px-10 py-10 text-center w-[380px] border border-[#1e3a8a]/60 flex flex-col items-center">
+        
+        {/* 🌍 Bara de limbă sus în card */}
+        <div className="flex justify-end w-full mb-3 gap-2">
+  <button
+    onClick={() => i18n.changeLanguage("en")}
+    className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
+      i18n.language === "en"
+        ? "bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white shadow-md"
+        : "bg-[#0d1a2f]/80 text-gray-300 hover:text-white border border-[#1e3a8a]"
+    }`}
+  >
+    🇬🇧 EN
+  </button>
+  <button
+    onClick={() => i18n.changeLanguage("ro")}
+    className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
+      i18n.language === "ro"
+        ? "bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white shadow-md"
+        : "bg-[#0d1a2f]/80 text-gray-300 hover:text-white border border-[#1e3a8a]"
+    }`}
+  >
+    🇷🇴 RO
+  </button>
+</div>
+
+        {/* Titlu aplicație */}
+        <h1
+          className="text-4xl font-extrabold mb-6 mt-3"
+          style={{
+            fontFamily: "'Orbitron', sans-serif",
+            background: "linear-gradient(to right, #007bff, #00bfff)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
+          AutoTrack
+        </h1>
+
+        <h2 className="text-white text-xl font-semibold mb-6">
+          {isCreatingAccount ? t("createAccount") : t("signIn")}
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        {/* Formular login */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           <input
             type="email"
-            placeholder="Email address"
+            placeholder={t("emailAddress")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
+            className="bg-[#0d1a2f] border border-[#1e3a8a] text-white px-4 py-3 rounded-md focus:outline-none focus:border-[#007bff] transition-all"
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder={t("password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            className="bg-[#0d1a2f] border border-[#1e3a8a] text-white px-4 py-3 rounded-md focus:outline-none focus:border-[#007bff] transition-all"
           />
-          <button type="submit">
-            {isCreatingAccount ? "Create Account" : "Sign In"}
+
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white font-semibold py-2 rounded-md shadow-lg hover:scale-105 transition-transform"
+          >
+            {isCreatingAccount ? t("createAccount") : t("signIn")}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-gray-300">
-          {isCreatingAccount ? (
-            <>
-              Already have an account?{" "}
-              <button
-                onClick={() => setIsCreatingAccount(false)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#60a5fa",
-                  cursor: "pointer",
-                }}
-              >
-                Sign In
-              </button>
-            </>
-          ) : (
-            <>
-              Don't have an account?{" "}
-              <button
-                onClick={() => setIsCreatingAccount(true)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#60a5fa",
-                  cursor: "pointer",
-                }}
-              >
-                Create one
-              </button>
-            </>
-          )}
+        <p
+          onClick={() => setIsCreatingAccount(!isCreatingAccount)}
+          className="text-[#00bfff] hover:underline cursor-pointer mt-4"
+        >
+          {isCreatingAccount ? t("alreadyHaveAccount") : t("noAccount")}
         </p>
 
-        {message && <p className="mt-4 text-sm">{message}</p>}
+        {message && <p className="text-green-400 mt-4">{message}</p>}
       </div>
     </div>
   );

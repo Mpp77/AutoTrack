@@ -1,0 +1,28 @@
+{
+    "signIn": "Autentificare",
+    "createAccount": "Creează cont",
+    "alreadyHaveAccount": "Ai deja un cont? Autentifică-te",
+    "noAccount": "Nu ai un cont? Creează unul",
+    "emailAddress": "Adresă de email",
+    "password": "Parolă",
+    "accountCreated": "Cont creat cu succes!",
+    "loggedIn": "Autentificat cu succes!",
+    "expenseOverview": "Vizualizare Cheltuieli",
+    "addExpense": "Adaugă o Cheltuială Nouă",
+    "expenseList": "Lista Cheltuielilor",
+    "noData": "Nu există încă cheltuieli înregistrate.",
+    "currency": "lei",
+    "Fuel": "Combustibil",
+    "Service": "Service",
+    "Insurance": "Asigurare",
+    "ITP": "ITP",
+    "Oil Change": "Schimb ulei",
+    "Tuning": "Tuning",
+    "Unexpected Repairs": "Reparații neprevăzute",
+    "selectCategory": "Selectează categoria",
+    "amount": "Sumă",
+    "noteOptional": "Notă (opțional)",
+    "saveExpense": "Salvează cheltuiala",
+    "expenseSaved": "Cheltuială salvată!"
+  
+  }

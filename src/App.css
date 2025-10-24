@@ -131,4 +131,120 @@
     height: 100vh;
     width: 100%;
   }
-  
+
+.dashboard-title {
+  font-size: 3rem;
+  text-align: center;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #2e82ff, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 1rem;
+  text-shadow: 0 0 25px rgba(0, 140, 255, 0.3);
+}
+
+.glass-section {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(10, 20, 40, 0.6);
+  border-radius: 16px;
+  padding: 1.8rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0, 119, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-section:hover {
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+  transform: translateY(-3px);
+}
+
+h3 {
+  color: #aad3ff;
+  margin-bottom: 1rem;
+}
+
+button {
+  background: linear-gradient(90deg, #007bff, #00bfff);
+  border: none;
+  color: white;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* === Adjusted layout and typography === */
+.dashboard-container {
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  background: linear-gradient(145deg, #081321, #0e1b2e 50%, #182c40);
+  color: #e8f0ff;
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.glass-section {
+  width: 90%;
+  max-width: 800px;
+  background: rgba(8, 20, 40, 0.75);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 25px rgba(0, 119, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-section:hover {
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+h2.dashboard-title {
+  font-size: 3rem;
+  text-align: center;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #2e82ff, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(0, 140, 255, 0.3);
+}
+
+h3 {
+  color: #84bfff;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button {
+  background: linear-gradient(90deg, #007bff, #00bfff);
+  border: none;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+  transform: translateY(-2px);
+
+  /* 🔹 Font fallback pentru texte cu diacritice */
+.chart-text {
+  font-family: 'Inter', 'Roboto', 'Arial', sans-serif !important;
+  letter-spacing: 0.5px;
+}
+}
