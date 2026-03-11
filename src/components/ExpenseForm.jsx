@@ -4,14 +4,13 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
 
 export default function ExpenseForm() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [category, setCategory] = useState("");
-  const [customCategory, setCustomCategory] = useState(""); // 🔹 pentru categorie nouă
+  const [customCategory, setCustomCategory] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
 
-  // 🔹 Am adăugat "Rovinieta"
   const categories = [
     "Fuel",
     "Service",
@@ -21,33 +20,40 @@ export default function ExpenseForm() {
     "Tuning",
     "Unexpected Repairs",
     "Rovinieta",
-    "OtherCategory", // 🔹 opțiune pentru categorie personalizată
+    "OtherCategory"
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!category || !amount) return;
-
-    // 🔹 dacă user-ul alege "Altă categorie", folosește textul din input
-    const finalCategory =
-      category === "OtherCategory" && customCategory
-        ? customCategory
-        : category;
-
-    await addDoc(collection(db, "expenses"), {
-      category: finalCategory,
-      amount: parseFloat(amount),
-      note,
-      createdAt: serverTimestamp(),
-    });
-
-    setCategory("");
-    setCustomCategory("");
-    setAmount("");
-    setNote("");
-    setMessage(t("expenseSaved"));
-
-    setTimeout(() => setMessage(""), 2000);
+    setMessage("");
+  
+    if (!category || !amount) {
+      setMessage("Please complete category and amount");
+      return;
+    }
+  
+    try {
+      const finalCategory =
+        category === "OtherCategory" && customCategory
+          ? customCategory
+          : category;
+  
+      await addDoc(collection(db, "expenses"), {
+        category: finalCategory,
+        amount: parseFloat(amount),
+        note,
+        createdAt: serverTimestamp(),
+      });
+  
+      setCategory("");
+      setCustomCategory("");
+      setAmount("");
+      setNote("");
+      setMessage(t("expenseSaved"));
+    } catch (error) {
+      console.error("Firestore save error:", error);
+      setMessage(error.message);
+    }
   };
 
   return (
@@ -56,7 +62,6 @@ export default function ExpenseForm() {
       className="flex flex-col items-center gap-3 text-white"
     >
       <div className="flex flex-col w-full gap-2">
-        {/* 🔹 Select pentru categorie */}
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -65,12 +70,11 @@ export default function ExpenseForm() {
           <option value="">{t("selectCategory")}</option>
           {categories.map((cat) => (
             <option key={cat} value={cat}>
-              {t(cat)}
+              {t(cat, cat)}
             </option>
           ))}
         </select>
 
-        {/* 🔹 Input pentru categorie personalizată */}
         {category === "OtherCategory" && (
           <input
             type="text"
@@ -81,7 +85,6 @@ export default function ExpenseForm() {
           />
         )}
 
-        {/* 🔹 Suma */}
         <input
           type="number"
           placeholder={t("amount")}
@@ -90,7 +93,6 @@ export default function ExpenseForm() {
           className="bg-[#0d1a2f]/70 border border-[#1e3a8a] rounded-lg p-2 text-sm text-gray-300 focus:outline-none"
         />
 
-        {/* 🔹 Notă opțională */}
         <input
           type="text"
           placeholder={t("noteOptional")}
@@ -107,9 +109,7 @@ export default function ExpenseForm() {
         </button>
       </div>
 
-      {message && (
-        <p className="text-green-400 font-medium mt-2">{message}</p>
-      )}
+      {message && <p className="text-green-400 font-medium mt-2">{message}</p>}
     </form>
   );
 }

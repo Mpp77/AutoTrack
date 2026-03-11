@@ -1,167 +1,130 @@
-import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from "recharts";
-import { db } from "../firebase/config";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import ExpenseForm from "./ExpenseForm";
-import ExpenseList from "./ExpenseList";
+import React, { useEffect, useState } from "react";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/config";
+import ExpenseForm from "./ExpenseForm";
 import "../App.css";
 
-const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d", "#32cd32", "#ff69b4", "#8a2be2"];
+const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d", "#32cd32", "#8b5cf6"];
 
 export default function Dashboard() {
-  const { t, i18n } = useTranslation();
-  const currencySymbol = i18n.language === "ro" ? "lei" : "€";
-  const exchangeRate = 0.20; // 1 leu ≈ 0.20 euro
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [chartData, setChartData] = useState([]);
 
-  const [expenses, setExpenses] = useState([]);
-
-  // 🔹 Preluare date din Firestore
   useEffect(() => {
-    const q = query(collection(db, "expenses"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setExpenses(data);
+    const unsub = onSnapshot(collection(db, "expenses"), (snap) => {
+      const expenses = snap.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      const grouped = expenses.reduce((acc, exp) => {
+        const cat = exp.category?.trim();
+        const amount = parseFloat(exp.amount || 0);
+
+        if (!cat) return acc;
+
+        acc[cat] = (acc[cat] || 0) + amount;
+        return acc;
+      }, {});
+
+      const formatted = Object.entries(grouped).map(([name, value]) => ({
+        name,
+        value,
+      }));
+
+      setChartData(formatted);
     });
-    return () => unsubscribe();
+
+    return () => unsub();
   }, []);
-
-  // 🔹 Grupare cheltuieli pe categorii + validare valori
-  const data = expenses.reduce((acc, expense) => {
-    const amount = parseFloat(expense.amount);
-    if (isNaN(amount) || amount <= 0) return acc;
-
-    const category = expense.category || t("Unknown");
-
-    const existing = acc.find((item) => item.name === category);
-    if (existing) {
-      existing.value += amount;
-    } else {
-      acc.push({
-        name: category,
-        value: amount,
-      });
-    }
-    return acc;
-  }, []);
-
-  // 🔹 Etichete personalizate (două rânduri, centrate)
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    index,
-  }) => {
-    const RADIAN = Math.PI / 130;
-    const radius = innerRadius + (outerRadius - innerRadius) * 1.20;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    if (!data[index]) return null;
-    const label = t(data[index].name);
-
-    const words = label.split(" ");
-    const firstLine = words[0];
-    const secondLine = words.slice(1).join(" ");
-
-    return (
-      <text
-        x={x}
-        y={y}
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
-        fill={COLORS[index % COLORS.length]}
-        fontSize={13}
-        fontFamily="'Inter', 'Roboto', sans-serif"
-      >
-        <tspan x={x} dy="-0.4em">
-          {firstLine}
-        </tspan>
-        {secondLine && (
-          <tspan x={x} dy="1.2em">
-            {secondLine}
-          </tspan>
-        )}
-      </text>
-    );
-  };
 
   return (
-    <div className="dashboard-container flex flex-col items-center mt-10">
-      <h2 className="text-3xl font-bold mb-6 text-white tracking-wide">
-        {t("expenseOverview")}
-      </h2>
+    <div className="dashboard-container flex flex-col items-center min-h-screen text-white px-4 py-6">
+      <div className="text-center mt-4 mb-6">
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent drop-shadow-lg">
+          AutoTrack Dashboard
+        </h1>
+        <p className="text-blue-300 text-sm mt-2 tracking-widest uppercase">
+          {t("expenseOverview")}
+        </p>
+      </div>
 
-      {/* 🔹 Grafic circular mare, centrat */}
-      <div className="bg-[#0b1320]/70 p-6 rounded-2xl shadow-xl border border-[#1e3a8a]/50 mb-8 flex justify-center items-center">
-        {data.length > 0 ? (
-          <ResponsiveContainer width={400} height={550}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+        className="chart-card w-full max-w-2xl mb-8"
+      >
+        {chartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={350}>
             <PieChart>
               <Pie
-                data={data}
-                dataKey="value"
+                data={chartData}
                 cx="50%"
-                cy="80%"           // 🔹 ridicat ușor, să nu fie tăiat jos
-                outerRadius={80}  // 🔹 mai mare, clar vizibil
-                labelLine={false}
-                //label={renderCustomizedLabel}
+                cy="45%"
+                outerRadius={80}
+                dataKey="value"
+                label={({ name, percent }) =>
+                  `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
+                }
+                onClick={(_, index) => navigate(`/category/${chartData[index].name}`)}
               >
-                {data.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell
-                    key={`cell-${index}`}
+                    key={index}
                     fill={COLORS[index % COLORS.length]}
+                    style={{ cursor: "pointer" }}
                   />
                 ))}
               </Pie>
+
               <Tooltip
-                formatter={(value, name) => {
-                  const displayValue =
-                    i18n.language === "ro"
-                      ? value
-                      : (value * exchangeRate).toFixed(2);
-                  return [`${displayValue} ${currencySymbol}`, t(name)];
-                }}
-                contentStyle={{
-                  backgroundColor: "#0d1a2f",
-                  border: "1px solid #1e3a8a",
-                  color: "#fff",
-                }}
+                formatter={(value, name) => [
+                  `${value} ${t("currency")}`,
+                  t(name, name),
+                ]}
               />
+
               <Legend
+                formatter={(value) => t(value, value)}
                 verticalAlign="bottom"
                 align="center"
                 iconType="circle"
                 iconSize={10}
-                wrapperStyle={{
-                  marginTop: "10px",
-                  color: "#fff",
-                  fontSize: "13px",
-                }}
               />
             </PieChart>
           </ResponsiveContainer>
         ) : (
-          <p className="text-gray-300 italic">{t("noData")}</p>
+          <p className="text-center text-gray-400 italic">{t("noData")}</p>
         )}
-      </div>
+      </motion.div>
 
-      {/* 🔹 Formular cheltuieli */}
-      <div className="glass-section w-full max-w-md mb-6">
-        <h3 className="text-xl font-semibold mb-3 text-white">
-          {t("addExpense")}
-        </h3>
+      <div className="w-full max-w-lg glass-section mb-8">
+        <h3 className="mb-4">{t("addExpense")}</h3>
         <ExpenseForm />
       </div>
 
-      {/* 🔹 Lista cheltuieli */}
-      <div className="glass-section w-full max-w-md">
-        <h3 className="text-xl font-semibold mb-3 text-white">
-          {t("expenseList")}
-        </h3>
-        <ExpenseList />
-      </div>
+      {chartData.length > 0 && (
+        <div className="w-full max-w-lg glass-section">
+          <h3 className="mb-4">{t("expenseList")}</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {chartData.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => navigate(`/category/${item.name}`)}
+                className="rounded-xl"
+              >
+                {t(item.name, item.name)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
