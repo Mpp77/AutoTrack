@@ -3,9 +3,8 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recha
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase/config";
 import ExpenseForm from "./ExpenseForm";
+import { API_URL } from "../api";
 import "../App.css";
 
 const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d", "#32cd32", "#8b5cf6"];
@@ -15,14 +14,23 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const [chartData, setChartData] = useState([]);
 
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "expenses"), (snap) => {
-      const expenses = snap.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+  const fetchExpenses = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-      const grouped = expenses.reduce((acc, exp) => {
+      const res = await fetch(`${API_URL}/expenses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch expenses");
+      }
+
+      const grouped = data.reduce((acc, exp) => {
         const cat = exp.category?.trim();
         const amount = parseFloat(exp.amount || 0);
 
@@ -38,9 +46,13 @@ export default function Dashboard() {
       }));
 
       setChartData(formatted);
-    });
+    } catch (error) {
+      console.error("Dashboard fetch error:", error);
+    }
+  };
 
-    return () => unsub();
+  useEffect(() => {
+    fetchExpenses();
   }, []);
 
   return (
@@ -106,7 +118,7 @@ export default function Dashboard() {
 
       <div className="w-full max-w-lg glass-section mb-8">
         <h3 className="mb-4">{t("addExpense")}</h3>
-        <ExpenseForm />
+        <ExpenseForm onExpenseAdded={fetchExpenses} />
       </div>
 
       {chartData.length > 0 && (

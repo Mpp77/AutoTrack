@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { db } from "../firebase/config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../api";
 
-export default function ExpenseForm() {
+export default function ExpenseForm({ onExpenseAdded }) {
   const { t } = useTranslation();
   const [category, setCategory] = useState("");
   const [customCategory, setCustomCategory] = useState("");
@@ -20,38 +19,56 @@ export default function ExpenseForm() {
     "Tuning",
     "Unexpected Repairs",
     "Rovinieta",
-    "OtherCategory"
+    "OtherCategory",
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-  
+
     if (!category || !amount) {
       setMessage("Please complete category and amount");
       return;
     }
-  
+
     try {
+      const token = localStorage.getItem("token");
+
       const finalCategory =
         category === "OtherCategory" && customCategory
           ? customCategory
           : category;
-  
-      await addDoc(collection(db, "expenses"), {
-        category: finalCategory,
-        amount: parseFloat(amount),
-        note,
-        createdAt: serverTimestamp(),
+
+      const res = await fetch(`${API_URL}/expenses`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          category: finalCategory,
+          amount: parseFloat(amount),
+          note,
+        }),
       });
-  
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Error saving expense");
+      }
+
       setCategory("");
       setCustomCategory("");
       setAmount("");
       setNote("");
       setMessage(t("expenseSaved"));
+
+      if (onExpenseAdded) {
+        onExpenseAdded();
+      }
     } catch (error) {
-      console.error("Firestore save error:", error);
+      console.error("API error:", error);
       setMessage(error.message);
     }
   };

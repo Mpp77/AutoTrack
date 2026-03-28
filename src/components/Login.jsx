@@ -1,57 +1,58 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
-import { auth, db } from "../firebase/config";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { API_URL } from "../api";
 import "../App.css";
 
-export default function Login() {
+export default function Login({ initialCreateMode = false }) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [isCreatingAccount, setIsCreatingAccount] = useState(initialCreateMode);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
     try {
-      if (isCreatingAccount) {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+      const endpoint = isCreatingAccount ? "register" : "login";
 
-        await setDoc(doc(db, "users", user.uid), {
-          email: user.email,
-          createdAt: serverTimestamp(),
-        });
+      const res = await fetch(`${API_URL}/${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-        setMessage("✅ " + t("accountCreated"));
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-        setMessage("✅ " + t("loggedIn"));
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Request failed");
+      }
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
         navigate("/dashboard");
       }
 
+      setMessage(isCreatingAccount ? "✅ Account created" : "✅ Logged in");
       setEmail("");
       setPassword("");
-    } catch (error) {
-      setMessage("❌ " + error.message);
+    } catch (err) {
+      setMessage("❌ " + err.message);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#030b18] via-[#081a36] to-[#0f294e]">
       <div className="relative bg-[#0b1320]/80 backdrop-blur-xl shadow-[0_0_35px_rgba(0,180,255,0.2)] rounded-3xl px-10 py-10 text-center w-[400px] border border-[#1e3a8a]/60 flex flex-col items-center transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,180,255,0.4)]">
-        
-        {/* Selectare limbă */}
         <div className="flex justify-end w-full mb-4 gap-2">
           <button
+            type="button"
             onClick={() => i18n.changeLanguage("en")}
             className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
               i18n.language === "en"
@@ -62,6 +63,7 @@ export default function Login() {
             🇬🇧 EN
           </button>
           <button
+            type="button"
             onClick={() => i18n.changeLanguage("ro")}
             className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
               i18n.language === "ro"
@@ -72,8 +74,7 @@ export default function Login() {
             🇷🇴 RO
           </button>
         </div>
-  
-        {/* Titlu */}
+
         <h1
           className="text-5xl font-extrabold mb-4 tracking-wide"
           style={{
@@ -86,12 +87,11 @@ export default function Login() {
         >
           AutoTrack
         </h1>
-  
+
         <h2 className="text-gray-200 text-lg font-semibold mb-6">
           {isCreatingAccount ? t("createAccount") : t("signIn")}
         </h2>
-  
-        {/* Formular */}
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           <input
             type="email"
@@ -99,6 +99,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00bfff]/70 transition-all"
+            required
           />
           <input
             type="password"
@@ -106,8 +107,9 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00bfff]/70 transition-all"
+            required
           />
-  
+
           <button
             type="submit"
             className="bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white font-semibold py-3 rounded-md shadow-lg hover:shadow-[0_0_20px_rgba(0,191,255,0.6)] hover:scale-[1.03] transition-transform tracking-wide"
@@ -115,22 +117,23 @@ export default function Login() {
             {isCreatingAccount ? t("createAccount") : t("signIn")}
           </button>
         </form>
-  
+
         <p
-          onClick={() => setIsCreatingAccount(!isCreatingAccount)}
+          onClick={() => {
+            setIsCreatingAccount(!isCreatingAccount);
+            setMessage("");
+          }}
           className="text-[#00bfff] hover:underline cursor-pointer mt-6 text-sm tracking-wide"
         >
           {isCreatingAccount ? t("alreadyHaveAccount") : t("noAccount")}
         </p>
-  
+
         {message && (
           <p className="text-green-400 mt-4 text-sm tracking-wide">{message}</p>
         )}
-  
-        {/* Efect decorativ */}
+
         <div className="absolute -z-10 inset-0 rounded-3xl bg-gradient-to-br from-[#007bff]/10 to-[#00bfff]/5 blur-3xl"></div>
       </div>
     </div>
   );
-  
 }

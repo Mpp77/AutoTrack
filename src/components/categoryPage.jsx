@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  collection,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  updateDoc,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
-import { db } from "../firebase/config";
 import { useTranslation } from "react-i18next";
+import { API_URL } from "../api";
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -18,23 +9,40 @@ export default function CategoryPage() {
   const { t } = useTranslation();
 
   const [expenses, setExpenses] = useState([]);
-  const [editMode, setEditMode] = useState(false);
   const [newAmount, setNewAmount] = useState("");
   const [newNote, setNewNote] = useState("");
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "expenses"), (snap) => {
-      const filtered = snap.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter(
-          (exp) =>
-            exp.category?.trim().toLowerCase() === category?.trim().toLowerCase()
-        );
+  const fetchExpenses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API_URL}/expenses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch expenses");
+      }
+
+      const filtered = data.filter(
+        (exp) =>
+          exp.category?.trim().toLowerCase() === category?.trim().toLowerCase()
+      );
 
       setExpenses(filtered);
-    });
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    }
+  };
 
-    return () => unsub();
+  useEffect(() => {
+    fetchExpenses();
   }, [category]);
 
   const total = expenses.reduce(
@@ -43,141 +51,191 @@ export default function CategoryPage() {
   );
 
   const handleDelete = async (id) => {
-    if (window.confirm(t("deleteExpenseConfirm"))) {
-      await deleteDoc(doc(db, "expenses", id));
+    if (!window.confirm(t("deleteExpenseConfirm"))) return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API_URL}/expenses/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Delete failed");
+      }
+
+      fetchExpenses();
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
     }
   };
 
-  const handleEdit = async (id, newAmountValue, newNoteValue) => {
-    await updateDoc(doc(db, "expenses", id), {
-      amount: parseFloat(newAmountValue),
-      note: newNoteValue,
-    });
+  const handleUpdate = async (id, amount, note) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${API_URL}/expenses/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          amount: parseFloat(amount),
+          note,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Update failed");
+      }
+
+      fetchExpenses();
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    }
   };
 
-  const handleAddExpense = async (e) => {
-    e.preventDefault();
+  const handleAddExpenseInCategory = async () => {
+    if (!newAmount) {
+      setMessage("Please enter amount");
+      return;
+    }
 
-    if (!newAmount) return;
+    try {
+      const token = localStorage.getItem("token");
 
-    await addDoc(collection(db, "expenses"), {
-      category,
-      amount: parseFloat(newAmount),
-      note: newNote,
-      createdAt: serverTimestamp(),
-    });
+      const res = await fetch(`${API_URL}/expenses`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          category,
+          amount: parseFloat(newAmount),
+          note: newNote,
+        }),
+      });
 
-    setNewAmount("");
-    setNewNote("");
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Add failed");
+      }
+
+      setNewAmount("");
+      setNewNote("");
+      fetchExpenses();
+    } catch (error) {
+      console.error(error);
+      setMessage(error.message);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-start p-6 text-white min-h-screen">
-      <div className="flex gap-3 mb-8 mt-8">
-        <button
-          onClick={() => navigate("/dashboard")}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 px-5 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
-        >
-          ← {t("backToDashboard")}
-        </button>
+    <div className="min-h-screen text-white px-6 py-8">
+      <button
+        onClick={() => navigate("/dashboard")}
+        className="mb-6 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500"
+      >
+        ← Back
+      </button>
 
-        <button
-          onClick={() => setEditMode(!editMode)}
-          className="bg-gradient-to-r from-blue-400 to-blue-500 px-5 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition flex items-center gap-2"
-        >
-          ✏️ {editMode ? t("done") : t("edit")}
-        </button>
+      <h1 className="text-4xl font-bold mb-4">{t(category, category)}</h1>
+      <p className="mb-6 text-lg">
+        Total: {total} {t("currency")}
+      </p>
+
+      <div className="mb-8 p-4 rounded-xl bg-[#0d1a2f]/70 border border-[#1e3a8a]">
+        <h2 className="text-xl font-semibold mb-3">Add expense</h2>
+        <div className="flex flex-col gap-3">
+          <input
+            type="number"
+            placeholder={t("amount")}
+            value={newAmount}
+            onChange={(e) => setNewAmount(e.target.value)}
+            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md"
+          />
+          <input
+            type="text"
+            placeholder={t("noteOptional")}
+            value={newNote}
+            onChange={(e) => setNewNote(e.target.value)}
+            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md"
+          />
+          <button
+            onClick={handleAddExpenseInCategory}
+            className="bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white font-semibold py-3 rounded-md"
+          >
+            {t("saveExpense")}
+          </button>
+        </div>
       </div>
 
-      <h2 className="text-3xl font-bold mb-8 drop-shadow-md text-center">
-        💰 {t(category, category)} —{" "}
-        <span className="text-blue-300">
-          {total} {t("currency")}
-        </span>
-      </h2>
+      <div className="grid gap-4">
+        {expenses.map((exp) => (
+          <ExpenseCard
+            key={exp.id}
+            exp={exp}
+            currency={t("currency")}
+            onDelete={handleDelete}
+            onSave={handleUpdate}
+          />
+        ))}
+      </div>
 
-      <form
-        onSubmit={handleAddExpense}
-        className="w-full max-w-md mb-8 flex flex-col gap-3"
-      >
+      {message && <p className="mt-4 text-red-400">{message}</p>}
+    </div>
+  );
+}
+
+function ExpenseCard({ exp, currency, onDelete, onSave }) {
+  const [amount, setAmount] = useState(exp.amount);
+  const [note, setNote] = useState(exp.note || "");
+
+  return (
+    <div className="p-4 rounded-xl bg-[#0d1a2f]/70 border border-[#1e3a8a]">
+      <div className="flex flex-col gap-3">
         <input
           type="number"
-          placeholder={t("amount")}
-          value={newAmount}
-          onChange={(e) => setNewAmount(e.target.value)}
-          className="w-full bg-blue-900/40 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-2 rounded-md"
         />
-
         <input
           type="text"
-          placeholder={t("noteOptional")}
-          value={newNote}
-          onChange={(e) => setNewNote(e.target.value)}
-          className="w-full bg-blue-900/40 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-2 rounded-md"
         />
+        <p className="text-sm text-gray-300">
+          {amount} {currency}
+        </p>
 
-        <button
-          type="submit"
-          className="bg-gradient-to-r from-blue-500 to-cyan-500 px-5 py-3 rounded-xl font-semibold shadow-md hover:shadow-lg hover:scale-105 transition"
-        >
-          {t("saveExpense")}
-        </button>
-      </form>
-
-      <div className="flex flex-col gap-4 w-full max-w-md mt-4">
-        {expenses.map((exp) => (
-          <div
-            key={exp.id}
-            className="rounded-2xl bg-gradient-to-br from-blue-500/70 to-blue-400/40 p-5 shadow-[0_4px_20px_rgba(0,0,0,0.25)] backdrop-blur-md border border-blue-300/20 hover:scale-[1.03] hover:shadow-[0_6px_25px_rgba(59,130,246,0.5)] transition-all duration-300 text-center"
+        <div className="flex gap-3">
+          <button
+            onClick={() => onSave(exp.id, amount, note)}
+            className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500"
           >
-            {editMode ? (
-              <div className="flex flex-col gap-3">
-                <input
-                  type="number"
-                  defaultValue={exp.amount}
-                  onBlur={(e) => handleEdit(exp.id, e.target.value, exp.note)}
-                  className="w-full bg-blue-900/40 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-
-                <input
-                  type="text"
-                  defaultValue={exp.note || ""}
-                  onBlur={(e) => handleEdit(exp.id, exp.amount, e.target.value)}
-                  className="w-full bg-blue-900/40 text-white rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-
-                <button
-                  onClick={() => handleDelete(exp.id)}
-                  className="text-sm text-red-400 hover:text-red-600 transition"
-                >
-                  🗑️ {t("delete")}
-                </button>
-              </div>
-            ) : (
-              <div>
-                <p className="text-xl font-semibold text-white drop-shadow-md">
-                  {exp.amount} {t("currency")}
-                </p>
-
-                {exp.note ? (
-                  <p className="italic text-blue-100 opacity-90 mt-1 text-sm border-t border-blue-300/20 pt-1">
-                    {exp.note}
-                  </p>
-                ) : (
-                  <p className="italic text-blue-100 opacity-70 mt-1 text-sm border-t border-blue-300/20 pt-1">
-                    {t("noNote")}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-
-        {expenses.length === 0 && (
-          <p className="text-gray-400 italic text-center mt-6">
-            {t("noExpenses")}
-          </p>
-        )}
+            Save
+          </button>
+          <button
+            onClick={() => onDelete(exp.id)}
+            className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
