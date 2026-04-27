@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
+import Home from "./components/Home";
+import ExpenseOverview from "./components/ExpenseOverview";
+import AddExpensePage from "./components/AddExpensePage";
+import ExpenseListPage from "./components/ExpenseListPage";
 import CategoryPage from "./components/categoryPage";
 
 export default function App() {
@@ -9,8 +12,14 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/dashboard" element={<Dashboard />} />
+
+      <Route path="/home" element={<Home />} />
+      <Route path="/overview" element={<ExpenseOverview />} />
+      <Route path="/add-expense" element={<AddExpensePage />} />
+      <Route path="/expenses" element={<ExpenseListPage />} />
+
       <Route path="/category/:category" element={<CategoryPage />} />
+
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

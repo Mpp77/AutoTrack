@@ -12,21 +12,30 @@ export default function Login({ initialCreateMode = false }) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isCreatingAccount, setIsCreatingAccount] = useState(initialCreateMode);
+  const [isResetting, setIsResetting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
     try {
-      const endpoint = isCreatingAccount ? "register" : "login";
-
-      const res = await fetch(`${API_URL}/${endpoint}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const endpoint = isResetting
+      ? "reset-password"
+      : isCreatingAccount
+      ? "register"
+      : "login";
+    
+    const res = await fetch(`${API_URL}/${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        isResetting
+          ? { email, newPassword: password }
+          : { email, password }
+      ),
+    });
 
       const data = await res.json();
 
@@ -34,12 +43,15 @@ export default function Login({ initialCreateMode = false }) {
         throw new Error(data.message || "Request failed");
       }
 
-      if (data.token) {
+      if (isResetting) {
+        setMessage("✅ Password updated");
+        setIsResetting(false);
+      } else if (data.token) {
         localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+        navigate("/home");
+        setMessage(isCreatingAccount ? "✅ Account created" : "✅ Logged in");
       }
-
-      setMessage(isCreatingAccount ? "✅ Account created" : "✅ Logged in");
+      
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -48,91 +60,104 @@ export default function Login({ initialCreateMode = false }) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#030b18] via-[#081a36] to-[#0f294e]">
-      <div className="relative bg-[#0b1320]/80 backdrop-blur-xl shadow-[0_0_35px_rgba(0,180,255,0.2)] rounded-3xl px-10 py-10 text-center w-[400px] border border-[#1e3a8a]/60 flex flex-col items-center transition-all duration-300 hover:shadow-[0_0_45px_rgba(0,180,255,0.4)]">
-        <div className="flex justify-end w-full mb-4 gap-2">
-          <button
-            type="button"
-            onClick={() => i18n.changeLanguage("en")}
-            className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
-              i18n.language === "en"
-                ? "bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white shadow-md"
-                : "bg-[#0d1a2f]/70 text-gray-300 hover:text-white border border-[#1e3a8a]"
-            }`}
-          >
-            🇬🇧 EN
-          </button>
-          <button
-            type="button"
-            onClick={() => i18n.changeLanguage("ro")}
-            className={`flex items-center gap-1 px-3 py-1 rounded-md text-sm font-semibold transition-all duration-300 ${
-              i18n.language === "ro"
-                ? "bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white shadow-md"
-                : "bg-[#0d1a2f]/70 text-gray-300 hover:text-white border border-[#1e3a8a]"
-            }`}
-          >
-            🇷🇴 RO
-          </button>
-        </div>
-
-        <h1
-          className="text-5xl font-extrabold mb-4 tracking-wide"
-          style={{
-            fontFamily: "'Orbitron', sans-serif",
-            background: "linear-gradient(to right, #00bfff, #007bff)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textShadow: "0 0 20px rgba(0,191,255,0.3)",
-          }}
-        >
-          AutoTrack
-        </h1>
-
-        <h2 className="text-gray-200 text-lg font-semibold mb-6">
-          {isCreatingAccount ? t("createAccount") : t("signIn")}
+    <div className="auth-page">
+      <div className={`auth-card ${isResetting ? "reset-mode" : ""}`}>
+        {!isResetting && (
+          <div className="language-buttons">
+            <button type="button" onClick={() => i18n.changeLanguage("en")}>
+              🇬🇧 EN
+            </button>
+            <button type="button" onClick={() => i18n.changeLanguage("ro")}>
+              🇷🇴 RO
+            </button>
+          </div>
+        )}
+  
+        <h1 className="auth-title">AutoTrack</h1>
+  
+        <h2 className="auth-subtitle">
+          {isResetting
+            ? "Reset Password"
+            : isCreatingAccount
+            ? t("createAccount")
+            : t("signIn")}
         </h2>
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+  
+        {isResetting && (
+          <p className="auth-description">
+            Enter your email and choose a new password.
+          </p>
+        )}
+  
+        <form onSubmit={handleSubmit} className="auth-form">
           <input
             type="email"
             placeholder={t("emailAddress")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00bfff]/70 transition-all"
             required
           />
+  
           <input
             type="password"
-            placeholder={t("password")}
+            placeholder={isResetting ? "New password" : t("password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00bfff]/70 transition-all"
             required
           />
-
-          <button
-            type="submit"
-            className="bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white font-semibold py-3 rounded-md shadow-lg hover:shadow-[0_0_20px_rgba(0,191,255,0.6)] hover:scale-[1.03] transition-transform tracking-wide"
-          >
-            {isCreatingAccount ? t("createAccount") : t("signIn")}
+  
+          <button type="submit">
+            {isResetting
+              ? "Reset Password"
+              : isCreatingAccount
+              ? t("createAccount")
+              : t("signIn")}
           </button>
         </form>
-
-        <p
-          onClick={() => {
-            setIsCreatingAccount(!isCreatingAccount);
-            setMessage("");
-          }}
-          className="text-[#00bfff] hover:underline cursor-pointer mt-6 text-sm tracking-wide"
-        >
-          {isCreatingAccount ? t("alreadyHaveAccount") : t("noAccount")}
-        </p>
-
-        {message && (
-          <p className="text-green-400 mt-4 text-sm tracking-wide">{message}</p>
+  
+        {!isResetting ? (
+          <>
+            <p
+              onClick={() => {
+                setIsCreatingAccount(!isCreatingAccount);
+                setIsResetting(false);
+                setMessage("");
+              }}
+              className="auth-link"
+            >
+              {isCreatingAccount ? t("alreadyHaveAccount") : t("noAccount")}
+            </p>
+  
+            <p
+              onClick={() => {
+                setIsResetting(true);
+                setIsCreatingAccount(false);
+                setMessage("");
+                setEmail("");
+                setPassword("");
+              }}
+              className="auth-link secondary"
+            >
+              Forgot password?
+            </p>
+          </>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setIsResetting(false);
+              setIsCreatingAccount(false);
+              setMessage("");
+              setEmail("");
+              setPassword("");
+            }}
+            className="back-login-btn"
+          >
+            ← Back to Sign In
+          </button>
         )}
-
-        <div className="absolute -z-10 inset-0 rounded-3xl bg-gradient-to-br from-[#007bff]/10 to-[#00bfff]/5 blur-3xl"></div>
+  
+        {message && <p className="auth-message">{message}</p>}
       </div>
     </div>
   );

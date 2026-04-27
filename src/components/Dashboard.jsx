@@ -57,6 +57,21 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container flex flex-col items-center min-h-screen text-white px-4 py-6">
+<div className="w-full max-w-4xl flex justify-start mt-10 mb-6">
+    <button
+    onClick={() => {
+      localStorage.removeItem("token"); // 🔥 logout
+      navigate("/"); // sau "/login"
+    }}
+    className="px-5 py-2 rounded-xl font-semibold text-white
+    bg-gradient-to-r from-[#007bff] to-[#00bfff]
+    shadow-[0_0_15px_rgba(0,191,255,0.6)]
+    hover:scale-105 hover:shadow-[0_0_25px_rgba(0,191,255,0.9)]
+    transition-all duration-300"
+  >
+    ← Logout
+  </button>
+</div>
       <div className="text-center mt-4 mb-6">
         <h1 className="text-5xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent drop-shadow-lg">
           AutoTrack Dashboard
