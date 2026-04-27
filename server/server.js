@@ -38,6 +38,7 @@ app.options("/api/register", cors());
 app.options("/api/login", cors());
 app.options("/api/expenses", cors());
 app.options("/api/expenses/:id", cors());
+app.options("/api/reset-pasword", cors());
 
 app.post("/api/register", async (req, res) => {
   const { email, password } = req.body;
@@ -86,6 +87,32 @@ app.post("/api/login", async (req, res) => {
   } catch (error) {
     console.error("LOGIN ERROR:", error);
     res.status(500).json({ message: "Login failed" });
+  }
+});
+
+app.post("/api/reset-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    if (!email || !newPassword) {
+      return res.status(400).json({ message: "Email and new password required" });
+    }
+
+    const hash = await bcrypt.hash(newPassword, 10);
+
+    const result = await pool.query(
+      "UPDATE users SET password_hash=$1 WHERE email=$2 RETURNING email",
+      [hash, email]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("RESET PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Error resetting password" });
   }
 });
 
