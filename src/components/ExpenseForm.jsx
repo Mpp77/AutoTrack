@@ -74,10 +74,7 @@ export default function ExpenseForm({ onExpenseAdded }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col items-center gap-3 text-white"
-    >
+    <form onSubmit={handleSubmit} className="expense-form">
       <div className="flex flex-col w-full gap-2">
         <select
           value={category}

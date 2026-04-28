@@ -44,51 +44,58 @@ export default function ExpenseOverview() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white px-6 py-8 bg-gradient-to-br from-[#030b18] via-[#081a36] to-[#0f294e]">
+    <div className="overview-page">
       <button
         onClick={() => navigate("/home")}
-        className="mb-8 px-5 py-2 rounded-xl bg-gradient-to-r from-[#007bff] to-[#00bfff] font-semibold"
+        className="back-btn"
       >
         ← Back Home
       </button>
-
-      <h1 className="text-4xl font-bold text-center mb-8 text-cyan-300">
-        {t("expenseOverview")}
-      </h1>
-
-      <div className="chart-card w-full max-w-3xl mx-auto">
-        {chartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="45%"
-                outerRadius={100}
-                dataKey="value"
-                label={({ name, percent }) =>
-                  `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
-                }
-                onClick={(_, index) => navigate(`/category/${chartData[index].name}`)}
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-
-              <Tooltip
-                formatter={(value, name) => [
-                  `${value} ${t("currency")}`,
-                  t(name, name),
-                ]}
-              />
-
-              <Legend formatter={(value) => t(value, value)} />
-            </PieChart>
-          </ResponsiveContainer>
-        ) : (
-          <p className="text-center text-gray-400 italic">{t("noData")}</p>
-        )}
+  
+      <div className="overview-card">
+        <h1>{t("expenseOverview")}</h1>
+  
+        <div className="chart-wrapper">
+          {chartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={520}>
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="45%"
+                  outerRadius={150}
+                  dataKey="value"
+                  label={({ name, percent }) =>
+                    `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
+                  }
+                  onClick={(_, index) =>
+                    navigate(`/category/${chartData[index].name}`)
+                  }
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+  
+                <Tooltip
+                  formatter={(value, name) => [
+                    `${value} ${t("currency")}`,
+                    t(name, name),
+                  ]}
+                />
+  
+                <Legend formatter={(value) => t(value, value)} />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <p className="text-center text-gray-400 italic">
+              {t("noData")}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

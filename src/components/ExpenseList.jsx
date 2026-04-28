@@ -43,16 +43,18 @@ export default function ExpenseList() {
   }, {});
 
   const categories = Object.keys(grouped);
-
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="expense-grid">
       {categories.map((cat) => (
         <button
           key={cat}
           onClick={() => navigate(`/category/${cat}`)}
-          className="rounded-xl p-3 bg-[#0d1a2f]/70 border border-[#1e3a8a] hover:bg-[#13213d]"
+          className="expense-category-card"
         >
-          {t(cat, cat)} - {grouped[cat].total} {t("currency")}
+          <span>{t(cat, cat)}</span>
+          <strong>
+            {grouped[cat].total} {t("currency")}
+          </strong>
         </button>
       ))}
     </div>

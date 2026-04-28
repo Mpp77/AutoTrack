@@ -143,58 +143,56 @@ export default function CategoryPage() {
   };
 
   return (
-    <div className="min-h-screen text-white px-6 py-8">
-      <button
-        onClick={() => navigate("/dashboard")}
-        className="mb-6 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500"
-      >
+    <div className="category-page">
+      <button onClick={() => navigate("/expenses")} className="back-home-btn">
         ← Back
       </button>
-
-      <h1 className="text-4xl font-bold mb-4">{t(category, category)}</h1>
-      <p className="mb-6 text-lg">
-        Total: {total} {t("currency")}
-      </p>
-
-      <div className="mb-8 p-4 rounded-xl bg-[#0d1a2f]/70 border border-[#1e3a8a]">
-        <h2 className="text-xl font-semibold mb-3">Add expense</h2>
-        <div className="flex flex-col gap-3">
-          <input
-            type="number"
-            placeholder={t("amount")}
-            value={newAmount}
-            onChange={(e) => setNewAmount(e.target.value)}
-            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md"
-          />
-          <input
-            type="text"
-            placeholder={t("noteOptional")}
-            value={newNote}
-            onChange={(e) => setNewNote(e.target.value)}
-            className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-3 rounded-md"
-          />
-          <button
-            onClick={handleAddExpenseInCategory}
-            className="bg-gradient-to-r from-[#007bff] to-[#00bfff] text-white font-semibold py-3 rounded-md"
-          >
-            {t("saveExpense")}
-          </button>
+  
+      <div className="category-card">
+        <h1 className="category-title">{t(category, category)}</h1>
+  
+        <p className="category-total">
+          Total: {total} {t("currency")}
+        </p>
+  
+        <div className="category-add-box">
+          <h2>Add expense</h2>
+  
+          <div className="category-form">
+            <input
+              type="number"
+              placeholder={t("amount")}
+              value={newAmount}
+              onChange={(e) => setNewAmount(e.target.value)}
+            />
+  
+            <input
+              type="text"
+              placeholder={t("noteOptional")}
+              value={newNote}
+              onChange={(e) => setNewNote(e.target.value)}
+            />
+  
+            <button onClick={handleAddExpenseInCategory}>
+              {t("saveExpense")}
+            </button>
+          </div>
         </div>
+  
+        <div className="category-expense-grid">
+          {expenses.map((exp) => (
+            <ExpenseCard
+              key={exp.id}
+              exp={exp}
+              currency={t("currency")}
+              onDelete={handleDelete}
+              onSave={handleUpdate}
+            />
+          ))}
+        </div>
+  
+        {message && <p className="category-message">{message}</p>}
       </div>
-
-      <div className="grid gap-4">
-        {expenses.map((exp) => (
-          <ExpenseCard
-            key={exp.id}
-            exp={exp}
-            currency={t("currency")}
-            onDelete={handleDelete}
-            onSave={handleUpdate}
-          />
-        ))}
-      </div>
-
-      {message && <p className="mt-4 text-red-400">{message}</p>}
     </div>
   );
 }
@@ -204,38 +202,26 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
   const [note, setNote] = useState(exp.note || "");
 
   return (
-    <div className="p-4 rounded-xl bg-[#0d1a2f]/70 border border-[#1e3a8a]">
-      <div className="flex flex-col gap-3">
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-2 rounded-md"
-        />
-        <input
-          type="text"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-          className="bg-[#0d1a2f]/80 border border-[#1e3a8a]/80 text-white px-4 py-2 rounded-md"
-        />
-        <p className="text-sm text-gray-300">
-          {amount} {currency}
-        </p>
-
-        <div className="flex gap-3">
-          <button
-            onClick={() => onSave(exp.id, amount, note)}
-            className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500"
-          >
-            Save
-          </button>
-          <button
-            onClick={() => onDelete(exp.id)}
-            className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500"
-          >
-            Delete
-          </button>
-        </div>
+    <div className="category-expense-card">
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+  
+      <input
+        type="text"
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+      />
+  
+      <p>
+        {amount} {currency}
+      </p>
+  
+      <div className="category-card-actions">
+        <button onClick={() => onSave(exp.id, amount, note)}>Save</button>
+        <button onClick={() => onDelete(exp.id)}>Delete</button>
       </div>
     </div>
   );
