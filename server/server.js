@@ -5,16 +5,27 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const { Pool } = pkg;
-
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://auto-track-sooty.vercel.app",
+];
+
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
+
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
+
   next();
 });
 
@@ -27,6 +38,7 @@ const pool = new Pool({
   },
 });
 
+const SECRET = process.env.JWT_SECRET;
 
 app.get("/", (req, res) => {
   res.send("Backend works");
