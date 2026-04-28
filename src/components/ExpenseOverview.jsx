@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
 import "../App.css";
 
-const COLORS = ["#2e82ff", "#00bfff", "#ff7f24", "#ffd700", "#ff4d4d", "#32cd32", "#8b5cf6"];
+const COLORS = [
+  "#2e82ff",
+  "#00bfff",
+  "#ff7f24",
+  "#ffd700",
+  "#ff4d4d",
+  "#32cd32",
+  "#8b5cf6",
+];
 
 export default function ExpenseOverview() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
+  const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -23,38 +44,109 @@ export default function ExpenseOverview() {
       });
 
       const data = await res.json();
-
-      const grouped = data.reduce((acc, exp) => {
-        const cat = exp.category?.trim();
-        const amount = parseFloat(exp.amount || 0);
-        if (!cat) return acc;
-        acc[cat] = (acc[cat] || 0) + amount;
-        return acc;
-      }, {});
-
-      setChartData(
-        Object.entries(grouped).map(([name, value]) => ({
-          name,
-          value,
-        }))
-      );
+      setAllExpenses(data);
     };
 
     fetchExpenses();
   }, []);
 
+  useEffect(() => {
+    let filtered = [...allExpenses];
+
+    if (startDate) {
+      filtered = filtered.filter(
+        (exp) => new Date(exp.created_at) >= new Date(startDate)
+      );
+    }
+
+    if (endDate) {
+      filtered = filtered.filter(
+        (exp) => new Date(exp.created_at) <= new Date(endDate + "T23:59:59")
+      );
+    }
+
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter(
+        (exp) =>
+          exp.category?.trim().toLowerCase() ===
+          selectedCategory.toLowerCase()
+      );
+    }
+
+    const grouped = filtered.reduce((acc, exp) => {
+      const cat = exp.category?.trim();
+      const amount = parseFloat(exp.amount || 0);
+
+      if (!cat) return acc;
+
+      acc[cat] = (acc[cat] || 0) + amount;
+      return acc;
+    }, {});
+
+    setChartData(
+      Object.entries(grouped).map(([name, value]) => ({
+        name,
+        value,
+      }))
+    );
+  }, [allExpenses, startDate, endDate, selectedCategory]);
+
+  const categories = [
+    "All",
+    "Fuel",
+    "Service",
+    "Insurance",
+    "ITP",
+    "Oil Change",
+    "Tuning",
+    "Unexpected Repairs",
+    "Rovinieta",
+    "OtherCategory",
+  ];
+
+  const totalSpent = chartData.reduce((sum, item) => sum + item.value, 0);
+
   return (
     <div className="overview-page">
-      <button
-        onClick={() => navigate("/home")}
-        className="back-btn"
-      >
+      <button onClick={() => navigate("/home")} className="back-btn">
         ← Back Home
       </button>
-  
+
       <div className="overview-card">
         <h1>{t("expenseOverview")}</h1>
-  
+
+        <div className="filters-row">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="filter-input"
+          />
+
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="filter-input"
+          />
+
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="filter-input"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat === "All" ? "All Categories" : t(cat, cat)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <p className="overview-total">
+          Total: {totalSpent.toFixed(2)} {t("currency")}
+        </p>
+
         <div className="chart-wrapper">
           {chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={520}>
@@ -79,14 +171,14 @@ export default function ExpenseOverview() {
                     />
                   ))}
                 </Pie>
-  
+
                 <Tooltip
                   formatter={(value, name) => [
                     `${value} ${t("currency")}`,
                     t(name, name),
                   ]}
                 />
-  
+
                 <Legend formatter={(value) => t(value, value)} />
               </PieChart>
             </ResponsiveContainer>

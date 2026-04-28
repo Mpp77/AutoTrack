@@ -219,6 +219,10 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
         {amount} {currency}
       </p>
   
+      <p className="expense-date">
+  Added: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
+</p>
+
       <div className="category-card-actions">
         <button onClick={() => onSave(exp.id, amount, note)}>Save</button>
         <button onClick={() => onDelete(exp.id)}>Delete</button>
