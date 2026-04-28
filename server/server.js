@@ -21,14 +21,12 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "autotrack",
-  password: "1234567", 
-  port: 5433,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-const SECRET = "mysecret123";
 
 app.get("/", (req, res) => {
   res.send("Backend works");
