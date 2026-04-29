@@ -152,7 +152,7 @@ export default function CategoryPage() {
         <h1 className="category-title">{t(category, category)}</h1>
   
         <p className="category-total">
-          Total: {total} {t("currency")}
+        {t("total")}: {total} {t("currency")}
         </p>
   
         <div className="category-add-box">
@@ -198,6 +198,7 @@ export default function CategoryPage() {
 }
 
 function ExpenseCard({ exp, currency, onDelete, onSave }) {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState(exp.amount);
   const [note, setNote] = useState(exp.note || "");
 
@@ -208,24 +209,28 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
-  
+
       <input
         type="text"
         value={note}
         onChange={(e) => setNote(e.target.value)}
       />
-  
+
       <p>
         {amount} {currency}
       </p>
-  
+
       <p className="expense-date">
-      {t("addedOn")}: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
+        {t("added")}: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
       </p>
 
       <div className="category-card-actions">
-        <button onClick={() => onSave(exp.id, amount, note)}>Save</button>
-        <button onClick={() => onDelete(exp.id)}>Delete</button>
+        <button onClick={() => onSave(exp.id, amount, note)}>
+          {t("save")}
+        </button>
+        <button onClick={() => onDelete(exp.id)}>
+          {t("delete")}
+        </button>
       </div>
     </div>
   );
