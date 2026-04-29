@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { PieChart, MonitorUp, List, Plus } from "lucide-react";
 import "../App.css";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
@@ -13,12 +14,12 @@ export default function Home() {
   return (
     <div className="home-page">
       <button onClick={handleLogout} className="logout-btn">
-        ← Logout
+      ← {t("logout")}
       </button>
 
       <section className="hero-card">
-        <h1>Welcome to AutoTrack</h1>
-        <p>Manage your car expenses in one smart dashboard.</p>
+        <h1>{t("welcomeTitle")}</h1>
+        <p>{t("welcomeSubtitle")}</p>
 
         <div className="icon-row">
           <NeonIcon type="report" />
@@ -31,17 +32,17 @@ export default function Home() {
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
           <PieChart />
-          <span>Overview</span>
+          <span>{t("overview")}</span>
         </button>
 
         <button className="active" onClick={() => navigate("/add-expense")}>
           <Plus />
-          <span>Add Expense</span>
+          <span>{t("addExpenseShort")}</span>
         </button>
 
         <button onClick={() => navigate("/expenses")}>
           <List />
-          <span>Expense List</span>
+          <span>{t("expenseList")}t</span>
         </button>
       </nav>
     </div>

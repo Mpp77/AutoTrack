@@ -36,5 +36,11 @@
   "edit": "Editare",
   "delete": "Șterge",
   "deleteExpenseConfirm": "Sigur vrei să ștergi această cheltuială?",
-  "noNote": "Fără notiță"
+  "noNote": "Fără notiță",
+  "welcomeTitle": "Bine ai venit la AutoTrack",
+  "welcomeSubtitle": "Gestionează cheltuielile mașinii tale într-un dashboard inteligent.",
+  "logout": "Deconectare",
+  "backHome": "Înapoi Acasă",
+  "allCategories": "Toate Categoriile",
+  "forgotPassword": "Ai uitat parola?"
 }
