@@ -708,20 +708,21 @@ body {
 ========================= */
 
 .custom-legend {
-  margin-top: 28px;
   width: 100%;
+  max-width: 320px;
+  margin: -4px auto 0;
+  padding: 0 4px 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 0 14px 24px;
+  gap: 8px;
 }
 
 .legend-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
-  border-radius: 16px;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: rgba(0, 25, 70, 0.95) !important;
   border: 1px solid rgba(0, 191, 255, 0.35);
   box-shadow: 0 0 12px rgba(0, 191, 255, 0.12);
@@ -730,13 +731,13 @@ body {
 .legend-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex: 1;
 }
 
 .legend-color {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 4px;
   flex-shrink: 0;
 }
@@ -744,20 +745,28 @@ body {
 .legend-label,
 .legend-value,
 .legend-row p,
-.legend-row span {
+.legend-row span,
+.custom-legend p,
+.custom-legend span {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
   opacity: 1 !important;
+  text-shadow: none !important;
 }
 
 .legend-label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .legend-value {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
+  white-space: nowrap;
+  margin-left: 10px;
+  text-align: right;
 }
 
 /* =========================
@@ -1097,7 +1106,6 @@ body {
   }
 
   .legend-value {
-    font-size: 13px !important;
     text-align: right !important;
     white-space: nowrap !important;
   }
