@@ -903,4 +903,54 @@ body {
   }
 }
 
+.overview-card {
+  width: min(100% - 24px, 980px);
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
 
+.chart-wrapper {
+  overflow: visible;
+  padding-bottom: 120px;
+}
+
+@media (max-width: 768px) {
+  .overview-page {
+    overflow-x: hidden;
+  }
+
+  .overview-card {
+    width: calc(100% - 24px);
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    overflow: visible;
+    padding-bottom: 140px;
+  }
+
+  .recharts-wrapper,
+  .recharts-surface {
+    max-width: 100%;
+  }
+
+  .recharts-legend-wrapper {
+    left: 0 !important;
+    width: 100% !important;
+    bottom: -20px !important;
+  }
+
+  .recharts-default-legend {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .recharts-legend-item-text {
+    font-size: 18px !important;
+  }
+}
