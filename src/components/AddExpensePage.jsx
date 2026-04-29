@@ -14,7 +14,7 @@ export default function AddExpensePage() {
       </button>
   
       <div className="add-expense-card">
-        <h1>Add New Expense</h1>
+        <h1>{t("addExpense")}</h1>
         <ExpenseForm />
       </div>
     </div>

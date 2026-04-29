@@ -42,7 +42,7 @@ export default function Home() {
 
         <button onClick={() => navigate("/expenses")}>
           <List />
-          <span>{t("expenseList")}t</span>
+          <span>{t("expenseList")}</span>
         </button>
       </nav>
     </div>
