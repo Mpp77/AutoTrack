@@ -150,46 +150,69 @@ export default function ExpenseOverview() {
           {t("total")}: {totalSpent.toFixed(2)} {t("currency")}
         </p>
 
-        <div className="chart-wrapper">
-          {chartData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={420}>
-              <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="value"
-                label={false}
-                labelLine={false}
-                onClick={(_, index) =>
-                  navigate(`/category/${chartData[index].name}`)
-                }
-              >
-                  {chartData.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
+            <div className="chart-wrapper">
+      {chartData.length > 0 ? (
+        <>
+          <ResponsiveContainer width="100%" height={340}>
+            <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              outerRadius={90}
+              dataKey="value"
+              labelLine={false}
+              label={({ name, percent }) =>
+                `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
+              }
+              onClick={(_, index) =>
+                navigate(`/category/${chartData[index].name}`)
+              }
+            >
+                {chartData.map((entry, index) => (
+                  <Cell
+                    key={index}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
 
-                <Tooltip
-                  formatter={(value, name) => [
-                    `${value} ${t("currency")}`,
-                    t(name, name),
-                  ]}
+              <Tooltip
+                formatter={(value, name) => [
+                  `${value} ${t("currency")}`,
+                  t(name, name),
+                ]}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+
+          <div className="custom-legend">
+          {chartData.map((item, index) => (
+            <div className="legend-row" key={item.name}>
+              <div className="legend-left">
+                <span
+                  className="legend-color"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
                 />
 
-                <Legend formatter={(value) => t(value, value)} />
-              </PieChart>
-            </ResponsiveContainer>
-          ) : (
-            <p className="text-center text-gray-400 italic">
-              {t("noData")}
-            </p>
-          )}
+                <p className="legend-label">
+                  {t(item.name, item.name)}
+                </p>
+              </div>
+
+              <p className="legend-value">
+                {item.value.toFixed(2)} {t("currency")}
+              </p>
+            </div>
+          ))}
         </div>
+        </>
+      ) : (
+        <p className="text-center text-gray-400 italic">
+          {t("noData")}
+        </p>
+      )}
+    </div>
       </div>
     </div>
   );
