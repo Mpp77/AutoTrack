@@ -1002,3 +1002,103 @@ body {
     margin-left: 4px !important;
   }
 }
+
+/* =========================
+   OVERVIEW MOBILE FINAL FIX
+   (doar ExpenseOverview, fără Home/Welcome)
+========================= */
+@media (max-width: 600px) {
+
+  .overview-page {
+    padding: 18px 12px 120px !important;
+    align-items: center;
+  }
+
+  /* card mare complet vizibil */
+  .overview-card {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    margin: 20px auto 0 !important;
+    padding: 34px 14px 55px !important;
+    border-radius: 34px !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  /* titlu */
+  .overview-card h1 {
+    font-size: 34px !important;
+    margin-bottom: 28px !important;
+    line-height: 1.15 !important;
+  }
+
+  /* filtre mai mici */
+  .filters-row {
+    gap: 12px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .filter-input {
+    width: 100% !important;
+    max-width: 250px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 8px 12px !important;
+    font-size: 16px !important;
+    border-radius: 18px !important;
+  }
+
+  /* total */
+  .overview-total {
+    font-size: 28px !important;
+    margin: 14px 0 8px !important;
+  }
+
+  /* chart mai sus */
+  .chart-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: -8px !important;
+    padding-bottom: 10px !important;
+    overflow: visible !important;
+  }
+
+  /* legendă apropiată */
+  .custom-legend {
+    width: 100% !important;
+    max-width: 310px !important;
+    margin: -6px auto 0 !important;
+    padding: 0 !important;
+    gap: 6px !important;
+  }
+
+  .legend-row {
+    padding: 8px 10px !important;
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    align-items: center !important;
+    column-gap: 8px !important;
+    border-radius: 14px !important;
+  }
+
+  .legend-left {
+    gap: 8px !important;
+  }
+
+  .legend-color {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .legend-label {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+  }
+
+  .legend-value {
+    font-size: 13px !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+}
