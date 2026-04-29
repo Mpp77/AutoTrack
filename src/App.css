@@ -1014,7 +1014,6 @@ body {
 
 /* =========================
    OVERVIEW MOBILE FINAL FIX
-   (doar ExpenseOverview, fără Home/Welcome)
 ========================= */
 @media (max-width: 600px) {
 
@@ -1109,4 +1108,25 @@ body {
     text-align: right !important;
     white-space: nowrap !important;
   }
+}
+
+/* =========================
+   FORCE LEGEND TEXT WHITE
+========================= */
+.custom-legend,
+.custom-legend * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.legend-label,
+.legend-value,
+.legend-row p,
+.legend-row span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
+  text-shadow: none !important;
 }
