@@ -1,3 +1,4 @@
+// ExpenseOverview.jsx
 import React, { useEffect, useState } from "react";
 import {
   PieChart,
@@ -28,7 +29,6 @@ export default function ExpenseOverview() {
 
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -109,7 +109,7 @@ export default function ExpenseOverview() {
   return (
     <div className="overview-page">
       <button onClick={() => navigate("/home")} className="back-btn">
-        ← Back Home
+        ← {t("backHome")}
       </button>
 
       <div className="overview-card">
@@ -137,14 +137,14 @@ export default function ExpenseOverview() {
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
-                {cat === "All" ? "All Categories" : t(cat, cat)}
+                {cat === "All" ? t("allCategories") : t(cat, cat)}
               </option>
             ))}
           </select>
         </div>
 
         <p className="overview-total">
-          Total: {totalSpent.toFixed(2)} {t("currency")}
+          {t("total")}: {totalSpent.toFixed(2)} {t("currency")}
         </p>
 
         <div className="chart-wrapper">

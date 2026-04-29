@@ -9,6 +9,7 @@
   "loggedIn": "Autentificat cu succes!",
   "expenseOverview": "Vizualizare Cheltuieli",
   "addExpense": "Adaugă o Cheltuială Nouă",
+  "addExpenseShort": "Adaugă",
   "expenseList": "Lista Cheltuielilor",
   "noData": "Nu există încă cheltuieli înregistrate.",
   "currency": "lei",
@@ -42,5 +43,6 @@
   "logout": "Deconectare",
   "backHome": "Înapoi Acasă",
   "allCategories": "Toate Categoriile",
+  "overview": "Prezentare generala",
   "forgotPassword": "Ai uitat parola?"
 }

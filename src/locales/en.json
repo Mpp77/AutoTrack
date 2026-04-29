@@ -9,6 +9,7 @@
   "loggedIn": "Logged in successfully!",
   "expenseOverview": "Expense Overview",
   "addExpense": "Add New Expense",
+  "addExpenseShort": "Add Expense",
   "expenseList": "Expense List",
   "noData": "No expenses recorded yet.",
   "currency": "€",
@@ -36,5 +37,12 @@
   "edit": "Edit",
   "delete": "Delete",
   "deleteExpenseConfirm": "Are you sure you want to delete this expense?",
-  "noNote": "No note"
+  "noNote": "No note",
+  "welcomeTitle": "Welcome to AutoTrack",
+  "welcomeSubtitle": "Manage your car expenses in one smart dashboard.",
+  "logout": "Logout",
+  "backHome": "Back Home",
+  "overview": "Overview",
+  "allCategories": "All Categories",
+  "forgotPassword": "Forgot password?"
 }
