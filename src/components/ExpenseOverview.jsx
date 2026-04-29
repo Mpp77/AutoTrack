@@ -149,13 +149,13 @@ export default function ExpenseOverview() {
 
         <div className="chart-wrapper">
           {chartData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={380}>
+            <ResponsiveContainer width="100%" height={320}>
               <PieChart>
                 <Pie
                   data={chartData}
                   cx="50%"
                   cy="45%"
-                  outerRadius={window.innerWidth < 500 ? 110 : 150}
+                  outerRadius={95}
                   dataKey="value"
                   label={({ name, percent }) =>
                     `${t(name, name)}: ${(percent * 100).toFixed(0)}%`

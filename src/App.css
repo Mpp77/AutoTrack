@@ -849,12 +849,22 @@ body {
 }
 
 .filter-input {
-  color: white;
-  -webkit-text-fill-color: white;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: rgba(13, 26, 47, 0.75) !important;
 }
 
-.filter-input::-webkit-datetime-edit {
-  color: white;
+.filter-input::-webkit-date-and-time-value {
+  color: #ffffff !important;
+  text-align: center;
+}
+
+.filter-input::-webkit-datetime-edit,
+.filter-input::-webkit-datetime-edit-text,
+.filter-input::-webkit-datetime-edit-month-field,
+.filter-input::-webkit-datetime-edit-day-field,
+.filter-input::-webkit-datetime-edit-year-field {
+  color: #ffffff !important;
 }
 
 .filter-input::-webkit-calendar-picker-indicator {
