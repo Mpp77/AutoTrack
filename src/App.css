@@ -946,3 +946,19 @@ body {
     gap: 8px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .overview-card {
+    padding-bottom: 30px !important;
+  }
+
+  .chart-wrapper {
+    margin-top: 10px !important;
+    padding-bottom: 20px !important;
+    height: 280px !important;
+  }
+
+  .overview-total {
+    margin-bottom: 8px !important;
+  }
+}
