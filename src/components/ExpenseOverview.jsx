@@ -184,31 +184,79 @@ export default function ExpenseOverview() {
             </PieChart>
           </ResponsiveContainer>
 
-          <div
-          className="chart-legend"
-          style={{ color: "white", WebkitTextFillColor: "white" }}
-        >
-          {chartData.map((item, index) => (
-            <div
-              className="chart-legend-item"
-              key={item.name}
-              style={{ color: "white", WebkitTextFillColor: "white" }}
-            >
-              <span
-                className="chart-legend-dot"
-                style={{ backgroundColor: COLORS[index % COLORS.length] }}
-              />
+                    <div
+            className="chart-legend"
+            style={{
+              color: "white",
+              WebkitTextFillColor: "white",
+              maxWidth: "320px",
+              margin: "0 auto",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            {chartData.map((item, index) => (
+              <div
+                key={item.name}
+                className="chart-legend-item"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "10px 14px",
+                  borderRadius: "14px",
+                  background: "rgba(0,25,70,0.95)",
+                  border: "1px solid rgba(0,191,255,0.35)",
+                  color: "white",
+                  WebkitTextFillColor: "white",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    flex: 1,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "4px",
+                      backgroundColor: COLORS[index % COLORS.length],
+                      display: "inline-block",
+                      flexShrink: 0,
+                    }}
+                  />
 
-              <span style={{ color: "white", WebkitTextFillColor: "white" }}>
-                {t(item.name, item.name)}
-              </span>
+                  <span
+                    style={{
+                      color: "white",
+                      WebkitTextFillColor: "white",
+                      fontWeight: 700,
+                      fontSize: "14px",
+                    }}
+                  >
+                    {t(item.name, item.name)}
+                  </span>
+                </div>
 
-              <strong style={{ color: "white", WebkitTextFillColor: "white" }}>
-                {item.value.toFixed(2)} {t("currency")}
-              </strong>
-            </div>
-          ))}
-        </div>
+                <strong
+                  style={{
+                    color: "white",
+                    WebkitTextFillColor: "white",
+                    fontWeight: 800,
+                    fontSize: "14px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.value.toFixed(2)} {t("currency")}
+                </strong>
+              </div>
+            ))}
+          </div>
         </>
       ) : (
         <p className="text-center text-gray-400 italic">
