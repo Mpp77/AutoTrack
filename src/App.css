@@ -847,3 +847,16 @@ body {
     margin-right: auto;
   }
 }
+
+.filter-input {
+  color: white;
+  -webkit-text-fill-color: white;
+}
+
+.filter-input::-webkit-datetime-edit {
+  color: white;
+}
+
+.filter-input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
