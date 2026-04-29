@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
 import "../App.css";
-import { useTranslation } from "react-i18next";
 
 const COLORS = [
   "#2e82ff",
@@ -26,7 +25,6 @@ const COLORS = [
 export default function ExpenseOverview() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  
 
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
@@ -111,7 +109,7 @@ export default function ExpenseOverview() {
   return (
     <div className="overview-page">
       <button onClick={() => navigate("/home")} className="back-btn">
-      ← {t("backHome")}
+        ← Back Home
       </button>
 
       <div className="overview-card">
@@ -139,14 +137,14 @@ export default function ExpenseOverview() {
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
-                {cat === "All" ? t("allCategories") : t(cat, cat)}
+                {cat === "All" ? "All Categories" : t(cat, cat)}
               </option>
             ))}
           </select>
         </div>
 
         <p className="overview-total">
-          {t("total")}: {totalSpent.toFixed(2)} {t("currency")}
+          Total: {totalSpent.toFixed(2)} {t("currency")}
         </p>
 
         <div className="chart-wrapper">
