@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
 import "../App.css";
+import { useTranslation } from "react-i18next";
 
 const COLORS = [
   "#2e82ff",
@@ -25,6 +26,7 @@ const COLORS = [
 export default function ExpenseOverview() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  
 
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
