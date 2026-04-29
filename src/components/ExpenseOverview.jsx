@@ -154,21 +154,21 @@ export default function ExpenseOverview() {
       {chartData.length > 0 ? (
         <>
           <ResponsiveContainer width="100%" height={340}>
-            <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              outerRadius={90}
-              dataKey="value"
-              labelLine={false}
-              label={({ name, percent }) =>
-                `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
-              }
-              onClick={(_, index) =>
-                navigate(`/category/${chartData[index].name}`)
-              }
-            >
+            <PieChart margin={{ top: 10, right: 45, bottom: 40, left: 45 }}>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="48%"
+                outerRadius={82}
+                dataKey="value"
+                label={({ name, percent }) =>
+                  `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
+                }
+                labelLine={true}
+                onClick={(_, index) =>
+                  navigate(`/category/${chartData[index].name}`)
+                }
+              >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={index}
