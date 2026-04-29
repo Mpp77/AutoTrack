@@ -1110,23 +1110,19 @@ body {
   }
 }
 
-/* =========================
-   FORCE LEGEND TEXT WHITE
-========================= */
+/* FORCE ALL CHART LEGEND TEXT WHITE */
 .custom-legend,
-.custom-legend * {
+.custom-legend *,
+.chart-legend,
+.chart-legend *,
+.legend-row,
+.legend-row *,
+.chart-legend-item,
+.chart-legend-item * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
   fill: #ffffff !important;
   opacity: 1 !important;
-}
-
-.legend-label,
-.legend-value,
-.legend-row p,
-.legend-row span {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  fill: #ffffff !important;
-  text-shadow: none !important;
+  background-clip: initial !important;
+  -webkit-background-clip: initial !important;
 }
