@@ -199,6 +199,7 @@ export default function CategoryPage() {
 
 function ExpenseCard({ exp, currency, onDelete, onSave }) {
   const { t } = useTranslation();
+
   const [amount, setAmount] = useState(exp.amount);
   const [note, setNote] = useState(exp.note || "");
 
@@ -228,10 +229,12 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
         <button onClick={() => onSave(exp.id, amount, note)}>
           {t("save")}
         </button>
+
         <button onClick={() => onDelete(exp.id)}>
           {t("delete")}
         </button>
       </div>
     </div>
   );
+
 }
