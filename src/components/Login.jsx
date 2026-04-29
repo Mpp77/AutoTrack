@@ -138,7 +138,7 @@ export default function Login({ initialCreateMode = false }) {
               }}
               className="auth-link secondary"
             >
-              Forgot password?
+              {t("forgotPassword")}
             </p>
           </>
         ) : (
