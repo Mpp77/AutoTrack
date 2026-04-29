@@ -10,7 +10,7 @@
   "expenseOverview": "Vizualizare Cheltuieli",
   "addExpense": "Adaugă o Cheltuială Nouă",
   "addExpenseShort": "Adaugă",
-  "expenseList": "Lista Cheltuielilor",
+  "expenseList": "Cheltuieli",
   "noData": "Nu există încă cheltuieli înregistrate.",
   "currency": "lei",
   "Fuel": "Combustibil",
@@ -44,5 +44,6 @@
   "backHome": "Înapoi Acasă",
   "allCategories": "Toate Categoriile",
   "overview": "Prezentare generala",
-  "forgotPassword": "Ai uitat parola?"
+  "forgotPassword": "Ai uitat parola?",
+  "total": "Total"
 }

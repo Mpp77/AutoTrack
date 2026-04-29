@@ -10,7 +10,7 @@
   "expenseOverview": "Expense Overview",
   "addExpense": "Add New Expense",
   "addExpenseShort": "Add Expense",
-  "expenseList": "Expense List",
+  "expenseList": "Expenses",
   "noData": "No expenses recorded yet.",
   "currency": "€",
   "Fuel": "Fuel",
@@ -44,5 +44,6 @@
   "backHome": "Back Home",
   "overview": "Overview",
   "allCategories": "All Categories",
+  "total": "Total",
   "forgotPassword": "Forgot password?"
 }
