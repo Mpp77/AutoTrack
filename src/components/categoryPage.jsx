@@ -145,7 +145,7 @@ export default function CategoryPage() {
   return (
     <div className="category-page">
       <button onClick={() => navigate("/expenses")} className="back-home-btn">
-        ← Back
+      ← {t("back")}
       </button>
   
       <div className="category-card">
@@ -156,7 +156,7 @@ export default function CategoryPage() {
         </p>
   
         <div className="category-add-box">
-          <h2>Add expense</h2>
+          <h2>{t("addExpenseSimple")}</h2>
   
           <div className="category-form">
             <input
@@ -220,7 +220,7 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
       </p>
   
       <p className="expense-date">
-        Added: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
+      {t("addedOn")}: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
       </p>
 
       <div className="category-card-actions">

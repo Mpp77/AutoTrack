@@ -20,22 +20,22 @@ export default function Login({ initialCreateMode = false }) {
 
     try {
       const endpoint = isResetting
-      ? "reset-password"
-      : isCreatingAccount
-      ? "register"
-      : "login";
-    
-    const res = await fetch(`${API_URL}/${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        isResetting
-          ? { email, newPassword: password }
-          : { email, password }
-      ),
-    });
+        ? "reset-password"
+        : isCreatingAccount
+        ? "register"
+        : "login";
+
+      const res = await fetch(`${API_URL}/${endpoint}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(
+          isResetting
+            ? { email, newPassword: password }
+            : { email, password }
+        ),
+      });
 
       const data = await res.json();
 
@@ -44,14 +44,18 @@ export default function Login({ initialCreateMode = false }) {
       }
 
       if (isResetting) {
-        setMessage("✅ Password updated");
+        setMessage(`✅ ${t("passwordUpdated")}`);
         setIsResetting(false);
       } else if (data.token) {
         localStorage.setItem("token", data.token);
         navigate("/home");
-        setMessage(isCreatingAccount ? "✅ Account created" : "✅ Logged in");
+        setMessage(
+          isCreatingAccount
+            ? `✅ ${t("accountCreated")}`
+            : `✅ ${t("loggedIn")}`
+        );
       }
-      
+
       setEmail("");
       setPassword("");
     } catch (err) {
@@ -67,28 +71,29 @@ export default function Login({ initialCreateMode = false }) {
             <button type="button" onClick={() => i18n.changeLanguage("en")}>
               🇬🇧 EN
             </button>
+
             <button type="button" onClick={() => i18n.changeLanguage("ro")}>
               🇷🇴 RO
             </button>
           </div>
         )}
-  
+
         <h1 className="auth-title">AutoTrack</h1>
-  
+
         <h2 className="auth-subtitle">
           {isResetting
-            ? "Reset Password"
+            ? t("resetPassword")
             : isCreatingAccount
             ? t("createAccount")
             : t("signIn")}
         </h2>
-  
+
         {isResetting && (
           <p className="auth-description">
-            Enter your email and choose a new password.
+            {t("resetPasswordDescription")}
           </p>
         )}
-  
+
         <form onSubmit={handleSubmit} className="auth-form">
           <input
             type="email"
@@ -97,24 +102,24 @@ export default function Login({ initialCreateMode = false }) {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-  
+
           <input
             type="password"
-            placeholder={isResetting ? "New password" : t("password")}
+            placeholder={isResetting ? t("newPassword") : t("password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-  
+
           <button type="submit">
             {isResetting
-              ? "Reset Password"
+              ? t("resetPassword")
               : isCreatingAccount
               ? t("createAccount")
               : t("signIn")}
           </button>
         </form>
-  
+
         {!isResetting ? (
           <>
             <p
@@ -127,7 +132,7 @@ export default function Login({ initialCreateMode = false }) {
             >
               {isCreatingAccount ? t("alreadyHaveAccount") : t("noAccount")}
             </p>
-  
+
             <p
               onClick={() => {
                 setIsResetting(true);
@@ -153,10 +158,10 @@ export default function Login({ initialCreateMode = false }) {
             }}
             className="back-login-btn"
           >
-            ← Back to Sign In
+            ← {t("backToSignIn")}
           </button>
         )}
-  
+
         {message && <p className="auth-message">{message}</p>}
       </div>
     </div>

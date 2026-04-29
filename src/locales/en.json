@@ -45,5 +45,13 @@
   "overview": "Overview",
   "allCategories": "All Categories",
   "total": "Total",
-  "forgotPassword": "Forgot password?"
+  "forgotPassword": "Forgot password?",
+  "resetPassword": "Reset Password",
+  "resetPasswordDescription": "Enter your email and choose a new password.",
+  "newPassword": "New password",
+  "backToSignIn": "Back to Sign In",
+  "passwordUpdated": "Password updated",
+  "back": "Back",
+  "addExpenseSimple": "Add expense",
+  "addedOn": "Added"
 }
