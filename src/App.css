@@ -1110,19 +1110,3 @@ body {
   }
 }
 
-/* FORCE ALL CHART LEGEND TEXT WHITE */
-.custom-legend,
-.custom-legend *,
-.chart-legend,
-.chart-legend *,
-.legend-row,
-.legend-row *,
-.chart-legend-item,
-.chart-legend-item * {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  fill: #ffffff !important;
-  opacity: 1 !important;
-  background-clip: initial !important;
-  -webkit-background-clip: initial !important;
-}

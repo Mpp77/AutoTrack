@@ -184,22 +184,31 @@ export default function ExpenseOverview() {
             </PieChart>
           </ResponsiveContainer>
 
-          <div className="chart-legend">
-            {chartData.map((item, index) => (
-              <div className="chart-legend-item" key={item.name}>
-                <span
-                  className="chart-legend-dot"
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                />
+          <div
+          className="chart-legend"
+          style={{ color: "white", WebkitTextFillColor: "white" }}
+        >
+          {chartData.map((item, index) => (
+            <div
+              className="chart-legend-item"
+              key={item.name}
+              style={{ color: "white", WebkitTextFillColor: "white" }}
+            >
+              <span
+                className="chart-legend-dot"
+                style={{ backgroundColor: COLORS[index % COLORS.length] }}
+              />
 
-                <span>{t(item.name, item.name)}</span>
+              <span style={{ color: "white", WebkitTextFillColor: "white" }}>
+                {t(item.name, item.name)}
+              </span>
 
-                <strong>
-                  {item.value.toFixed(2)} {t("currency")}
-                </strong>
-              </div>
-            ))}
-          </div>
+              <strong style={{ color: "white", WebkitTextFillColor: "white" }}>
+                {item.value.toFixed(2)} {t("currency")}
+              </strong>
+            </div>
+          ))}
+        </div>
         </>
       ) : (
         <p className="text-center text-gray-400 italic">
