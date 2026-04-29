@@ -153,22 +153,20 @@ export default function ExpenseOverview() {
             <div className="chart-wrapper">
       {chartData.length > 0 ? (
         <>
-          <ResponsiveContainer width="100%" height={340}>
+          <ResponsiveContainer width="100%" height={260}>
             <PieChart margin={{ top: 10, right: 45, bottom: 40, left: 45 }}>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="48%"
-                outerRadius={82}
-                dataKey="value"
-                label={({ name, percent }) =>
-                  `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
-                }
-                labelLine={true}
-                onClick={(_, index) =>
-                  navigate(`/category/${chartData[index].name}`)
-                }
-              >
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="45%"
+              outerRadius={75}
+              dataKey="value"
+              label={false}
+              labelLine={false}
+              onClick={(_, index) =>
+                navigate(`/category/${chartData[index].name}`)
+              }
+            >
                 {chartData.map((entry, index) => (
                   <Cell
                     key={index}
@@ -186,26 +184,22 @@ export default function ExpenseOverview() {
             </PieChart>
           </ResponsiveContainer>
 
-          <div className="custom-legend">
-          {chartData.map((item, index) => (
-            <div className="legend-row" key={item.name}>
-              <div className="legend-left">
+          <div className="chart-legend">
+            {chartData.map((item, index) => (
+              <div className="chart-legend-item" key={item.name}>
                 <span
-                  className="legend-color"
+                  className="chart-legend-dot"
                   style={{ backgroundColor: COLORS[index % COLORS.length] }}
                 />
 
-                <p className="legend-label">
-                  {t(item.name, item.name)}
-                </p>
-              </div>
+                <span>{t(item.name, item.name)}</span>
 
-              <p className="legend-value">
-                {item.value.toFixed(2)} {t("currency")}
-              </p>
-            </div>
-          ))}
-        </div>
+                <strong>
+                  {item.value.toFixed(2)} {t("currency")}
+                </strong>
+              </div>
+            ))}
+          </div>
         </>
       ) : (
         <p className="text-center text-gray-400 italic">

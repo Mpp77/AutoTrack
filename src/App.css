@@ -953,67 +953,45 @@ body {
     MOBILE OVERVIEW FIX
 ========================= */
 @media (max-width: 600px) {
-  .overview-page {
-    padding: 18px 10px 90px !important;
-    overflow-x: hidden !important;
-    align-items: center !important;
-  }
-
   .overview-card {
-    width: calc(100vw - 20px) !important;
-    max-width: calc(100vw - 20px) !important;
-    margin: 12px auto 0 !important;
-    padding: 26px 12px 48px !important;
+    min-height: auto !important;
+    padding-bottom: 90px !important;
     overflow: visible !important;
-  }
-
-  .overview-card h1 {
-    font-size: 32px !important;
-    margin-bottom: 22px !important;
-    line-height: 1.1 !important;
-  }
-
-  .filters-row {
-    gap: 10px !important;
-    margin: 12px 0 14px !important;
-  }
-
-  .filter-input {
-    max-width: 240px !important;
-    height: 46px !important;
-    min-height: 46px !important;
-    padding: 8px 12px !important;
-    font-size: 14px !important;
-    border-radius: 14px !important;
-  }
-
-  .overview-total {
-    font-size: 26px !important;
-    margin: 14px 0 4px !important;
   }
 
   .chart-wrapper {
+    height: auto !important;
     max-width: 100% !important;
-    margin-top: 0 !important;
-    padding-bottom: 70px !important;
+    padding-bottom: 0 !important;
     overflow: visible !important;
   }
 
-  .recharts-wrapper {
-    max-width: 100% !important;
-    overflow: visible !important;
+  .chart-legend {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .recharts-surface {
-    overflow: visible !important;
+  .chart-legend-item {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    color: #bffcff;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
   }
 
-  .custom-legend {
-    margin-top: 8px !important;
-    padding-bottom: 8px !important;
+  .chart-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
   }
 
-  .legend-row {
-    padding: 8px 10px !important;
+  .chart-legend-item strong {
+    color: white;
+    font-size: 12px;
   }
 }
