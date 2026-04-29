@@ -870,3 +870,37 @@ body {
 .filter-input::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
+
+/* Date inputs smaller + centered */
+.filter-input {
+  min-height: 52px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Mobile date boxes */
+@media (max-width: 768px) {
+  .filters-row {
+    gap: 12px;
+  }
+
+  .filter-input {
+    width: 100%;
+    max-width: 100%;
+    min-height: 48px;
+    font-size: 0.95rem;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  /* Pie chart labels wrap */
+  .recharts-pie-label-text {
+    font-size: 13px !important;
+    white-space: pre-line !important;
+  }
+
+  .recharts-text {
+    white-space: pre-line !important;
+  }
+}

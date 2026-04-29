@@ -1,4 +1,3 @@
-// ExpenseOverview.jsx
 import React, { useEffect, useState } from "react";
 import {
   PieChart,
@@ -29,8 +28,12 @@ export default function ExpenseOverview() {
 
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  
+  const today = new Date().toISOString().split("T")[0];
+
+  const [startDate, setStartDate] = useState(today);
+  const [endDate, setEndDate] = useState(today);
+  
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
@@ -158,7 +161,7 @@ export default function ExpenseOverview() {
                   outerRadius={95}
                   dataKey="value"
                   label={({ name, percent }) =>
-                    `${t(name, name)}: ${(percent * 100).toFixed(0)}%`
+                    `${t(name, name).replaceAll(" ", "\n")}: ${(percent * 100).toFixed(0)}%`
                   }
                   onClick={(_, index) =>
                     navigate(`/category/${chartData[index].name}`)
