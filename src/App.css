@@ -854,17 +854,15 @@ body {
   background: rgba(13, 26, 47, 0.75) !important;
 }
 
-.filter-input::-webkit-date-and-time-value {
-  color: #ffffff !important;
-  text-align: center;
+.filter-input::-webkit-datetime-edit {
+  color: white !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.filter-input::-webkit-datetime-edit,
-.filter-input::-webkit-datetime-edit-text,
-.filter-input::-webkit-datetime-edit-month-field,
-.filter-input::-webkit-datetime-edit-day-field,
-.filter-input::-webkit-datetime-edit-year-field {
-  color: #ffffff !important;
+.filter-input::-webkit-date-and-time-value {
+  min-height: 24px;
 }
 
 .filter-input::-webkit-calendar-picker-indicator {
@@ -904,3 +902,5 @@ body {
     white-space: pre-line !important;
   }
 }
+
+

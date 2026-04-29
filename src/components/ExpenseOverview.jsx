@@ -152,7 +152,7 @@ export default function ExpenseOverview() {
 
         <div className="chart-wrapper">
           {chartData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={320}>
+            <ResponsiveContainer width="100%" height={420}>
               <PieChart>
                 <Pie
                   data={chartData}
