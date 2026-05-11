@@ -6,6 +6,7 @@ import ExpenseOverview from "./components/ExpenseOverview";
 import AddExpensePage from "./components/AddExpensePage";
 import ExpenseListPage from "./components/ExpenseListPage";
 import CategoryPage from "./components/categoryPage";
+import Settings from "./components/Settings";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/overview" element={<ExpenseOverview />} />
       <Route path="/add-expense" element={<AddExpensePage />} />
       <Route path="/expenses" element={<ExpenseListPage />} />
+      <Route path="/settings" element={<Settings />} />
 
       <Route path="/category/:category" element={<CategoryPage />} />
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PieChart, MonitorUp, List, Plus } from "lucide-react";
+import { PieChart, MonitorUp, List, Plus, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import "../App.css";
 
@@ -16,6 +16,13 @@ export default function Home() {
     <div className="home-page">
       <button onClick={handleLogout} className="logout-btn">
         ← {t("logout")}
+      </button>
+
+      <button
+        onClick={() => navigate("/settings")}
+        className="settings-btn"
+      >
+        <Settings size={22} />
       </button>
 
       <section className="hero-card">
