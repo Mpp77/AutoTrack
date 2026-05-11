@@ -19,7 +19,7 @@ export default defineConfig({
         icons: [
           {
             src: "/icon-192.png?v=4",
-            izes: "192x192",
+            sizes: "192x192",
             type: "image/png"
           },
           {
