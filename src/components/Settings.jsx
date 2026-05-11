@@ -24,11 +24,11 @@ export default function Settings() {
       </button>
 
       <div className="settings-card">
-        <h1>Settings</h1>
+      <h1>{t("settings")}</h1>
 
         <div className="settings-row">
-          <label>Language</label>
-          <select
+        <label>{t("language")}</label>
+              <select
             value={i18n.language}
             onChange={(e) => i18n.changeLanguage(e.target.value)}
           >
@@ -38,8 +38,8 @@ export default function Settings() {
         </div>
 
         <div className="settings-row">
-          <label>Currency</label>
-          <select value={currency} onChange={handleCurrencyChange}>
+        <label>{t("currencySettings")}</label>
+                  <select value={currency} onChange={handleCurrencyChange}>
             <option value="RON">RON - Lei</option>
             <option value="EUR">EUR - €</option>
           </select>

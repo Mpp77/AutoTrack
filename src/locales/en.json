@@ -24,6 +24,10 @@
   "welcomeTitle": "Welcome to AutoTrack",
   "welcomeSubtitle": "Manage your car expenses in one smart dashboard.",
 
+  "settings": "Settings",
+  "language": "Language",
+  "currencySettings": "Currency",
+
   "overview": "Overview",
   "expenseOverview": "Expense Overview",
   "expenseList": "Expense List",

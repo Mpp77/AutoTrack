@@ -24,6 +24,10 @@
   "welcomeTitle": "Bine ai venit la AutoTrack",
   "welcomeSubtitle": "Gestionează cheltuielile mașinii tale într-un dashboard inteligent.",
 
+  "settings": "Setări",
+  "language": "Limbă",
+  "currencySettings": "Monedă",
+
   "overview": "Prezentare generală",
   "expenseOverview": "Vizualizare Cheltuieli",
   "expenseList": "Lista Cheltuielilor",
