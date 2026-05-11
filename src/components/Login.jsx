@@ -5,7 +5,7 @@ import { API_URL } from "../api";
 import "../App.css";
 
 export default function Login({ initialCreateMode = false }) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -62,7 +62,7 @@ export default function Login({ initialCreateMode = false }) {
       setPassword("");
     } catch (err) {
       setMessage("❌ " + err.message);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -70,18 +70,6 @@ export default function Login({ initialCreateMode = false }) {
   return (
     <div className="auth-page">
       <div className={`auth-card ${isResetting ? "reset-mode" : ""}`}>
-        {!isResetting && (
-          <div className="language-buttons">
-            <button type="button" onClick={() => i18n.changeLanguage("en")}>
-              🇬🇧 EN
-            </button>
-
-            <button type="button" onClick={() => i18n.changeLanguage("ro")}>
-              🇷🇴 RO
-            </button>
-          </div>
-        )}
-
         <h1 className="auth-title">AutoTrack</h1>
 
         <h2 className="auth-subtitle">
