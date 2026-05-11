@@ -1132,3 +1132,51 @@ body {
   font-weight: 700;
   cursor: pointer;
 }
+
+
+/* =========================*/
+@media (min-width: 769px) {
+  .overview-page {
+    min-height: 100vh;
+    height: auto;
+    padding: 24px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .overview-card {
+    width: min(100% - 48px, 980px);
+    max-width: 980px;
+    margin: 24px auto 0;
+    padding: 48px 40px;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .filters-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(170px, 1fr));
+    gap: 16px;
+    max-width: 760px;
+    margin: 22px auto 16px;
+  }
+
+  .filter-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .chart-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+    padding-bottom: 0;
+  }
+
+  .custom-legend,
+  .chart-legend {
+    max-width: 520px;
+    margin: 10px auto 0;
+  }
+}
+
