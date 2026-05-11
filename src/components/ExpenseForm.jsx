@@ -49,6 +49,7 @@ export default function ExpenseForm({ onExpenseAdded }) {
           category: finalCategory,
           amount: parseFloat(amount),
           note,
+          currency: localStorage.getItem("currency") || "RON",
         }),
       });
 

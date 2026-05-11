@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
 import "../App.css";
-
 const COLORS = [
   "#2e82ff",
   "#00bfff",
@@ -35,6 +34,9 @@ export default function ExpenseOverview() {
   const [endDate, setEndDate] = useState(today);
   
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const selectedCurrency = localStorage.getItem("currency") || "RON";
+  const exchangeRate = 0.19;
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -78,8 +80,13 @@ export default function ExpenseOverview() {
 
     const grouped = filtered.reduce((acc, exp) => {
       const cat = exp.category?.trim();
-      const amount = parseFloat(exp.amount || 0);
+      let amount = parseFloat(exp.amount || 0);
 
+      if (exp.currency === "RON" && selectedCurrency === "EUR") {
+        amount = amount * exchangeRate;
+      } else if (exp.currency === "EUR" && selectedCurrency === "RON") {
+        amount = amount / exchangeRate;
+      }
       if (!cat) return acc;
 
       acc[cat] = (acc[cat] || 0) + amount;
@@ -92,8 +99,7 @@ export default function ExpenseOverview() {
         value,
       }))
     );
-  }, [allExpenses, startDate, endDate, selectedCategory]);
-
+  }, [allExpenses, startDate, endDate, selectedCategory, selectedCurrency]);
   const categories = [
     "All",
     "Fuel",
@@ -112,7 +118,6 @@ export default function ExpenseOverview() {
   const currencySymbols = {
     RON: "Lei",
     EUR: "€",
-    USD: "$",
   };
   
   const currency =
@@ -186,8 +191,7 @@ export default function ExpenseOverview() {
 
               <Tooltip
                 formatter={(value, name) => [
-                  `${value} ${currency}`,
-                  t(name, name),
+                `${Number(value).toFixed(2)} ${currency}`,                  t(name, name),
                 ]}
               />
             </PieChart>

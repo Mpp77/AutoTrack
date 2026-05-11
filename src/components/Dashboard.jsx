@@ -112,7 +112,7 @@ export default function Dashboard() {
 
               <Tooltip
                 formatter={(value, name) => [
-                  `${value} ${t("currency")}`,
+                  `${value} ${currency}`,
                   t(name, name),
                 ]}
               />

@@ -8,6 +8,9 @@ export default function ExpenseList() {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const selectedCurrency = localStorage.getItem("currency") || "RON";
+  const exchangeRate = 0.19;
+
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
@@ -38,8 +41,15 @@ export default function ExpenseList() {
     if (!exp.category) return acc;
     const cat = exp.category.trim();
     if (!acc[cat]) acc[cat] = { total: 0 };
-    acc[cat].total += parseFloat(exp.amount) || 0;
-    return acc;
+    let amount = parseFloat(exp.amount) || 0;
+
+    if (exp.currency === "RON" && selectedCurrency === "EUR") {
+      amount = amount * exchangeRate;
+    } else if (exp.currency === "EUR" && selectedCurrency === "RON") {
+      amount = amount / exchangeRate;
+    }
+    
+    acc[cat].total += amount;    return acc;
   }, {});
 
   const categories = Object.keys(grouped);
@@ -47,7 +57,6 @@ export default function ExpenseList() {
   const currencySymbols = {
     RON: "Lei",
     EUR: "€",
-    USD: "$"
   };
   
   const currency =
@@ -63,8 +72,7 @@ export default function ExpenseList() {
         >
           <span>{t(cat, cat)}</span>
           <strong>
-          {grouped[cat].total} {currency}
-          </strong>
+          {grouped[cat].total.toFixed(2)} {currency}          </strong>
         </button>
       ))}
     </div>

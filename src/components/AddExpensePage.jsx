@@ -30,7 +30,6 @@ export default function AddExpensePage() {
           <select value={currency} onChange={handleCurrencyChange}>
             <option value="RON">RON</option>
             <option value="EUR">EUR</option>
-            <option value="USD">USD</option>
           </select>
         </div>
 

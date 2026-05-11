@@ -155,13 +155,12 @@ app.get("/api/expenses", auth, async (req, res) => {
 });
 
 app.post("/api/expenses", auth, async (req, res) => {
-  const { category, amount, note } = req.body;
-
+  const { category, amount, note, currency = "RON" } = req.body;
   try {
     const result = await pool.query(
-      `INSERT INTO expenses(user_id, category, amount, note)
-       VALUES($1,$2,$3,$4) RETURNING *`,
-      [req.user.userId, category, amount, note]
+`INSERT INTO expenses(user_id, category, amount, note, currency)
+ VALUES($1,$2,$3,$4,$5) RETURNING *`,
+[req.user.userId, category, amount, note, currency]
     );
 
     res.json(result.rows[0]);
@@ -172,15 +171,14 @@ app.post("/api/expenses", auth, async (req, res) => {
 });
 
 app.put("/api/expenses/:id", auth, async (req, res) => {
-  const { amount, note } = req.body;
-
+  const { amount, note, currency } = req.body;
   try {
     const result = await pool.query(
       `UPDATE expenses
-       SET amount=$1, note=$2
-       WHERE id=$3 AND user_id=$4
-       RETURNING *`,
-      [amount, note, req.params.id, req.user.userId]
+ SET amount=$1, note=$2, currency=COALESCE($3, currency)
+ WHERE id=$4 AND user_id=$5
+ RETURNING *`,
+[amount, note, currency, req.params.id, req.user.userId]
     );
 
     res.json(result.rows[0]);

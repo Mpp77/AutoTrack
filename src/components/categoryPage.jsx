@@ -13,6 +13,28 @@ export default function CategoryPage() {
   const [newNote, setNewNote] = useState("");
   const [message, setMessage] = useState("");
 
+  const selectedCurrency = localStorage.getItem("currency") || "RON";
+const exchangeRate = 0.19;
+
+const currencySymbols = {
+  RON: "Lei",
+  EUR: "€",
+};
+
+const currency = currencySymbols[selectedCurrency] || "Lei";
+
+const convertAmount = (amount, fromCurrency = "RON") => {
+  let convertedAmount = parseFloat(amount) || 0;
+
+  if (fromCurrency === "RON" && selectedCurrency === "EUR") {
+    convertedAmount = convertedAmount * exchangeRate;
+  } else if (fromCurrency === "EUR" && selectedCurrency === "RON") {
+    convertedAmount = convertedAmount / exchangeRate;
+  }
+
+  return convertedAmount;
+};
+
   const fetchExpenses = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -46,7 +68,7 @@ export default function CategoryPage() {
   }, [category]);
 
   const total = expenses.reduce(
-    (sum, exp) => sum + parseFloat(exp.amount || 0),
+    (sum, exp) => sum + convertAmount(exp.amount, exp.currency),
     0
   );
 
@@ -89,6 +111,7 @@ export default function CategoryPage() {
         body: JSON.stringify({
           amount: parseFloat(amount),
           note,
+          currency: localStorage.getItem("currency") || "RON",
         }),
       });
 
@@ -124,6 +147,7 @@ export default function CategoryPage() {
           category,
           amount: parseFloat(newAmount),
           note: newNote,
+          currency: localStorage.getItem("currency") || "RON",
         }),
       });
 
@@ -152,8 +176,8 @@ export default function CategoryPage() {
         <h1 className="category-title">{t(category, category)}</h1>
   
         <p className="category-total">
-        {t("total")}: {total} {t("currency")}
-        </p>
+        {t("total")}: {total.toFixed(2)} {currency}
+                </p>
   
         <div className="category-add-box">
           <h2>{t("addExpenseSimple")}</h2>
@@ -184,7 +208,8 @@ export default function CategoryPage() {
             <ExpenseCard
               key={exp.id}
               exp={exp}
-              currency={t("currency")}
+              currency={currency}
+              convertAmount={convertAmount}
               onDelete={handleDelete}
               onSave={handleUpdate}
             />
@@ -197,8 +222,8 @@ export default function CategoryPage() {
   );
 }
 
-function ExpenseCard({ exp, currency, onDelete, onSave }) {
-  const { t } = useTranslation();
+function ExpenseCard({ exp, currency, convertAmount, onDelete, onSave }) {
+    const { t } = useTranslation();
 
   const [amount, setAmount] = useState(exp.amount);
   const [note, setNote] = useState(exp.note || "");
@@ -218,8 +243,8 @@ function ExpenseCard({ exp, currency, onDelete, onSave }) {
       />
 
       <p>
-        {amount} {currency}
-      </p>
+      {convertAmount(amount, exp.currency).toFixed(2)} {currency}
+            </p>
 
       <p className="expense-date">
         {t("added")}: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
