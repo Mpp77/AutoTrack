@@ -43,6 +43,16 @@ export default function ExpenseList() {
   }, {});
 
   const categories = Object.keys(grouped);
+
+  const currencySymbols = {
+    RON: "Lei",
+    EUR: "€",
+    USD: "$"
+  };
+  
+  const currency =
+    currencySymbols[localStorage.getItem("currency")] || "Lei";
+
   return (
     <div className="expense-grid">
       {categories.map((cat) => (
@@ -53,7 +63,7 @@ export default function ExpenseList() {
         >
           <span>{t(cat, cat)}</span>
           <strong>
-            {grouped[cat].total} {t("currency")}
+          {grouped[cat].total} {currency}
           </strong>
         </button>
       ))}

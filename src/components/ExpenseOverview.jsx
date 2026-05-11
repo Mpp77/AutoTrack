@@ -109,6 +109,15 @@ export default function ExpenseOverview() {
 
   const totalSpent = chartData.reduce((sum, item) => sum + item.value, 0);
 
+  const currencySymbols = {
+    RON: "Lei",
+    EUR: "€",
+    USD: "$",
+  };
+  
+  const currency =
+    currencySymbols[localStorage.getItem("currency")] || "Lei";
+
   return (
     <div className="overview-page">
       <button onClick={() => navigate("/home")} className="back-btn">
@@ -147,7 +156,7 @@ export default function ExpenseOverview() {
         </div>
 
         <p className="overview-total">
-          {t("total")}: {totalSpent.toFixed(2)} {t("currency")}
+          {t("total")}: {totalSpent.toFixed(2)} {currency}
         </p>
 
             <div className="chart-wrapper">
@@ -177,7 +186,7 @@ export default function ExpenseOverview() {
 
               <Tooltip
                 formatter={(value, name) => [
-                  `${value} ${t("currency")}`,
+                  `${value} ${currency}`,
                   t(name, name),
                 ]}
               />
@@ -201,7 +210,7 @@ export default function ExpenseOverview() {
               </div>
 
               <span className="legend-value">
-                {item.value.toFixed(2)} {t("currency")}
+                {item.value.toFixed(2)} {currency}
               </span>
             </div>
           ))}
