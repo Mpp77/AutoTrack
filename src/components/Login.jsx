@@ -13,10 +13,12 @@ export default function Login({ initialCreateMode = false }) {
   const [message, setMessage] = useState("");
   const [isCreatingAccount, setIsCreatingAccount] = useState(initialCreateMode);
   const [isResetting, setIsResetting] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setLoading(true);
 
     try {
       const endpoint = isResetting
@@ -60,6 +62,8 @@ export default function Login({ initialCreateMode = false }) {
       setPassword("");
     } catch (err) {
       setMessage("❌ " + err.message);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -111,8 +115,10 @@ export default function Login({ initialCreateMode = false }) {
             required
           />
 
-          <button type="submit">
-            {isResetting
+          <button type="submit" disabled={loading}>
+            {loading
+              ? t("loading")
+              : isResetting
               ? t("resetPassword")
               : isCreatingAccount
               ? t("createAccount")

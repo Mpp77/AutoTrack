@@ -10,6 +10,7 @@
   "resetPassword": "Reset Password",
   "resetPasswordDescription": "Enter your email and choose a new password.",
   "backToSignIn": "Back to Sign In",
+  "loading": "Signing in...",
 
   "accountCreated": "Account created successfully!",
   "loggedIn": "Logged in successfully!",

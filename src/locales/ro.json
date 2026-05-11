@@ -10,6 +10,7 @@
   "resetPassword": "Resetare parolă",
   "resetPasswordDescription": "Introdu emailul și alege o parolă nouă.",
   "backToSignIn": "Înapoi la autentificare",
+  "loading": "Se conectează...",
 
   "accountCreated": "Cont creat cu succes!",
   "loggedIn": "Autentificat cu succes!",
