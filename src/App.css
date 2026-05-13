@@ -351,14 +351,30 @@ body {
   box-shadow: 0 0 15px rgba(50, 205, 50, 0.4);
 }
 
+/* Stil nou pentru butonul de alerte */
 .edit-reminders-link {
-  background: transparent;
-  border: none;
-  color: #8da4c8;
-  font-size: 14px;
-  margin-top: 2px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 15px auto 0 !important; /* Îl centrează sub pastila de revizie */
+  padding: 8px 20px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(141, 164, 200, 0.3) !important;
+  border-radius: 999px !important;
+  color: #8da4c8 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
   cursor: pointer;
-  text-decoration: underline;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.edit-reminders-link {
+  display: inline-flex !important; /* Esențial pentru alinierea iconiței cu textul */
+  align-items: center !important;
+  justify-content: center !important;
+  /* Restul stilurilor rămân la fel */
 }
 
 /* =========================
@@ -412,6 +428,18 @@ body {
     0 0 28px rgba(0, 207, 255, 0.72);
 }
 
+
+.alerts-action-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom) + 110px) !important; 
+  z-index: 998;
+}
+.edit-reminders-link {
+  padding: 8px 24px !important; 
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2) !important;
+}
 /* =========================
    AUTH / LOGIN PAGE
 ========================= */
@@ -1415,6 +1443,10 @@ input[type="file"]::file-selector-button:hover {
     width: 230px !important;
     height: 230px !important;
     margin-bottom: 6px !important;
+  }
+
+  .alerts-action-container {
+    bottom: calc(env(safe-area-inset-bottom) + 105px) !important;
   }
 
   .dashboard-central {

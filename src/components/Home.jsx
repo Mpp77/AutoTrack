@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PieChart, List, Plus, Settings, AlertTriangle, Droplet, CheckCircle, Calendar } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { PieChart, List, Plus, Settings, AlertTriangle, Droplet, CheckCircle, Calendar, Bell } from "lucide-react";import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import "../App.css";
 
@@ -178,9 +177,18 @@ export default function Home() {
         </div>
       </div>
 
-      <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
-        {t("configureAlerts", "Configurează alerte")} →
-      </button>
+     
+{/* Butonul mutat deasupra navigației */}
+<div className="alerts-action-container">
+        <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
+          <Bell size={14} style={{ marginRight: '8px' }} />
+          {t("configureAlerts", "Configurează alerte")}
+        </button>
+      </div>
+
+      <nav className="bottom-nav">
+        {/* ... cele 3 butoane existente ... */}
+      </nav>
 
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
