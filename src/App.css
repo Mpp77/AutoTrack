@@ -22,6 +22,8 @@ body {
 ========================= */
 
 .home-page {
+  display: flex; /* ADAUGAT PENTRU CENTRARE */
+  flex-direction: column; /* ADAUGAT PENTRU CENTRARE */
   min-height: 100vh;
   height: 100vh;
   padding: clamp(14px, 2vw, 32px);
@@ -925,11 +927,21 @@ height: clamp(105px, 12vw, 180px);
 }
 
 @media (max-width: 600px) {
-  .auth-card {
-    width: calc(100vw - 34px);
-    max-width: calc(100vw - 34px);
-    padding: 34px 18px;
-    overflow: visible;
+  .home-page {
+    min-height: 100dvh !important;
+    /* Am șters height: auto ca să poată ocupa tot ecranul */
+    padding: 22px 14px 105px !important;
+    overflow-y: auto !important;
+  }
+
+  .dashboard-central {
+    /* Am șters margin-top: -8px care trăgea mașina în sus */
+    justify-content: center !important; 
+    margin-bottom: 5vh !important; /* Lasă spațiu ca să nu se lovească de meniul de jos */
+  }
+
+  .dashboard-greeting {
+    margin-bottom: 4px !important;
   }
 
   .auth-form {
