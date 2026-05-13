@@ -1750,3 +1750,49 @@ input[type="file"]::file-selector-button:hover {
   transform: translateY(-1px);
   filter: brightness(1.1);
 }
+
+@media (max-width: 600px) {
+  .home-page {
+    min-height: 100dvh !important;
+    height: auto !important;
+    padding: 22px 14px 105px !important;
+    overflow-y: auto !important;
+  }
+
+  .dashboard-central {
+    margin-top: -8px !important;
+  }
+
+  .dashboard-greeting {
+    margin-bottom: 4px !important;
+  }
+
+  .progress-ring-container {
+    width: 190px !important;
+    height: 190px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .custom-car-photo {
+    width: 145px !important;
+    height: 145px !important;
+  }
+
+  .smart-badges-container {
+    gap: 8px !important;
+    max-width: 300px !important;
+  }
+
+  .smart-badge {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .edit-reminders-link {
+    margin-top: 6px !important;
+  }
+
+  .bottom-nav {
+    bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
+  }
+}
