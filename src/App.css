@@ -39,6 +39,7 @@ body {
 
 .logout-btn,
 .back-btn {
+  cursor: pointer;
   width: auto;
   height: 50px;
   border-radius: 999px;
@@ -401,6 +402,7 @@ body {
 }
 
 .bottom-nav button {
+  cursor: pointer; 
   flex: 1;
   height: 64px;
   border-radius: clamp(14px, 2vw, 22px);
@@ -1189,6 +1191,7 @@ body {
 }
 
 .settings-btn {
+  cursor: pointer;
   position: absolute;
   top: 28px;
   right: 28px;
