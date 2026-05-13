@@ -34,15 +34,48 @@ export default function Settings() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    // Întâi salvăm datele local, pentru ca pagina să le citească super rapid
     localStorage.setItem("carPlate", carPlate);
     if (carImage) {
       localStorage.setItem("carImage", carImage);
     }
-    // Funcția ta veche schimba moneda/limba instant, 
-    // deci butonul ăsta doar salvează noile date despre mașină și te întoarce pe Home.
-    alert(t("remindersSaved", "Setări salvate cu succes!"));
-    navigate("/home");
+    localStorage.setItem("currency", currency);
+
+    // ACUM TRIMITEM TOTUL CĂTRE SERVER:
+    const token = localStorage.getItem("token");
+    const API_URL = "https://autotrack-hxdk.onrender.com/api"; 
+
+    // Împachetăm toate setările
+    const settingsData = {
+      carPlate: carPlate, 
+      carImage: carImage, 
+      currency: currency,
+      itpDate: localStorage.getItem("itpDate"),
+      insuranceDate: localStorage.getItem("insuranceDate"),
+      oilDate: localStorage.getItem("oilExpiryDate"),
+      targetKm: localStorage.getItem("targetKm")
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/user-settings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(settingsData)
+      });
+
+      if (response.ok) {
+        alert("Setări salvate cu succes pe server!");
+      } else {
+        alert("Am salvat local, dar a apărut o eroare la salvarea în cloud.");
+      }
+    } catch (error) {
+      console.error("Eroare de rețea:", error);
+      alert("Eroare de rețea. Datele s-au salvat doar local.");
+    }
   };
 
   return (

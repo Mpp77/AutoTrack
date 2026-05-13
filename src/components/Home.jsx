@@ -8,12 +8,59 @@ export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
-  // --- CITIM SETĂRILE PERSONALIZATE ALE MAȘINII ---
-  const carPlate = localStorage.getItem("carPlate") || t("auto", "Auto");
-  const carImage = localStorage.getItem("carImage");
-
+  // Folosim state pentru a putea actualiza imaginea și numărul imediat ce vin de pe server
+  const [carPlate, setCarPlate] = useState(localStorage.getItem("carPlate") || t("auto", "Auto"));
+  const [carImage, setCarImage] = useState(localStorage.getItem("carImage"));
   const [reminders, setReminders] = useState([]);
+  
+  // O variabilă care ne anunță când serverul a terminat de trimis datele
+  const [cloudDataLoaded, setCloudDataLoaded] = useState(false);
 
+  // 1. Efectul care DESCARCĂ datele din Cloud
+  useEffect(() => {
+    const fetchCloudSettings = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setCloudDataLoaded(true);
+        return;
+      }
+
+      const API_URL = "https://autotrack-hxdk.onrender.com/api";
+
+      try {
+        const response = await fetch(`${API_URL}/user-settings`, {
+          headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          
+          // Salvăm local și actualizăm interfața
+          if (data.car_plate) {
+            localStorage.setItem("carPlate", data.car_plate);
+            setCarPlate(data.car_plate);
+          }
+          if (data.car_image) {
+            localStorage.setItem("carImage", data.car_image);
+            setCarImage(data.car_image);
+          }
+          if (data.currency) localStorage.setItem("currency", data.currency);
+          if (data.itp_date) localStorage.setItem("itpDate", data.itp_date);
+          if (data.insurance_date) localStorage.setItem("insuranceDate", data.insurance_date);
+          if (data.oil_date) localStorage.setItem("oilExpiryDate", data.oil_date);
+          if (data.target_km) localStorage.setItem("targetKm", data.target_km);
+        }
+      } catch (error) {
+        console.error("Eroare la descărcarea setărilor:", error);
+      } finally {
+        setCloudDataLoaded(true); // Gata descărcarea, putem calcula alertele!
+      }
+    };
+
+    fetchCloudSettings();
+  }, []);
+
+  // 2. Efectul care CALCULEAZĂ Reminderele (se rulează din nou după ce cloudDataLoaded devine true)
   useEffect(() => {
     const calculateReminders = () => {
       const activeReminders = [];
@@ -73,7 +120,7 @@ export default function Home() {
     };
 
     calculateReminders();
-  }, [t]);
+  }, [t, cloudDataLoaded]); // Array de dependențe: se re-rulează dacă vin date noi din cloud
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -96,7 +143,6 @@ export default function Home() {
           {t("status", "Status")} <span className="highlight">{carPlate}</span>
         </h2>
 
-        {/* Am lăsat doar poza mașinii, fără cercul din fundal */}
         <div 
           className="progress-ring-container clickable-ring" 
           onClick={() => navigate("/reminders")}
