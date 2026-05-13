@@ -63,6 +63,7 @@
 
   "Fuel": "Combustibil",
   "Service": "Service",
+  "serviceAt": "Revizie la:",
   "Insurance": "Asigurare",
   "ITP": "ITP",
   "Oil Change": "Schimb ulei",
@@ -96,11 +97,11 @@
 
   "carPlate": "Număr Înmatriculare",
   "carPhoto": "Poză Mașină (Opțional)",
-  "settings": "Setări Profil",
   "settingsSaved": "Setări salvate cu succes!",
 
   "changePhoto": "Schimbă poza",
-"removePhoto": "Șterge poza",
+"chooseFile": "Alege poza",
+ "removePhoto": "Șterge poza",
 "confirmDeletePhoto": "Sigur vrei să ștergi poza mașinii?"
 
 }

@@ -1271,8 +1271,9 @@ input[type="file"]::file-selector-button:hover {
 ========================= */
 
 @media (min-width: 769px) {
-  .home-page {
-    padding: 18px 24px 110px;
+  .progress-ring-container {
+    width: 280px !important; 
+    height: 280px !important;
   }
 
   .dashboard-central {
@@ -1286,8 +1287,8 @@ input[type="file"]::file-selector-button:hover {
   }
 
   .custom-car-photo {
-    width: 160px;
-    height: 160px;
+    width: 210px !important;
+    height: 210px !important;
   }
 
   .bottom-nav {
@@ -1486,4 +1487,44 @@ input[type="file"]::file-selector-button:hover {
     height: 52px;
     top: 22px;
     right: 16px;
+  }
+
+  .custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(91, 223, 255, 0.5);
+    background: rgba(13, 26, 47, 0.75);
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 0 14px rgba(0, 191, 255, 0.16), 0 0 18px rgba(0, 191, 255, 0.18);
+    transition: all 0.2s ease;
+  }
+  
+  .custom-file-upload:hover {
+    filter: brightness(1.2);
+    border-color: rgba(91, 223, 255, 0.8);
+  }
+  
+  .remove-photo-btn {
+    display: block;
+    margin: 0 auto;
+    background: rgba(255, 68, 68, 0.2);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .remove-photo-btn:active {
+    transform: scale(0.95);
   }

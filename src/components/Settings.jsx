@@ -164,48 +164,40 @@ export default function Settings() {
         </div>
 
         {/* 4. SETARE POZĂ MAȘINĂ */}
-        {/* 4. SETARE POZĂ MAȘINĂ */}
         <div className="settings-row">
-          <label>
-            <Camera size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> 
-            {t("carPhoto", "Poză Mașină (Opțional)")}
-          </label>
-          <input 
-            type="file" 
-            accept="image/*" 
-            className="filter-input" 
-            onChange={handleImageUpload} 
-            style={{ padding: "12px", cursor: "pointer", height: "auto", minHeight: "52px" }}
-          />
-          
-          {carImage && (
-            <div style={{ textAlign: 'center', marginTop: '15px' }}>
-              <img 
-                src={carImage} 
-                alt="Preview" 
-                className="settings-photo-preview"
-                style={{ marginBottom: '10px' }}
-              />
-              <button 
-                onClick={handleRemoveImage}
-                style={{
-                  display: 'block',
-                  margin: '0 auto',
-                  background: 'rgba(255, 68, 68, 0.2)',
-                  border: '1px solid #ff4444',
-                  color: '#ff4444',
-                  padding: '6px 12px',
-                  borderRadius: '8px',
-                  fontSize: '13px',
-                  fontWeight: '700',
-                  cursor: 'pointer'
-                }}
-              >
-                {t("removePhoto", "Șterge poza")}
-              </button>
-            </div>
-          )}
-        </div>
+  <label>
+    <Camera size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> 
+    {t("carPhoto", "Poză Mașină (Opțional)")}
+  </label>
+  
+  {/* Containerul pentru noul buton de încărcare */}
+  <label className="custom-file-upload">
+    <input 
+      type="file" 
+      accept="image/*" 
+      onChange={handleImageUpload} 
+      style={{ display: 'none' }} /* Ascundem inputul de sistem care e în engleză */
+    />
+    <span>{t("chooseFile", "Alege poza")}</span>
+  </label>
+  
+  {carImage && (
+    <div style={{ textAlign: 'center', marginTop: '15px' }}>
+      <img 
+        src={carImage} 
+        alt="Preview" 
+        className="settings-photo-preview"
+        style={{ marginBottom: '10px' }}
+      />
+      <button 
+        onClick={handleRemoveImage}
+        className="remove-photo-btn"
+      >
+        {t("removePhoto", "Șterge poza")}
+      </button>
+    </div>
+  )}
+</div>
 
         {/* BUTON SALVARE */}
         <button onClick={handleSave} className="save-btn-neon">

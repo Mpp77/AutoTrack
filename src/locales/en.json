@@ -24,7 +24,6 @@
   "welcomeTitle": "Welcome to AutoTrack",
   "welcomeSubtitle": "Manage your car expenses in one smart dashboard.",
 
-  "settings": "Settings",
   "language": "Language",
   "currencySettings": "Currency",
 
@@ -101,6 +100,7 @@
   "settingsSaved": "Settings successfully saved!",
 
 "changePhoto": "Change photo",
+"chooseFile": "Choose photo", 
 "removePhoto": "Remove photo",
 "confirmDeletePhoto": "Are you sure you want to delete the car photo?"
 }
