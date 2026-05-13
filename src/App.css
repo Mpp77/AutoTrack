@@ -195,8 +195,7 @@ body {
 }
 
 .progress-ring {
-  transform: scale(0.85) rotate(-90deg);
-  transform-origin: center;
+  transform: scale(0.92) rotate(-90deg) !important;  transform-origin: center;
   overflow: visible;
 }
 
@@ -1412,16 +1411,15 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 600px) {
-  .dashboard-central {
-    justify-content: flex-start;
-    padding-top: 50px;
-    gap: 10px;
+  .progress-ring-container {
+    width: 230px !important;
+    height: 230px !important;
+    margin-bottom: 6px !important;
   }
-}
 
   .dashboard-central {
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .dashboard-greeting {
@@ -1434,8 +1432,8 @@ input[type="file"]::file-selector-button:hover {
   }
 
   .custom-car-photo {
-    width: 140px;
-    height: 140px;
+    width: 175px;
+    height: 175px;
   }
 
   .smart-badges-container {
@@ -1528,3 +1526,4 @@ input[type="file"]::file-selector-button:hover {
   .remove-photo-btn:active {
     transform: scale(0.95);
   }
+}
