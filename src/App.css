@@ -929,16 +929,53 @@ height: clamp(105px, 12vw, 180px);
 @media (max-width: 600px) {
   .home-page {
     min-height: 100dvh !important;
-    /* Am șters height: auto ca să poată ocupa tot ecranul */
+    height: auto !important;
     padding: 22px 14px 105px !important;
     overflow-y: auto !important;
+    /* Opțional: o poți face flex pentru a centra ușor conținutul interior */
+    display: flex;
+    flex-direction: column;
   }
 
   .dashboard-central {
-    /* Am șters margin-top: -8px care trăgea mașina în sus */
-    justify-content: center !important; 
-    margin-bottom: 5vh !important; /* Lasă spațiu ca să nu se lovească de meniul de jos */
+    /* Mărim marginea de sus pentru a împinge elementele mai pe centru */
+    margin-top: 12vh !important; 
+    margin-bottom: auto !important;
   }
+
+  .dashboard-greeting {
+    margin-bottom: 8px !important;
+  }
+
+  .progress-ring-container {
+    width: 190px !important;
+    height: 190px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .custom-car-photo {
+    width: 145px !important;
+    height: 145px !important;
+  }
+
+  .smart-badges-container {
+    gap: 8px !important;
+    max-width: 300px !important;
+  }
+
+  .smart-badge {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .edit-reminders-link {
+    margin-top: 10px !important;
+  }
+
+  .bottom-nav {
+    bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
+  }
+}
 
   .dashboard-greeting {
     margin-bottom: 4px !important;
@@ -1044,7 +1081,7 @@ height: clamp(105px, 12vw, 180px);
     font-weight: 700;
     text-align: center;
   }
-}
+
 
 /* =========================
    FINAL OVERVIEW MOBILE TUNING
