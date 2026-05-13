@@ -141,7 +141,7 @@ export default function Home() {
 
         <div 
           className="progress-ring-container clickable-ring" 
-          onClick={() => navigate("/settings")}
+          onClick={() => navigate("components/Settings")}
           title={t("changePhoto", "Schimbă poza")}
         >
           <div className="car-icon-center">
