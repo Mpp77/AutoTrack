@@ -1411,12 +1411,12 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 600px) {
-  .home-page {
-    height: 100dvh;
-    min-height: 100dvh;
-    padding: 14px 14px 92px;
-    overflow: hidden;
+  .dashboard-central {
+    justify-content: flex-start;
+    padding-top: 70px;
+    gap: 10px;
   }
+}
 
   .dashboard-central {
     justify-content: center;
@@ -1487,4 +1487,3 @@ input[type="file"]::file-selector-button:hover {
     top: 22px;
     right: 16px;
   }
-}
