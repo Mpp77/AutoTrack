@@ -1278,7 +1278,7 @@ input[type="file"]::file-selector-button:hover {
 
   .dashboard-central {
     justify-content: center;
-    gap: 16px;
+    gap: 10px;
   }
 
   .progress-ring-container {
