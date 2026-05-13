@@ -22,14 +22,15 @@ body {
 ========================= */
 
 .home-page {
-  display: flex; /* ADAUGAT PENTRU CENTRARE */
-  flex-direction: column; /* ADAUGAT PENTRU CENTRARE */
-  min-height: 100vh;
-  height: 100vh;
-  padding: clamp(14px, 2vw, 32px);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  height: 100dvh;
+  padding: 18px 14px 100px;
+  box-sizing: border-box;
   background:
-    radial-gradient(circle at 50% 26%, rgba(0, 119, 255, 0.35), transparent 34%),
-    radial-gradient(circle at 50% 75%, rgba(0, 229, 255, 0.08), transparent 32%),
+    radial-gradient(circle at 50% 26%, rgba(0, 119, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 50% 75%, rgba(0, 229, 255, 0.04), transparent 32%),
     linear-gradient(135deg, #020916 0%, #06152e 45%, #071b3f 100%);
   color: white;
   overflow: hidden;
@@ -44,10 +45,8 @@ body {
   border: 1px solid rgba(93, 146, 255, 0.75);
   background: rgba(5, 22, 55, 0.75);
   color: white;
-  font-size: clamp(18px, 2vw, 24px);
-  font-weight: 700;
   font-size: 18px;
-
+  font-weight: 700;
   box-shadow:
     inset 0 0 18px rgba(38, 112, 255, 0.25),
     0 0 22px rgba(36, 105, 255, 0.25);
@@ -64,12 +63,12 @@ body {
     radial-gradient(circle at 50% 15%, rgba(0, 90, 180, 0.28), transparent 38%),
     rgba(2, 12, 32, 0.45);
   box-shadow:
-    inset 0 0 80px rgba(16, 75, 150, 0.18),
-    0 0 40px rgba(27, 100, 255, 0.12);
+    inset 0 0 38px rgba(16, 75, 150, 0.08),
+    0 0 22px rgba(27, 100, 255, 0.08);
   text-align: center;
   padding: clamp(46px, 5vw, 70px) clamp(18px, 3vw, 40px) 95px;
   position: relative;
-    overflow: hidden;
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -88,7 +87,7 @@ body {
 .hero-card p {
   margin: clamp(12px, 2vw, 22px) 0 clamp(28px, 4vw, 46px);
   color: rgba(237, 247, 255, 0.92);
-    font-size: clamp(17px, 2.2vw, 30px);
+  font-size: clamp(17px, 2.2vw, 30px);
   font-weight: 500;
 }
 
@@ -103,12 +102,12 @@ body {
 
 .neon-circle {
   width: clamp(105px, 12vw, 180px);
-height: clamp(105px, 12vw, 180px);
+  height: clamp(105px, 12vw, 180px);
   border-radius: 50%;
   position: relative;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 0 18px rgba(0, 207, 255, 0.75));
+  filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.38));
 }
 
 .neon-circle::before {
@@ -116,11 +115,11 @@ height: clamp(105px, 12vw, 180px);
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: clamp(3px, 0.35vw, 5px) solid rgba(91, 223, 255, 0.95);
+  border: clamp(3px, 0.35vw, 5px) solid rgba(91, 223, 255, 0.72);
   box-shadow:
-    0 0 12px #2bdcff,
-    0 0 34px rgba(45, 132, 255, 0.9),
-    inset 0 0 18px rgba(45, 132, 255, 0.45);
+    0 0 8px rgba(43, 220, 255, 0.45),
+    0 0 18px rgba(45, 132, 255, 0.38),
+    inset 0 0 10px rgba(45, 132, 255, 0.22);
   mask:
     conic-gradient(
       from 22deg,
@@ -140,9 +139,6 @@ height: clamp(105px, 12vw, 180px);
   stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter:
-    drop-shadow(0 0 4px #7deeff)
-    drop-shadow(0 0 12px #2277ff);
 }
 
 .car-svg {
@@ -154,36 +150,8 @@ height: clamp(105px, 12vw, 180px);
   width: 42%;
   height: 42%;
   color: #7deeff;
-  filter:
-    drop-shadow(0 0 4px #7deeff)
-    drop-shadow(0 0 12px #2277ff);
 }
 
-/* HOMEPAGE NEON SOFTENING */
-.home-page {
-  background:
-    radial-gradient(circle at 50% 26%, rgba(0, 119, 255, 0.18), transparent 34%),
-    radial-gradient(circle at 50% 75%, rgba(0, 229, 255, 0.04), transparent 32%),
-    linear-gradient(135deg, #020916 0%, #06152e 45%, #071b3f 100%);
-}
-
-.hero-card {
-  box-shadow:
-    inset 0 0 38px rgba(16, 75, 150, 0.08),
-    0 0 22px rgba(27, 100, 255, 0.08);
-}
-
-.neon-circle {
-  filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.38));
-}
-
-.neon-circle::before {
-  border-color: rgba(91, 223, 255, 0.72);
-  box-shadow:
-    0 0 8px rgba(43, 220, 255, 0.45),
-    0 0 18px rgba(45, 132, 255, 0.38),
-    inset 0 0 10px rgba(45, 132, 255, 0.22);
-}
 .neon-svg,
 .lucide-neon {
   filter:
@@ -191,17 +159,207 @@ height: clamp(105px, 12vw, 180px);
     drop-shadow(0 0 5px rgba(34, 119, 255, 0.25));
 }
 
+/* =========================
+   SMART DASHBOARD
+========================= */
 
-.settings-btn {
-  box-shadow:
-    inset 0 0 10px rgba(38, 112, 255, 0.16),
-    0 0 14px rgba(36, 105, 255, 0.16);
+.dashboard-central {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
 }
 
-.settings-btn svg {
+.dashboard-greeting {
+  margin: 0 0 4px;
+}
+
+.dashboard-greeting .highlight {
+  color: #7eefff;
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.progress-ring {
+  transform: scale(0.85) rotate(-90deg);
+  transform-origin: center;
+  overflow: visible;
+}
+
+.progress-ring-bg {
+  stroke: rgba(255, 255, 255, 0.05);
+}
+
+.progress-ring-fill {
+  stroke: #7eefff;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.5));
+}
+
+.car-icon-center {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.neon-svg-center {
+  width: 100%;
+  height: 100%;
+  stroke: #7eeeff;
+  fill: none;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   filter:
-    drop-shadow(0 0 3px rgba(125, 238, 255, 0.55))
-    drop-shadow(0 0 7px rgba(34, 119, 255, 0.35));
+    drop-shadow(0 0 6px rgba(125, 238, 255, 0.5))
+    drop-shadow(0 0 15px rgba(34, 119, 255, 0.3));
+}
+
+.custom-car-photo {
+  width: 155px;
+  height: 155px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(126, 239, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+  transition: transform 0.3s ease;
+  margin: 0 auto;
+  display: block;
+}
+
+.budget-text {
+  font-family: "Inter", system-ui, sans-serif;
+  color: #8da4c8;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.smart-badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.smart-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  cursor: default;
+}
+
+.badge-warning {
+  background: rgba(255, 77, 77, 0.12);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  color: #ff768b;
+  box-shadow:
+    0 0 20px rgba(255, 77, 77, 0.1),
+    inset 0 0 10px rgba(255, 77, 77, 0.05);
+}
+
+.badge-info {
+  background: rgba(255, 153, 0, 0.12);
+  border: 1px solid rgba(255, 153, 0, 0.3);
+  color: #ffb84d;
+  box-shadow:
+    0 0 20px rgba(255, 153, 0, 0.1),
+    inset 0 0 10px rgba(255, 153, 0, 0.05);
+}
+
+.badge-success {
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid rgba(0, 255, 170, 0.25);
+  color: #32ffb4;
+  box-shadow:
+    0 0 20px rgba(0, 255, 170, 0.1),
+    inset 0 0 10px rgba(0, 255, 170, 0.05);
+}
+
+.clickable-ring {
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.2s ease;
+}
+
+.clickable-ring:hover {
+  transform: scale(1.04);
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(0, 191, 255, 0.3));
+}
+
+.clickable-ring:active {
+  transform: scale(0.96);
+}
+
+.clickable-ring:hover .custom-car-photo {
+  transform: scale(1.04);
+}
+
+.clickable-badge {
+  cursor: pointer;
+}
+
+.clickable-badge:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.clickable-badge:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.clickable-badge.badge-warning:hover {
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
+.clickable-badge.badge-info:hover {
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.4);
+}
+
+.clickable-badge.badge-success:hover {
+  box-shadow: 0 0 15px rgba(50, 205, 50, 0.4);
+}
+
+.edit-reminders-link {
+  background: transparent;
+  border: none;
+  color: #8da4c8;
+  font-size: 14px;
+  margin-top: 2px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* =========================
@@ -214,10 +372,10 @@ height: clamp(105px, 12vw, 180px);
   transform: translateX(-50%);
   width: calc(100% - 28px);
   max-width: 780px;
-  bottom: calc(env(safe-area-inset-bottom) + 75px);
+  bottom: calc(env(safe-area-inset-bottom) + 14px);
   padding: 8px;
   border-radius: clamp(22px, 3vw, 42px);
-    display: flex;
+  display: flex;
   gap: 8px;
   background: rgba(3, 16, 42, 0.82);
   border: 1px solid rgba(80, 141, 255, 0.8);
@@ -282,7 +440,6 @@ height: clamp(105px, 12vw, 180px);
     inset 0 0 28px rgba(0, 191, 255, 0.12);
   color: white;
   text-align: center;
-
   position: relative;
   overflow: visible;
 }
@@ -303,7 +460,7 @@ height: clamp(105px, 12vw, 180px);
   border-radius: 12px;
   padding: 8px 14px;
   font-weight: 700;
-  box-shadow: 0 0 14px rgba(0,191,255,0.15);
+  box-shadow: 0 0 14px rgba(0, 191, 255, 0.15);
 }
 
 .auth-title {
@@ -330,17 +487,24 @@ height: clamp(105px, 12vw, 180px);
 }
 
 .auth-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 14px;
 }
 
-.auth-form input {
-  width: 100%;
-  max-width: 100%;
+.auth-form input,
+.auth-form button {
+  width: calc(100% - 44px);
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
   box-sizing: border-box;
+}
+
+.auth-form input {
   display: block;
-  margin: 0 auto;
   padding: 18px 20px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.07);
@@ -355,12 +519,11 @@ height: clamp(105px, 12vw, 180px);
 
 .auth-form button,
 .back-login-btn {
-  width: 100%;
   padding: 14px;
   border-radius: 16px;
   background: linear-gradient(90deg, #0479ff, #08cbff);
   color: white;
-  font-size: 20px; /* Aici controlezi mărimea scrisului */
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 0.5px;
   box-shadow: 0 0 24px rgba(0, 207, 255, 0.55);
@@ -368,7 +531,6 @@ height: clamp(105px, 12vw, 180px);
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-/* Efect bonus când pui mouse-ul pe el */
 .auth-form button:hover,
 .back-login-btn:hover {
   transform: translateY(-2px);
@@ -393,22 +555,35 @@ height: clamp(105px, 12vw, 180px);
   font-weight: 700;
 }
 
+.login-logo {
+  width: 210px;
+  height: 210px;
+  object-fit: contain;
+  margin: 0 auto 12px;
+  display: block;
+  border-radius: 38px;
+  box-shadow:
+    0 0 40px rgba(0, 229, 255, 0.42),
+    0 0 70px rgba(0, 119, 255, 0.18);
+}
+
 /* =========================
    OVERVIEW PAGE
 ========================= */
 
 .overview-page {
   min-height: 100vh;
-  height: 50vh;
-  padding: clamp(12px, 4vw, 20px);
-  overflow: hidden;
+  height: auto;
+  padding: 24px;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .overview-card {
-  width: min(100% - 24px, 980px);
-  max-width: 1100px;
-  margin: 30px auto 0;
-  padding: clamp(30px, 4vw, 60px);
+  width: min(100% - 48px, 980px);
+  max-width: 980px;
+  margin: 24px auto 0;
+  padding: 48px 40px;
   border-radius: 34px;
   border: 1px solid rgba(91, 135, 255, 0.35);
   background:
@@ -418,7 +593,8 @@ height: clamp(105px, 12vw, 180px);
     inset 0 0 60px rgba(16, 75, 150, 0.15),
     0 0 35px rgba(27, 100, 255, 0.12);
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .overview-card h1 {
@@ -441,9 +617,9 @@ height: clamp(105px, 12vw, 180px);
 }
 
 .chart-wrapper {
-  max-width: 900px;
+  max-width: 520px;
   margin: 0 auto;
-  padding: 0 0 120px;
+  padding-bottom: 0;
   overflow: visible;
 }
 
@@ -467,7 +643,7 @@ height: clamp(105px, 12vw, 180px);
 .recharts-layer.recharts-pie-labels {
   pointer-events: none;
 }
-/* Textul pentru când nu există cheltuieli în listă/grafic */
+
 .no-data-text {
   color: #ffffff !important;
   text-align: center;
@@ -475,7 +651,7 @@ height: clamp(105px, 12vw, 180px);
   font-size: 18px;
   font-weight: 500;
   margin-top: 20px;
-  opacity: 0.8; /* Îl face un alb foarte fin, ca să nu fie prea agresiv */
+  opacity: 0.8;
 }
 
 /* =========================
@@ -483,15 +659,16 @@ height: clamp(105px, 12vw, 180px);
 ========================= */
 
 .filters-row {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin: 22px 0 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(170px, 1fr));
+  gap: 16px;
+  max-width: 760px;
+  margin: 22px auto 16px;
 }
 
 .filter-input {
-  min-width: 170px;
+  width: 100%;
+  min-width: 0;
   min-height: 52px;
   padding: 12px 14px;
   border-radius: 14px;
@@ -502,6 +679,7 @@ height: clamp(105px, 12vw, 180px);
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
+  box-sizing: border-box;
   box-shadow:
     inset 0 0 14px rgba(0, 191, 255, 0.16),
     0 0 18px rgba(0, 191, 255, 0.18);
@@ -525,6 +703,73 @@ height: clamp(105px, 12vw, 180px);
 
 .filter-input::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+/* =========================
+   CUSTOM LEGEND
+========================= */
+
+.custom-legend,
+.chart-legend {
+  width: 100%;
+  max-width: 520px;
+  margin: 10px auto 0;
+  padding: 0 4px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0, 25, 70, 0.95) !important;
+  border: 1px solid rgba(0, 191, 255, 0.35);
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.12);
+}
+
+.legend-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.legend-label,
+.legend-value,
+.legend-row p,
+.legend-row span,
+.custom-legend p,
+.custom-legend span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  fill: #ffffff !important;
+  opacity: 1 !important;
+  text-shadow: none !important;
+}
+
+.legend-label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.legend-value {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  margin-left: 10px;
+  text-align: right;
 }
 
 /* =========================
@@ -675,6 +920,81 @@ height: clamp(105px, 12vw, 180px);
 }
 
 /* =========================
+   EXPENSE LIST ITEMS
+========================= */
+
+.expense-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.expense-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 20px;
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+  background: rgba(5, 22, 55, 0.65);
+  border: 1px solid rgba(91, 223, 255, 0.35);
+  box-shadow:
+    inset 0 0 15px rgba(0, 191, 255, 0.1),
+    0 0 15px rgba(0, 191, 255, 0.12);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.expense-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 0 20px rgba(0, 191, 255, 0.15),
+    0 0 24px rgba(0, 191, 255, 0.25);
+  border-color: rgba(91, 223, 255, 0.7);
+}
+
+.expense-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.expense-item-category {
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.expense-item-date {
+  color: #7eefff;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.expense-item-right {
+  text-align: right;
+}
+
+.expense-item-amount {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+/* =========================
    CATEGORY PAGE
 ========================= */
 
@@ -782,527 +1102,8 @@ height: clamp(105px, 12vw, 180px);
 }
 
 /* =========================
-   CUSTOM LEGEND
+   SETTINGS PAGE
 ========================= */
-
-.custom-legend {
-  width: 100%;
-  max-width: 320px;
-  margin: -4px auto 0;
-  padding: 0 4px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.legend-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(0, 25, 70, 0.95) !important;
-  border: 1px solid rgba(0, 191, 255, 0.35);
-  box-shadow: 0 0 12px rgba(0, 191, 255, 0.12);
-}
-
-.legend-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-}
-
-.legend-color {
-  width: 14px;
-  height: 14px;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.legend-label,
-.legend-value,
-.legend-row p,
-.legend-row span,
-.custom-legend p,
-.custom-legend span {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  fill: #ffffff !important;
-  opacity: 1 !important;
-  text-shadow: none !important;
-}
-
-.legend-label {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.legend-value {
-  font-size: 14px;
-  font-weight: 800;
-  white-space: nowrap;
-  margin-left: 10px;
-  text-align: right;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
-  .filters-row {
-    gap: 12px;
-  }
-
-  .filter-input {
-    width: 100%;
-    max-width: 100%;
-    min-height: 48px;
-    font-size: 0.95rem;
-    padding: 10px;
-    border-radius: 16px;
-  }
-
-  .overview-card {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    margin: 0 auto !important;
-    padding: 28px 14px 30px !important;
-    overflow: hidden !important;
-  }
-
-  .chart-wrapper {
-    width: 100% !important;
-    height: auto !important;
-    margin-top: 10px !important;
-    padding-bottom: 30px !important;
-    overflow: visible !important;
-  }
-
-  .recharts-wrapper {
-    margin: 0 auto !important;
-  }
-
-  .recharts-legend-wrapper {
-    width: 100% !important;
-    left: 0 !important;
-  }
-
-  .recharts-default-legend {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 8px !important;
-  }
-
-  .recharts-pie-label-text {
-    font-size: 11px !important;
-    white-space: pre-line !important;
-  }
-
-  .recharts-text {
-    white-space: pre-line !important;
-  }
-
-  .legend-row {
-    padding: 12px 14px;
-  }
-
-  .legend-label,
-  .legend-value {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 650px) {
-  .category-card {
-    padding: 20px;
-  }
-
-  .category-form {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .home-page {
-    min-height: 100dvh !important;
-    height: auto !important;
-    padding: 22px 14px 105px !important;
-    overflow-y: auto !important;
-    /* Opțional: o poți face flex pentru a centra ușor conținutul interior */
-    display: flex;
-    flex-direction: column;
-  }
-
-  .dashboard-central {
-    /* Mărim marginea de sus pentru a împinge elementele mai pe centru */
-    margin-top: 12vh !important; 
-    margin-bottom: auto !important;
-  }
-
-  .dashboard-greeting {
-    margin-bottom: 8px !important;
-  }
-
-  .progress-ring-container {
-    width: 190px !important;
-    height: 190px !important;
-    margin-bottom: 12px !important;
-  }
-
-  .custom-car-photo {
-    width: 145px !important;
-    height: 145px !important;
-  }
-
-  .smart-badges-container {
-    gap: 8px !important;
-    max-width: 300px !important;
-  }
-
-  .smart-badge {
-    padding: 8px 16px !important;
-    font-size: 13px !important;
-  }
-
-  .edit-reminders-link {
-    margin-top: 10px !important;
-  }
-
-  .bottom-nav {
-    bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
-  }
-}
-
-  .dashboard-greeting {
-    margin-bottom: 4px !important;
-  }
-
-  .auth-form {
-    width: 100%;
-    align-items: center;
-  }
-
-  .auth-form input,
-  .auth-form button {
-    width: calc(100% - 44px) !important;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    box-sizing: border-box;
-  }
-
-  .home-page {
-    height: auto;
-    min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 28px 14px 130px;
-  }
-
-  .hero-card {
-    width: 100%;
-    padding: 48px 16px 70px;
-    margin-top: 24px;
-  }
-
-  .hero-card h1 {
-    font-size: 38px;
-    line-height: 1.15;
-  }
-
-  .hero-card p {
-    font-size: 20px;
-    line-height: 1.35;
-  }
-
-  .icon-row {
-    gap: 8px;
-    justify-content: space-between;
-  }
-
-  .neon-circle {
-    width: 78px;
-    height: 78px;
-  }
-
-  .overview-page {
-    min-height: 100vh;
-    padding: 22px 16px 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .overview-page .back-btn {
-    align-self: flex-start;
-    margin-left: 0;
-    margin-bottom: 24px;
-  }
-
-  .overview-card h1 {
-    font-size: 34px;
-    margin-bottom: 34px;
-  }
-
-  .filters-row {
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .filter-input {
-    width: 100%;
-    max-width: 280px;
-    height: 58px;
-    font-size: 18px;
-  }
-
-  .overview-total {
-    font-size: 34px;
-    margin-top: 28px;
-    margin-bottom: 8px !important;
-  }
-
-  .chart-wrapper {
-    max-width: 330px;
-    margin: 20px auto 0;
-  }
-
-  .overview-card .text-center,
-  .overview-card p {
-    color: #b9f7ff !important;
-    -webkit-text-fill-color: #b9f7ff !important;
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-  }
-
-
-/* =========================
-   FINAL OVERVIEW MOBILE TUNING
-========================= */
-@media (max-width: 600px) {
-  .overview-page {
-    padding: 18px 8px 110px !important;
-  }
-
-  .overview-card {
-    width: calc(100vw - 16px) !important;
-    max-width: calc(100vw - 16px) !important;
-    margin: 12px auto 0 !important;
-    padding: 24px 12px 70px !important;
-    overflow: visible !important;
-  }
-
-  .filters-row {
-    gap: 8px !important;
-    margin: 10px 0 12px !important;
-  }
-
-  .filter-input {
-    max-width: 230px !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    padding: 6px 10px !important;
-    font-size: 13px !important;
-    border-radius: 13px !important;
-  }
-
-  .chart-wrapper {
-    padding-bottom: 20px !important;
-    overflow: visible !important;
-  }
-
-  .chart-legend {
-    width: 100% !important;
-    max-width: 280px !important;
-    margin: 8px auto 0 !important;
-    gap: 6px !important;
-  }
-
-  .chart-legend-item {
-    grid-template-columns: 14px 1fr auto !important;
-    column-gap: 8px !important;
-    font-size: 13px !important;
-  }
-
-  .chart-legend-item strong {
-    font-size: 12px !important;
-    margin-left: 4px !important;
-  }
-}
-
-/* =========================
-   OVERVIEW MOBILE FINAL FIX
-========================= */
-@media (max-width: 600px) {
-
-  .overview-page {
-    padding: 18px 12px 120px !important;
-    align-items: center;
-  }
-
-  /* card mare complet vizibil */
-  .overview-card {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    margin: 20px auto 0 !important;
-    padding: 34px 14px 55px !important;
-    border-radius: 34px !important;
-    min-height: auto !important;
-    overflow: visible !important;
-    box-sizing: border-box !important;
-  }
-
-  /* titlu */
-  .overview-card h1 {
-    font-size: 34px !important;
-    margin-bottom: 28px !important;
-    line-height: 1.15 !important;
-  }
-
-  /* filtre mai mici */
-  .filters-row {
-    gap: 12px !important;
-    margin-bottom: 18px !important;
-  }
-
-  .filter-input {
-    width: 100% !important;
-    max-width: 250px !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    padding: 8px 12px !important;
-    font-size: 16px !important;
-    border-radius: 18px !important;
-  }
-
-  /* total */
-  .overview-total {
-    font-size: 28px !important;
-    margin: 14px 0 8px !important;
-  }
-
-  /* chart mai sus */
-  .chart-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: -8px !important;
-    padding-bottom: 10px !important;
-    overflow: visible !important;
-  }
-
-  /* legendă apropiată */
-  .custom-legend {
-    width: 100% !important;
-    max-width: 310px !important;
-    margin: -6px auto 0 !important;
-    padding: 0 !important;
-    gap: 6px !important;
-  }
-
-  .legend-row {
-    padding: 8px 10px !important;
-    display: grid !important;
-    grid-template-columns: auto 1fr auto !important;
-    align-items: center !important;
-    column-gap: 8px !important;
-    border-radius: 14px !important;
-  }
-
-  .legend-left {
-    gap: 8px !important;
-  }
-
-  .legend-color {
-    width: 14px !important;
-    height: 14px !important;
-  }
-
-  .legend-label {
-    font-size: 13px !important;
-    line-height: 1.2 !important;
-  }
-
-  .legend-value {
-    text-align: right !important;
-    white-space: nowrap !important;
-  }
-}
-
-/* =========================*/
-
-.currency-top-right {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
-}
-
-.currency-top-right select {
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(91, 223, 255, 0.45);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-
-/* =========================*/
-@media (min-width: 769px) {
-  .overview-page {
-    min-height: 100vh;
-    height: auto;
-    padding: 24px;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-
-  .overview-card {
-    width: min(100% - 48px, 980px);
-    max-width: 980px;
-    margin: 24px auto 0;
-    padding: 48px 40px;
-    box-sizing: border-box;
-    overflow: visible;
-  }
-
-  .filters-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(170px, 1fr));
-    gap: 16px;
-    max-width: 760px;
-    margin: 22px auto 16px;
-  }
-
-  .filter-input {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-
-  .chart-wrapper {
-    max-width: 520px;
-    margin: 0 auto;
-    padding-bottom: 0;
-  }
-
-  .custom-legend,
-  .chart-legend {
-    max-width: 520px;
-    margin: 10px auto 0;
-  }
-}
-
-/* =========================*/
-
 
 .settings-page {
   min-height: 100vh;
@@ -1335,7 +1136,6 @@ height: clamp(105px, 12vw, 180px);
   -webkit-text-fill-color: transparent;
   font-family: Inter, system-ui, sans-serif;
   letter-spacing: -2px;
-
 }
 
 .settings-row {
@@ -1375,275 +1175,27 @@ height: clamp(105px, 12vw, 180px);
   align-items: center;
   justify-content: center;
   box-shadow:
-    inset 0 0 18px rgba(38, 112, 255, 0.25),
-    0 0 22px rgba(36, 105, 255, 0.25);
+    inset 0 0 10px rgba(38, 112, 255, 0.16),
+    0 0 14px rgba(36, 105, 255, 0.16);
   z-index: 1000;
 }
 
 .settings-btn svg {
   color: #7deeff;
   filter:
-    drop-shadow(0 0 4px #7deeff)
-    drop-shadow(0 0 12px #2277ff);
+    drop-shadow(0 0 3px rgba(125, 238, 255, 0.55))
+    drop-shadow(0 0 7px rgba(34, 119, 255, 0.35));
 }
 
-@media (max-width: 600px) {
-  .settings-btn {
-    width: 52px;
-    height: 52px;
-    top: 22px;
-    right: 16px;
-  }
-}
-
-/* =========================*/
-
-.login-logo {
-  width: 210px;
-  height: 210px;
-  object-fit: contain;
-  margin: 0 auto 12px;
-  display: block;
-  border-radius: 38px;
-  box-shadow:
-    0 0 40px rgba(0, 229, 255, 0.42),
-    0 0 70px rgba(0, 119, 255, 0.18);
-}
-
-/* =========================
-   EXPENSE LIST ITEMS (CARDS)
-========================= */
-
-.expense-list-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.expense-item-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 18px 24px;
+.settings-photo-preview {
+  width: 100px;
+  height: 100px;
   border-radius: 20px;
-  /* Resetează marginile/fundalul default de buton HTML */
-  appearance: none;
-  font-family: inherit;
-  cursor: pointer;
-  
-  /* Fundalul translucid din restul aplicației */
-  background: rgba(5, 22, 55, 0.65); 
-  border: 1px solid rgba(91, 223, 255, 0.35); 
-  box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.1),
-              0 0 15px rgba(0, 191, 255, 0.12);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.expense-item-card:hover {
-  transform: translateY(-3px);
-  box-shadow: inset 0 0 20px rgba(0, 191, 255, 0.15),
-              0 0 24px rgba(0, 191, 255, 0.25);
-  border-color: rgba(91, 223, 255, 0.7);
-}
-
-.expense-item-left {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  text-align: left;
-}
-
-.expense-item-category {
-  color: #ffffff;
-  font-size: 19px;
-  font-weight: 700;
-  margin: 0;
-}
-
-.expense-item-date {
-  color: #7eefff; /* Culoarea neon cyan pentru "Vezi detalii" */
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0;
-  opacity: 0.85;
-}
-
-.expense-item-right {
-  text-align: right;
-}
-
-.expense-item-amount {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: 900;
-  margin: 0;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-}
-/* =========================
-   SMART DASHBOARD (GAMIFICARE)
-========================= */
-
-/* =========================
-   ADAPTARE LAPTOP vs TELEFON (ZONA CENTRALĂ)
-========================= */
-.dashboard-central {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-}
-
-/* Pe Laptop (Ecrane mari): Îl lăsăm mai sus, să arate natural */
-@media (min-width: 769px) {
-  .dashboard-central {
-    justify-content: flex-start;
-    margin-top: 8vh;
-  }
-}
-
-/* Pe Telefon (Ecrane mici): Îl forțăm în centrul spațiului disponibil */
-@media (max-width: 768px) {
-  .dashboard-central {
-    margin-top: auto !important;
-    margin-bottom: 12vh !important; /* Compensează vizual spațiul ocupat de meniul de jos */
-    justify-content: center !important;
-  }
-}
-
-.dashboard-greeting .highlight {
-  color: #7eefff;
-  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-}
-
-/* --- CERCUL LUMINOS --- */
-.progress-ring-container {
-  position: relative;
-  width: 220px;
-  height: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.progress-ring {
-  transform: rotate(-90deg); /* Face ca animația să înceapă din partea de sus, ora 12 */
-  overflow: visible;
-}
-
-.progress-ring-bg {
-  stroke: rgba(255, 255, 255, 0.05); /* Un gri abia vizibil */
-}
-
-.progress-ring-fill {
-  stroke: #7eefff; /* Cyan-ul tău principal */
-  stroke-linecap: round;
-  /* Animația fină care umple inelul */
-  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.5));
-}
-
-.car-icon-center {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.neon-svg-center {
-  width: 100%;
-  height: 100%;
-  stroke: #7eefff;
-  fill: none;
-  stroke-width: 4.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(125, 238, 255, 0.5)) drop-shadow(0 0 15px rgba(34, 119, 255, 0.3));
-}
-
-.budget-text {
-  font-family: "Inter", system-ui, sans-serif;
-  color: #8da4c8;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* --- SMART BADGES (Pilulele Glassmorphism) --- */
-.smart-badges-container {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  width: 100%;
-  max-width: 320px;
-}
-
-.smart-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px 22px;
-  border-radius: 999px; /* Formă de pilulă */
-  font-family: "Inter", system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: default;
-}
-
-.smart-badge:hover {
-  transform: translateY(-2px);
-}
-
-/* Varianta Roșie (Urgent / ITP) */
-.badge-warning {
-  background: rgba(255, 77, 77, 0.12);
-  border: 1px solid rgba(255, 77, 77, 0.3);
-  color: #ff768b;
-  box-shadow: 0 0 20px rgba(255, 77, 77, 0.1), inset 0 0 10px rgba(255, 77, 77, 0.05);
-}
-
-/* Varianta Portocalie (Avertisment / Ulei) */
-.badge-info {
-  background: rgba(255, 153, 0, 0.12);
-  border: 1px solid rgba(255, 153, 0, 0.3);
-  color: #ffb84d;
-  box-shadow: 0 0 20px rgba(255, 153, 0, 0.1), inset 0 0 10px rgba(255, 153, 0, 0.05);
-}
-
-/* Varianta Verde (Totul e OK) */
-.badge-success {
-  background: rgba(0, 255, 170, 0.1);
-  border: 1px solid rgba(0, 255, 170, 0.25);
-  color: #32ffb4;
-  box-shadow: 0 0 20px rgba(0, 255, 170, 0.1), inset 0 0 10px rgba(0, 255, 170, 0.05);
-}
-
-
-/* =========================
-
-========================= */
-
-.edit-reminders-link {
-  background: transparent;
-  border: none;
-  color: #8da4c8;
-  font-size: 14px;
-  margin-top: 15px;
-  cursor: pointer;
-  text-decoration: underline;
+  object-fit: cover;
+  margin: 15px auto 0;
+  display: block;
+  border: 2px solid rgba(91, 223, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
 }
 
 .save-btn-neon {
@@ -1668,127 +1220,34 @@ height: clamp(105px, 12vw, 180px);
 }
 
 /* =========================
-   REGLAJE SPATIALE HOME PAGE
+   CURRENCY
 ========================= */
 
-
-/* Micșorăm spațiul dintre "Status Auto" și cerc */
-.dashboard-greeting {
-  margin-bottom: 15px !important; 
-}
-
-.progress-ring-container {
-  width: 230px !important; 
-  height: 230px !important;
-  margin-bottom: 15px !important;
+.currency-top-right {
   display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.progress-ring {
-  transform: scale(0.85) rotate(-90deg) !important;
-  transform-origin: center;
+  justify-content: flex-end;
+  margin-bottom: 15px;
 }
 
-/* Micșorăm puțin pilulele de reminder ca să lase loc pentru link */
-.smart-badge {
-  padding: 10px 18px !important;
-  font-size: 14px !important;
-}
-
-/* --- ANIMATIA PENTRU CERC (Buton Tactil) --- */
-.clickable-ring {
+.currency-top-right select {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(91, 223, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease !important;
-}
-
-.clickable-ring:hover {
-  transform: scale(1.05);
-  filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 191, 255, 0.3));
-}
-
-.clickable-ring:active {
-  transform: scale(0.95); /* Efect de apăsare (tactil) */
-}
-
-/* --- ANIMATIA PENTRU PILULE (Remindere Tactile) --- */
-.clickable-badge {
-  cursor: pointer;
-  /* Tranziție lină pentru toate proprietățile */
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
-}
-
-/* Efectul de Hover (mouse peste) */
-.clickable-badge:hover {
-  transform: translateY(-2px); /* Se ridică puțin */
-  filter: brightness(1.1); /* Devine puțin mai luminoasă */
-}
-
-/* Efectul de Click (Tactil - apăsare) */
-.clickable-badge:active {
-  transform: translateY(1px) scale(0.98); /* Efect de apăsare în jos */
-}
-
-/* Suplimentar: Strălucire specifică pe hover în funcție de tip */
-.clickable-badge.badge-warning:hover {
-  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); /* Strălucire roșie */
-}
-
-.clickable-badge.badge-info:hover {
-  box-shadow: 0 0 15px rgba(255, 165, 0, 0.4); /* Strălucire portocalie */
-}
-
-.clickable-badge.badge-success:hover {
-  box-shadow: 0 0 15px rgba(50, 205, 50, 0.4); /* Strălucire verde */
 }
 
 /* =========================
-   CUSTOM CAR PHOTO
-========================= */
-
-.custom-car-photo {
-  /* Am micșorat dimensiunile de la 220px la 160px */
-  width: 160px !important;  
-  height: 160px !important; 
-  
-  flex-shrink: 0 !important; /* Păstrează forma perfectă, nu lasă ecranul să o strivească */
-  
-  object-fit: cover !important; 
-  border-radius: 50% !important;
-  
-  border: 3px solid rgba(126, 239, 255, 0.5);
-  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
-  transition: transform 0.3s ease;
-  
-  margin: 0 auto;
-  display: block;
-}
-
-/* Să se mărească un pic la hover împreună cu cercul */
-.clickable-ring:hover .custom-car-photo {
-  transform: scale(1.05);
-}
-
-.settings-photo-preview {
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
-  object-fit: cover;
-  margin: 15px auto 0;
-  display: block;
-  border: 2px solid rgba(91, 223, 255, 0.5);
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
-}
-
-/* =========================
-   CUSTOM FILE INPUT BUTTON
+   FILE INPUT
 ========================= */
 
 input[type="file"] {
-  color: #a0aec0; /* Culoarea textului "no file selected" */
+  color: #a0aec0;
 }
 
-/* Stilizăm butonul efectiv de "Choose file" */
 input[type="file"]::file-selector-button {
   background: linear-gradient(90deg, #0479ff, #08cbff);
   border: none;
@@ -1807,48 +1266,225 @@ input[type="file"]::file-selector-button:hover {
   filter: brightness(1.1);
 }
 
-@media (max-width: 600px) {
+/* =========================
+   LAPTOP / DESKTOP
+========================= */
+
+@media (min-width: 769px) {
   .home-page {
-    min-height: 100dvh !important;
-    height: auto !important;
-    padding: 22px 14px 105px !important;
-    overflow-y: auto !important;
+    padding: 18px 24px 110px;
   }
 
   .dashboard-central {
-    margin-top: -8px !important;
-  }
-
-  .dashboard-greeting {
-    margin-bottom: 4px !important;
+    justify-content: center;
+    gap: 16px;
   }
 
   .progress-ring-container {
-    width: 190px !important;
-    height: 190px !important;
-    margin-bottom: 6px !important;
+    width: 220px;
+    height: 220px;
   }
 
   .custom-car-photo {
-    width: 145px !important;
-    height: 145px !important;
-  }
-
-  .smart-badges-container {
-    gap: 8px !important;
-    max-width: 300px !important;
-  }
-
-  .smart-badge {
-    padding: 8px 16px !important;
-    font-size: 13px !important;
-  }
-
-  .edit-reminders-link {
-    margin-top: 6px !important;
+    width: 160px;
+    height: 160px;
   }
 
   .bottom-nav {
-    bottom: calc(env(safe-area-inset-bottom) + 14px) !important;
+    bottom: 20px;
+  }
+}
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .filters-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .filter-input {
+    width: 100%;
+    max-width: 280px;
+    min-height: 48px;
+    font-size: 0.95rem;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .overview-page {
+    min-height: 100vh;
+    padding: 22px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .overview-page .back-btn {
+    align-self: flex-start;
+    margin-left: 0;
+    margin-bottom: 24px;
+  }
+
+  .overview-card {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    margin: 0 auto;
+    padding: 28px 14px 30px;
+    overflow: hidden;
+  }
+
+  .overview-card h1 {
+    font-size: 34px;
+    margin-bottom: 34px;
+  }
+
+  .overview-total {
+    font-size: 34px;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    margin: 20px auto 0;
+    padding-bottom: 30px;
+    overflow: visible;
+  }
+
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+
+  .recharts-legend-wrapper {
+    width: 100%;
+    left: 0;
+  }
+
+  .recharts-default-legend {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .recharts-pie-label-text,
+  .recharts-text {
+    font-size: 11px !important;
+    white-space: pre-line !important;
+  }
+
+  .overview-card .text-center,
+  .overview-card p {
+    color: #b9f7ff !important;
+    -webkit-text-fill-color: #b9f7ff !important;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .legend-row {
+    padding: 12px 14px;
+  }
+
+  .legend-label,
+  .legend-value {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 650px) {
+  .category-card {
+    padding: 20px;
+  }
+
+  .category-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-page {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 14px 14px 92px;
+    overflow: hidden;
+  }
+
+  .dashboard-central {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .dashboard-greeting {
+    margin-bottom: 2px;
+  }
+
+  .progress-ring-container {
+    width: 185px;
+    height: 185px;
+  }
+
+  .custom-car-photo {
+    width: 140px;
+    height: 140px;
+  }
+
+  .smart-badges-container {
+    max-width: 300px;
+    gap: 7px;
+  }
+
+  .smart-badge {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .edit-reminders-link {
+    margin-top: 2px;
+  }
+
+  .bottom-nav {
+    bottom: calc(env(safe-area-inset-bottom) + 12px);
+  }
+
+  .hero-card {
+    width: 100%;
+    padding: 48px 16px 70px;
+    margin-top: 24px;
+  }
+
+  .hero-card h1 {
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  .hero-card p {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .icon-row {
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .neon-circle {
+    width: 78px;
+    height: 78px;
+  }
+
+  .settings-btn {
+    width: 52px;
+    height: 52px;
+    top: 22px;
+    right: 16px;
   }
 }
