@@ -20,10 +20,7 @@ export default function Home() {
   useEffect(() => {
     const fetchCloudSettings = async () => {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCloudDataLoaded(true);
-        return;
-      }
+      if (!token) return;
 
       const API_URL = "https://autotrack-hxdk.onrender.com/api";
 
@@ -34,26 +31,26 @@ export default function Home() {
 
         if (response.ok) {
           const data = await response.json();
-          
-          // Salvăm local și actualizăm interfața
-          if (data.car_plate) {
-            localStorage.setItem("carPlate", data.car_plate);
-            setCarPlate(data.car_plate);
+          console.log("DATE PRIMITE DE LA SERVER:", data); // Verifică asta în consola laptopului (F12)
+
+          if (data) {
+            // Suprascriem TOT ce avem local cu datele proaspete de pe server
+            localStorage.setItem("carPlate", data.car_plate || "");
+            localStorage.setItem("carImage", data.car_image || "");
+            localStorage.setItem("currency", data.currency || "RON");
+            localStorage.setItem("itpDate", data.itp_date || "");
+            localStorage.setItem("insuranceDate", data.insurance_date || "");
+            localStorage.setItem("oilExpiryDate", data.oil_date || "");
+            localStorage.setItem("targetKm", data.target_km || "");
+
+            // Forțăm state-ul să se schimbe ACUM
+            setCarPlate(data.car_plate || t("auto", "Auto"));
+            setCarImage(data.car_image || null);
+            setCloudDataLoaded(true);
           }
-          if (data.car_image) {
-            localStorage.setItem("carImage", data.car_image);
-            setCarImage(data.car_image);
-          }
-          if (data.currency) localStorage.setItem("currency", data.currency);
-          if (data.itp_date) localStorage.setItem("itpDate", data.itp_date);
-          if (data.insurance_date) localStorage.setItem("insuranceDate", data.insurance_date);
-          if (data.oil_date) localStorage.setItem("oilExpiryDate", data.oil_date);
-          if (data.target_km) localStorage.setItem("targetKm", data.target_km);
         }
       } catch (error) {
         console.error("Eroare la descărcarea setărilor:", error);
-      } finally {
-        setCloudDataLoaded(true); // Gata descărcarea, putem calcula alertele!
       }
     };
 
