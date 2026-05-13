@@ -1,0 +1,109 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Bell, Calendar, Gauge } from "lucide-react";
+import "../App.css";
+
+export default function RemindersPage() {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const [itpDate, setItpDate] = useState(localStorage.getItem("itpDate") || "");
+  const [insuranceDate, setInsuranceDate] = useState(localStorage.getItem("insuranceDate") || "");
+  
+  // Stările pentru Ulei (Exact cele 3 cerute de tine)
+  const [lastChangeKm, setLastChangeKm] = useState(localStorage.getItem("lastChangeKm") || "");
+  const [intervalKm, setIntervalKm] = useState(localStorage.getItem("intervalKm") || "");
+  const [lastChangeDate, setLastChangeDate] = useState(localStorage.getItem("lastChangeDate") || "");
+
+  const handleSave = () => {
+    localStorage.setItem("itpDate", itpDate);
+    localStorage.setItem("insuranceDate", insuranceDate);
+    localStorage.setItem("lastChangeKm", lastChangeKm);
+    localStorage.setItem("intervalKm", intervalKm);
+    localStorage.setItem("lastChangeDate", lastChangeDate);
+
+    // MATEMATICA PENTRU KM: Adunăm Km la schimb + Intervalul
+    if (lastChangeKm && intervalKm) {
+      const targetKm = parseInt(lastChangeKm) + parseInt(intervalKm);
+      localStorage.setItem("targetKm", targetKm.toString());
+    } else {
+      localStorage.removeItem("targetKm");
+    }
+
+    // MATEMATICA PENTRU DATĂ: Luăm data schimbului și adunăm 1 AN
+    if (lastChangeDate) {
+      const date = new Date(lastChangeDate);
+      date.setFullYear(date.getFullYear() + 1);
+      localStorage.setItem("oilExpiryDate", date.toISOString());
+    } else {
+      localStorage.removeItem("oilExpiryDate");
+    }
+
+    alert(t("remindersSaved", "Remindere salvate cu succes!"));
+    navigate("/home");
+  };
+
+  return (
+    <div className="settings-page">
+      <button onClick={() => navigate("/home")} className="back-home-btn">
+        ← {t("back", "Înapoi")}
+      </button>
+
+      <div className="settings-card">
+        <h1>{t("maintenance", "Mentenanță")}</h1>
+
+        <div className="settings-row">
+          <label><Calendar size={18} /> {t("itpExpiryDate", "Data Expirare ITP")}</label>
+          <input 
+            type="date" 
+            className="filter-input" 
+            value={itpDate} 
+            onChange={(e) => setItpDate(e.target.value)} 
+          />
+        </div>
+
+        <div className="settings-row">
+          <label><Bell size={18} /> {t("insuranceExpiryDate", "Data Expirare Asigurare")}</label>
+          <input 
+            type="date" 
+            className="filter-input" 
+            value={insuranceDate} 
+            onChange={(e) => setInsuranceDate(e.target.value)} 
+          />
+        </div>
+
+        <div className="settings-row">
+          <label><Gauge size={18} /> {t("oilChangeDetails", "Detalii Schimb Ulei")}</label>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <input 
+              type="number" 
+              placeholder={t("lastOilChangeKm", "Km la ultimul schimb (ex: 260000)")}
+              className="filter-input" 
+              value={lastChangeKm} 
+              onChange={(e) => setLastChangeKm(e.target.value)} 
+            />
+            <input 
+              type="number" 
+              placeholder={t("oilChangeInterval", "Interval (peste câți km? ex: 15000)")}
+              className="filter-input" 
+              value={intervalKm} 
+              onChange={(e) => setIntervalKm(e.target.value)} 
+            />
+            <label style={{ fontSize: '14px', marginTop: '5px' }}>{t("lastOilChangeDate", "Data ultimului schimb:")}</label>
+            <input 
+              type="date" 
+              className="filter-input" 
+              value={lastChangeDate} 
+              onChange={(e) => setLastChangeDate(e.target.value)} 
+            />
+          </div>
+        </div>
+
+        <button onClick={handleSave} className="save-btn-neon">
+          {t("saveConfig", "Salvează Configurația")}
+        </button>
+      </div>
+    </div>
+  );
+}

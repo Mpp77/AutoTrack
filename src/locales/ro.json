@@ -69,6 +69,34 @@
   "Tuning": "Tuning",
   "Unexpected Repairs": "Reparații neprevăzute",
   "Rovinieta": "Rovinietă",
-  "OtherCategory": "Altă categorie"
+  "OtherCategory": "Altă categorie",
+
+  "maintenance": "Mentenanță",
+  "itpExpiryDate": "Data Expirare ITP",
+  "insuranceExpiryDate": "Data Expirare Asigurare",
+  "oilChangeDetails": "Detalii Schimb Ulei",
+  "lastOilChangeKm": "Km la ultimul schimb (ex: 250000)",
+  "oilChangeInterval": "Interval revizie (ex: 15000)",
+  "currentKm": "Km actuali din bord (ex: 254000)",
+  "lastOilChangeDate": "Data ultimului schimb:",
+  "saveConfig": "Salvează Configurația",
+  "remindersSaved": "Remindere salvate cu succes!",
+  "status": "Status",
+  "configureAlerts": "Configurează alerte",
+  "nothingToDo": "Nimic de făcut. Drum întins!",
+  "itpInDays": "ITP în:",
+  "days": "zile",
+  "itpExpired": "ITP EXPIRAT!",
+  "rcaInDays": "RCA în:",
+  "rcaExpired": "RCA EXPIRAT!",
+  "serviceIn": "Revizie în:",
+  "serviceOverdue": "Revizie DEPĂȘITĂ cu",
+  "oilChangeIn": "Schimb ulei în:",
+  "oilChangeExpired": "Schimb ulei EXPIRAT (1 An)!",
+
+  "carPlate": "Număr Înmatriculare",
+  "carPhoto": "Poză Mașină (Opțional)",
+  "settings": "Setări Profil",
+  "settingsSaved": "Setări salvate cu succes!"
 
 }

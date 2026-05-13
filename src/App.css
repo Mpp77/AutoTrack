@@ -36,14 +36,16 @@ body {
 
 .logout-btn,
 .back-btn {
-  width: clamp(140px, 15vw, 190px);
-  height: clamp(48px, 5vw, 64px);
+  width: auto;
+  height: 50px;
   border-radius: 999px;
   border: 1px solid rgba(93, 146, 255, 0.75);
   background: rgba(5, 22, 55, 0.75);
   color: white;
   font-size: clamp(18px, 2vw, 24px);
   font-weight: 700;
+  font-size: 18px;
+
   box-shadow:
     inset 0 0 18px rgba(38, 112, 255, 0.25),
     0 0 22px rgba(36, 105, 255, 0.25);
@@ -51,9 +53,9 @@ body {
 
 .hero-card {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1180px;
   height: auto;
-  margin: clamp(14px, 1.5vw, 20px) auto 0;
+  margin: 28px auto 0;
   border-radius: clamp(22px, 3vw, 42px);
   border: 1px solid rgba(91, 135, 255, 0.42);
   background:
@@ -63,15 +65,15 @@ body {
     inset 0 0 80px rgba(16, 75, 150, 0.18),
     0 0 40px rgba(27, 100, 255, 0.12);
   text-align: center;
-  padding: clamp(55px, 7vw, 90px) clamp(18px, 3vw, 40px) 100px;
+  padding: clamp(46px, 5vw, 70px) clamp(18px, 3vw, 40px) 95px;
   position: relative;
-  overflow: hidden;
+    overflow: hidden;
   box-sizing: border-box;
 }
 
 .hero-card h1 {
   margin: 0;
-  font-size: clamp(36px, 5vw, 67px);
+  font-size: clamp(34px, 4.4vw, 58px);
   line-height: 1.1;
   font-weight: 800;
   letter-spacing: -1.5px;
@@ -82,9 +84,9 @@ body {
 }
 
 .hero-card p {
-  margin: clamp(12px, 3vw, 28px) 0 clamp(38px, 5vw, 68px);
+  margin: clamp(12px, 2vw, 22px) 0 clamp(28px, 4vw, 46px);
   color: rgba(237, 247, 255, 0.92);
-  font-size: clamp(17px, 2.2vw, 30px);
+    font-size: clamp(17px, 2.2vw, 30px);
   font-weight: 500;
 }
 
@@ -98,8 +100,8 @@ body {
 }
 
 .neon-circle {
-  width: clamp(130px, 18vw, 268px);
-  height: clamp(130px, 18vw, 268px);
+  width: clamp(105px, 12vw, 180px);
+height: clamp(105px, 12vw, 180px);
   border-radius: 50%;
   position: relative;
   display: grid;
@@ -155,6 +157,51 @@ body {
     drop-shadow(0 0 12px #2277ff);
 }
 
+/* HOMEPAGE NEON SOFTENING */
+.home-page {
+  background:
+    radial-gradient(circle at 50% 26%, rgba(0, 119, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 50% 75%, rgba(0, 229, 255, 0.04), transparent 32%),
+    linear-gradient(135deg, #020916 0%, #06152e 45%, #071b3f 100%);
+}
+
+.hero-card {
+  box-shadow:
+    inset 0 0 38px rgba(16, 75, 150, 0.08),
+    0 0 22px rgba(27, 100, 255, 0.08);
+}
+
+.neon-circle {
+  filter: drop-shadow(0 0 8px rgba(0, 207, 255, 0.38));
+}
+
+.neon-circle::before {
+  border-color: rgba(91, 223, 255, 0.72);
+  box-shadow:
+    0 0 8px rgba(43, 220, 255, 0.45),
+    0 0 18px rgba(45, 132, 255, 0.38),
+    inset 0 0 10px rgba(45, 132, 255, 0.22);
+}
+.neon-svg,
+.lucide-neon {
+  filter:
+    drop-shadow(0 0 2px rgba(125, 238, 255, 0.5))
+    drop-shadow(0 0 5px rgba(34, 119, 255, 0.25));
+}
+
+
+.settings-btn {
+  box-shadow:
+    inset 0 0 10px rgba(38, 112, 255, 0.16),
+    0 0 14px rgba(36, 105, 255, 0.16);
+}
+
+.settings-btn svg {
+  filter:
+    drop-shadow(0 0 3px rgba(125, 238, 255, 0.55))
+    drop-shadow(0 0 7px rgba(34, 119, 255, 0.35));
+}
+
 /* =========================
    BOTTOM NAV
 ========================= */
@@ -163,12 +210,12 @@ body {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom) + 70px);
   width: calc(100% - 28px);
-  max-width: 900px;
+  max-width: 780px;
+  bottom: calc(env(safe-area-inset-bottom) + 75px);
   padding: 8px;
   border-radius: clamp(22px, 3vw, 42px);
-  display: flex;
+    display: flex;
   gap: 8px;
   background: rgba(3, 16, 42, 0.82);
   border: 1px solid rgba(80, 141, 255, 0.8);
@@ -180,12 +227,12 @@ body {
 
 .bottom-nav button {
   flex: 1;
-  height: 72px;
+  height: 64px;
   border-radius: clamp(14px, 2vw, 22px);
   border: 1px solid rgba(107, 177, 255, 0.85);
   background: linear-gradient(135deg, #12368d 0%, #064fbf 100%);
   color: white;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -233,19 +280,28 @@ body {
     inset 0 0 28px rgba(0, 191, 255, 0.12);
   color: white;
   text-align: center;
+
+  position: relative;
+  overflow: visible;
 }
 
 .language-buttons {
+  position: absolute;
+  top: 18px;
+  right: 18px;
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 10px;
+  z-index: 5;
 }
 
 .language-buttons button {
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 13px;
+  background: rgba(8, 24, 58, 0.9);
+  border: 1px solid rgba(91, 223, 255, 0.45);
+  color: white;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(0,191,255,0.15);
 }
 
 .auth-title {
@@ -259,8 +315,8 @@ body {
 }
 
 .auth-subtitle {
-  font-size: 30px;
-  margin: 0 0 24px;
+  font-size: clamp(42px, 4vw, 54px);
+  margin-top: -8px;
   color: #dff8ff !important;
   -webkit-text-fill-color: #dff8ff !important;
   background: none !important;
@@ -283,7 +339,7 @@ body {
   box-sizing: border-box;
   display: block;
   margin: 0 auto;
-  padding: 14px 16px;
+  padding: 18px 20px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(91, 223, 255, 0.45);
@@ -302,8 +358,19 @@ body {
   border-radius: 16px;
   background: linear-gradient(90deg, #0479ff, #08cbff);
   color: white;
+  font-size: 20px; /* Aici controlezi mărimea scrisului */
   font-weight: 800;
+  letter-spacing: 0.5px;
   box-shadow: 0 0 24px rgba(0, 207, 255, 0.55);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* Efect bonus când pui mouse-ul pe el */
+.auth-form button:hover,
+.back-login-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
 }
 
 .auth-link {
@@ -397,6 +464,16 @@ body {
 
 .recharts-layer.recharts-pie-labels {
   pointer-events: none;
+}
+/* Textul pentru când nu există cheltuieli în listă/grafic */
+.no-data-text {
+  color: #ffffff !important;
+  text-align: center;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 20px;
+  opacity: 0.8; /* Îl face un alb foarte fin, ca să nu fie prea agresiv */
 }
 
 /* =========================
@@ -529,11 +606,6 @@ body {
   gap: 17px;
   width: 100%;
   margin-top: 25px;
-}
-
-.expense-category-card {
-  min-height: 29px;
-  padding: 7px;
 }
 
 .expense-date {
@@ -857,7 +929,7 @@ body {
     width: calc(100vw - 34px);
     max-width: calc(100vw - 34px);
     padding: 34px 18px;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .auth-form {
@@ -1212,6 +1284,9 @@ body {
   background: linear-gradient(180deg, #ffffff 8%, #7eefff 55%, #6c8cff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-family: Inter, system-ui, sans-serif;
+  letter-spacing: -2px;
+
 }
 
 .settings-row {
@@ -1270,4 +1345,408 @@ body {
     top: 22px;
     right: 16px;
   }
+}
+
+/* =========================*/
+
+.login-logo {
+  width: 210px;
+  height: 210px;
+  object-fit: contain;
+  margin: 0 auto 12px;
+  display: block;
+  border-radius: 38px;
+  box-shadow:
+    0 0 40px rgba(0, 229, 255, 0.42),
+    0 0 70px rgba(0, 119, 255, 0.18);
+}
+
+/* =========================
+   EXPENSE LIST ITEMS (CARDS)
+========================= */
+
+.expense-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.expense-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 20px;
+  /* Resetează marginile/fundalul default de buton HTML */
+  appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+  
+  /* Fundalul translucid din restul aplicației */
+  background: rgba(5, 22, 55, 0.65); 
+  border: 1px solid rgba(91, 223, 255, 0.35); 
+  box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.1),
+              0 0 15px rgba(0, 191, 255, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.expense-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 0 20px rgba(0, 191, 255, 0.15),
+              0 0 24px rgba(0, 191, 255, 0.25);
+  border-color: rgba(91, 223, 255, 0.7);
+}
+
+.expense-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.expense-item-category {
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.expense-item-date {
+  color: #7eefff; /* Culoarea neon cyan pentru "Vezi detalii" */
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.expense-item-right {
+  text-align: right;
+}
+
+.expense-item-amount {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+/* =========================
+   SMART DASHBOARD (GAMIFICARE)
+========================= */
+
+.dashboard-central {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: clamp(20px, 4vh, 50px);
+  padding: 0 20px;
+}
+
+.dashboard-greeting {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(24px, 5vw, 32px); 
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 15px !important;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-greeting .highlight {
+  color: #7eefff;
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+/* --- CERCUL LUMINOS --- */
+.progress-ring-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg); /* Face ca animația să înceapă din partea de sus, ora 12 */
+  overflow: visible;
+}
+
+.progress-ring-bg {
+  stroke: rgba(255, 255, 255, 0.05); /* Un gri abia vizibil */
+}
+
+.progress-ring-fill {
+  stroke: #7eefff; /* Cyan-ul tău principal */
+  stroke-linecap: round;
+  /* Animația fină care umple inelul */
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.5));
+}
+
+.car-icon-center {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.neon-svg-center {
+  width: 100%;
+  height: 100%;
+  stroke: #7eefff;
+  fill: none;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px rgba(125, 238, 255, 0.5)) drop-shadow(0 0 15px rgba(34, 119, 255, 0.3));
+}
+
+.budget-text {
+  font-family: "Inter", system-ui, sans-serif;
+  color: #8da4c8;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* --- SMART BADGES (Pilulele Glassmorphism) --- */
+.smart-badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.smart-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-radius: 999px; /* Formă de pilulă */
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.smart-badge:hover {
+  transform: translateY(-2px);
+}
+
+/* Varianta Roșie (Urgent / ITP) */
+.badge-warning {
+  background: rgba(255, 77, 77, 0.12);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  color: #ff768b;
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.1), inset 0 0 10px rgba(255, 77, 77, 0.05);
+}
+
+/* Varianta Portocalie (Avertisment / Ulei) */
+.badge-info {
+  background: rgba(255, 153, 0, 0.12);
+  border: 1px solid rgba(255, 153, 0, 0.3);
+  color: #ffb84d;
+  box-shadow: 0 0 20px rgba(255, 153, 0, 0.1), inset 0 0 10px rgba(255, 153, 0, 0.05);
+}
+
+/* Varianta Verde (Totul e OK) */
+.badge-success {
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid rgba(0, 255, 170, 0.25);
+  color: #32ffb4;
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.1), inset 0 0 10px rgba(0, 255, 170, 0.05);
+}
+
+
+/* =========================
+
+========================= */
+
+.edit-reminders-link {
+  background: transparent;
+  border: none;
+  color: #8da4c8;
+  font-size: 14px;
+  margin-top: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.save-btn-neon {
+  width: 100%;
+  padding: 16px;
+  margin-top: 30px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(90deg, #007bff, #00bfff);
+  color: white;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.save-btn-neon:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* =========================
+   REGLAJE SPATIALE HOME PAGE
+========================= */
+
+/* Tragem blocul central mai sus */
+.dashboard-central {
+  margin-top: 10px !important; /* Înainte era mult prea mare */
+}
+
+/* Micșorăm spațiul dintre "Status Auto" și cerc */
+.dashboard-greeting {
+  margin-bottom: 15px !important; 
+}
+
+.progress-ring-container {
+  width: 230px !important; 
+  height: 230px !important;
+  margin-bottom: 15px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.progress-ring {
+  transform: scale(0.85) rotate(-90deg) !important;
+  transform-origin: center;
+}
+
+/* Micșorăm puțin pilulele de reminder ca să lase loc pentru link */
+.smart-badge {
+  padding: 10px 18px !important;
+  font-size: 14px !important;
+}
+
+/* --- ANIMATIA PENTRU CERC (Buton Tactil) --- */
+.clickable-ring {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease !important;
+}
+
+.clickable-ring:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(0, 191, 255, 0.3));
+}
+
+.clickable-ring:active {
+  transform: scale(0.95); /* Efect de apăsare (tactil) */
+}
+
+/* --- ANIMATIA PENTRU PILULE (Remindere Tactile) --- */
+.clickable-badge {
+  cursor: pointer;
+  /* Tranziție lină pentru toate proprietățile */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
+}
+
+/* Efectul de Hover (mouse peste) */
+.clickable-badge:hover {
+  transform: translateY(-2px); /* Se ridică puțin */
+  filter: brightness(1.1); /* Devine puțin mai luminoasă */
+}
+
+/* Efectul de Click (Tactil - apăsare) */
+.clickable-badge:active {
+  transform: translateY(1px) scale(0.98); /* Efect de apăsare în jos */
+}
+
+/* Suplimentar: Strălucire specifică pe hover în funcție de tip */
+.clickable-badge.badge-warning:hover {
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4); /* Strălucire roșie */
+}
+
+.clickable-badge.badge-info:hover {
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.4); /* Strălucire portocalie */
+}
+
+.clickable-badge.badge-success:hover {
+  box-shadow: 0 0 15px rgba(50, 205, 50, 0.4); /* Strălucire verde */
+}
+
+/* =========================
+   CUSTOM CAR PHOTO
+========================= */
+
+.custom-car-photo {
+  /* Am micșorat dimensiunile de la 220px la 160px */
+  width: 160px !important;  
+  height: 160px !important; 
+  
+  flex-shrink: 0 !important; /* Păstrează forma perfectă, nu lasă ecranul să o strivească */
+  
+  object-fit: cover !important; 
+  border-radius: 50% !important;
+  
+  border: 3px solid rgba(126, 239, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+  transition: transform 0.3s ease;
+  
+  margin: 0 auto;
+  display: block;
+}
+
+/* Să se mărească un pic la hover împreună cu cercul */
+.clickable-ring:hover .custom-car-photo {
+  transform: scale(1.05);
+}
+
+.settings-photo-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  object-fit: cover;
+  margin: 15px auto 0;
+  display: block;
+  border: 2px solid rgba(91, 223, 255, 0.5);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+}
+
+/* =========================
+   CUSTOM FILE INPUT BUTTON
+========================= */
+
+input[type="file"] {
+  color: #a0aec0; /* Culoarea textului "no file selected" */
+}
+
+/* Stilizăm butonul efectiv de "Choose file" */
+input[type="file"]::file-selector-button {
+  background: linear-gradient(90deg, #0479ff, #08cbff);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 8px 16px;
+  margin-right: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+input[type="file"]::file-selector-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
 }

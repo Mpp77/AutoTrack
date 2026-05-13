@@ -4,13 +4,13 @@ import {
   Pie,
   Cell,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
 import "../App.css";
+
 const COLORS = [
   "#2e82ff",
   "#00bfff",
@@ -28,10 +28,9 @@ export default function ExpenseOverview() {
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
   
-  const today = new Date().toISOString().split("T")[0];
-
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
+  // Starea inițială este complet goală ("") ca să afișeze tot istoricul!
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -58,6 +57,7 @@ export default function ExpenseOverview() {
   useEffect(() => {
     let filtered = [...allExpenses];
 
+    // Aplicăm filtrele doar dacă utilizatorul a selectat o dată
     if (startDate) {
       filtered = filtered.filter(
         (exp) => new Date(exp.created_at) >= new Date(startDate)
@@ -100,6 +100,7 @@ export default function ExpenseOverview() {
       }))
     );
   }, [allExpenses, startDate, endDate, selectedCategory, selectedCurrency]);
+
   const categories = [
     "All",
     "Fuel",
@@ -120,8 +121,7 @@ export default function ExpenseOverview() {
     EUR: "€",
   };
   
-  const currency =
-    currencySymbols[localStorage.getItem("currency")] || "Lei";
+  const currency = currencySymbols[localStorage.getItem("currency")] || "Lei";
 
   return (
     <div className="overview-page">
@@ -133,15 +133,22 @@ export default function ExpenseOverview() {
         <h1>{t("expenseOverview")}</h1>
 
         <div className="filters-row">
+          {/* TRUCUL AICI: Inputul este "text" până când dai click pe el (onFocus), apoi devine "date" */}
           <input
-            type="date"
+            type={startDate ? "date" : "text"}
+            placeholder={t("startDate", "De la data...")}
+            onFocus={(e) => (e.target.type = "date")}
+            onBlur={(e) => { if (!startDate) e.target.type = "text"; }}
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
             className="filter-input"
           />
 
           <input
-            type="date"
+            type={endDate ? "date" : "text"}
+            placeholder={t("endDate", "Până la data...")}
+            onFocus={(e) => (e.target.type = "date")}
+            onBlur={(e) => { if (!endDate) e.target.type = "text"; }}
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
             className="filter-input"
@@ -164,68 +171,60 @@ export default function ExpenseOverview() {
           {t("total")}: {totalSpent.toFixed(2)} {currency}
         </p>
 
-            <div className="chart-wrapper">
-      {chartData.length > 0 ? (
-        <>
-          <ResponsiveContainer width="100%" height={260}>
-            <PieChart margin={{ top: 10, right: 45, bottom: 40, left: 45 }}>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="45%"
-              outerRadius={75}
-              dataKey="value"
-              label={false}
-              labelLine={false}
-              onClick={(_, index) =>
-                navigate(`/category/${chartData[index].name}`)
-              }
-            >
-                {chartData.map((entry, index) => (
-                  <Cell
-                    key={index}
-                    fill={COLORS[index % COLORS.length]}
+        <div className="chart-wrapper">
+          {chartData.length > 0 ? (
+            <>
+              <ResponsiveContainer width="100%" height={260}>
+                <PieChart margin={{ top: 10, right: 45, bottom: 40, left: 45 }}>
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="45%"
+                    outerRadius={75}
+                    dataKey="value"
+                    label={false}
+                    labelLine={false}
+                    onClick={(_, index) => navigate(`/category/${chartData[index].name}`)}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+
+                  <Tooltip
+                    formatter={(value, name) => [
+                      `${Number(value).toFixed(2)} ${currency}`, t(name, name),
+                    ]}
                   />
+                </PieChart>
+              </ResponsiveContainer>
+
+              <div className="chart-legend">
+                {chartData.map((item, index) => (
+                  <div key={item.name} className="legend-row">
+                    <div className="legend-left">
+                      <span
+                        className="legend-color"
+                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                      />
+                      <span className="legend-label">
+                        {t(item.name, item.name)}
+                      </span>
+                    </div>
+
+                    <span className="legend-value">
+                      {item.value.toFixed(2)} {currency}
+                    </span>
+                  </div>
                 ))}
-              </Pie>
-
-              <Tooltip
-                formatter={(value, name) => [
-                `${Number(value).toFixed(2)} ${currency}`,                  t(name, name),
-                ]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-
-                  <div className="chart-legend">
-          {chartData.map((item, index) => (
-            <div key={item.name} className="legend-row">
-              <div className="legend-left">
-                <span
-                  className="legend-color"
-                  style={{
-                    backgroundColor: COLORS[index % COLORS.length],
-                  }}
-                />
-
-                <span className="legend-label">
-                  {t(item.name, item.name)}
-                </span>
               </div>
-
-              <span className="legend-value">
-                {item.value.toFixed(2)} {currency}
-              </span>
-            </div>
-          ))}
+            </>
+          ) : (
+            <p className="no-data-text">
+  {t("noData", "No expenses recorded yet.")}
+</p>
+          )}
         </div>
-        </>
-      ) : (
-        <p className="text-center text-gray-400 italic">
-          {t("noData")}
-        </p>
-      )}
-    </div>
       </div>
     </div>
   );

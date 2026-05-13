@@ -69,6 +69,35 @@
   "Tuning": "Tuning",
   "Unexpected Repairs": "Unexpected Repairs",
   "Rovinieta": "Road Toll",
-  "OtherCategory": "Other category"
+  "OtherCategory": "Other category",
+
+  "maintenance": "Maintenance",
+  "itpExpiryDate": "ITP Expiry Date",
+  "insuranceExpiryDate": "Insurance Expiry Date",
+  "oilChangeDetails": "Oil Change Details",
+  "lastOilChangeKm": "Km at last change (e.g. 250000)",
+  "oilChangeInterval": "Service interval (e.g. 15000)",
+  "currentKm": "Current dashboard Km (e.g. 254000)",
+  "lastOilChangeDate": "Date of last oil change:",
+  "saveConfig": "Save Configuration",
+  "remindersSaved": "Reminders successfully saved!",
+  "status": "Status",
+  "configureAlerts": "Configure alerts",
+  "nothingToDo": "All good. Safe travels!",
+  "itpInDays": "ITP in:",
+  "days": "days",
+  "itpExpired": "ITP EXPIRED!",
+  "rcaInDays": "Insurance in:",
+  "rcaExpired": "INSURANCE EXPIRED!",
+  "serviceIn": "Service in:",
+  "serviceOverdue": "Service OVERDUE by",
+  "oilChangeIn": "Oil change in:",
+  "oilChangeExpired": "Oil change EXPIRED (1 Year)!",
+  "serviceAt": "Service at:",
+
+  "carPlate": "License Plate",
+  "carPhoto": "Car Photo (Optional)",
+  "settings": "Settings",
+  "settingsSaved": "Settings successfully saved!"
 
 }

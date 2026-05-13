@@ -62,19 +62,27 @@ export default function ExpenseList() {
   const currency =
     currencySymbols[localStorage.getItem("currency")] || "Lei";
 
-  return (
-    <div className="expense-grid">
-      {categories.map((cat) => (
-        <button
-          key={cat}
-          onClick={() => navigate(`/category/${cat}`)}
-          className="expense-category-card"
-        >
-          <span>{t(cat, cat)}</span>
-          <strong>
-          {grouped[cat].total.toFixed(2)} {currency}          </strong>
-        </button>
-      ))}
-    </div>
-  );
+    return (
+      <div className="expense-list-container">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => navigate(`/category/${cat}`)}
+            className="expense-item-card"
+          >
+            <div className="expense-item-left">
+              <p className="expense-item-category">{t(cat, cat)}</p>
+              {/* Un mic indicator vizual că este un buton */}
+              <p className="expense-item-date">{t("viewDetails", "Vezi detalii")} →</p>
+            </div>
+            
+            <div className="expense-item-right">
+              <p className="expense-item-amount">
+                {grouped[cat].total.toFixed(2)} {currency}
+              </p>
+            </div>
+          </button>
+        ))}
+      </div>
+    );
 }

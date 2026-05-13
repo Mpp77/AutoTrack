@@ -7,6 +7,7 @@ import AddExpensePage from "./components/AddExpensePage";
 import ExpenseListPage from "./components/ExpenseListPage";
 import CategoryPage from "./components/categoryPage";
 import Settings from "./components/Settings";
+import RemindersPage from "./components/RemindersPage";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <Route path="/add-expense" element={<AddExpensePage />} />
       <Route path="/expenses" element={<ExpenseListPage />} />
       <Route path="/settings" element={<Settings />} />
+      <Route path="/reminders" element={<RemindersPage />} />
 
       <Route path="/category/:category" element={<CategoryPage />} />
 

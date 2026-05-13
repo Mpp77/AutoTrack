@@ -9,31 +9,29 @@ export default function CategoryPage() {
   const { t } = useTranslation();
 
   const [expenses, setExpenses] = useState([]);
-  const [newAmount, setNewAmount] = useState("");
-  const [newNote, setNewNote] = useState("");
   const [message, setMessage] = useState("");
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";
-const exchangeRate = 0.19;
+  const exchangeRate = 0.19;
 
-const currencySymbols = {
-  RON: "Lei",
-  EUR: "€",
-};
+  const currencySymbols = {
+    RON: "Lei",
+    EUR: "€",
+  };
 
-const currency = currencySymbols[selectedCurrency] || "Lei";
+  const currency = currencySymbols[selectedCurrency] || "Lei";
 
-const convertAmount = (amount, fromCurrency = "RON") => {
-  let convertedAmount = parseFloat(amount) || 0;
+  const convertAmount = (amount, fromCurrency = "RON") => {
+    let convertedAmount = parseFloat(amount) || 0;
 
-  if (fromCurrency === "RON" && selectedCurrency === "EUR") {
-    convertedAmount = convertedAmount * exchangeRate;
-  } else if (fromCurrency === "EUR" && selectedCurrency === "RON") {
-    convertedAmount = convertedAmount / exchangeRate;
-  }
+    if (fromCurrency === "RON" && selectedCurrency === "EUR") {
+      convertedAmount = convertedAmount * exchangeRate;
+    } else if (fromCurrency === "EUR" && selectedCurrency === "RON") {
+      convertedAmount = convertedAmount / exchangeRate;
+    }
 
-  return convertedAmount;
-};
+    return convertedAmount;
+  };
 
   const fetchExpenses = async () => {
     try {
@@ -128,80 +126,18 @@ const convertAmount = (amount, fromCurrency = "RON") => {
     }
   };
 
-  const handleAddExpenseInCategory = async () => {
-    if (!newAmount) {
-      setMessage("Please enter amount");
-      return;
-    }
-
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await fetch(`${API_URL}/expenses`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          category,
-          amount: parseFloat(newAmount),
-          note: newNote,
-          currency: localStorage.getItem("currency") || "RON",
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Add failed");
-      }
-
-      setNewAmount("");
-      setNewNote("");
-      fetchExpenses();
-    } catch (error) {
-      console.error(error);
-      setMessage(error.message);
-    }
-  };
-
   return (
     <div className="category-page">
       <button onClick={() => navigate("/expenses")} className="back-home-btn">
-      ← {t("back")}
+        ← {t("back")}
       </button>
   
       <div className="category-card">
         <h1 className="category-title">{t(category, category)}</h1>
   
         <p className="category-total">
-        {t("total")}: {total.toFixed(2)} {currency}
-                </p>
-  
-        <div className="category-add-box">
-          <h2>{t("addExpenseSimple")}</h2>
-  
-          <div className="category-form">
-            <input
-              type="number"
-              placeholder={t("amount")}
-              value={newAmount}
-              onChange={(e) => setNewAmount(e.target.value)}
-            />
-  
-            <input
-              type="text"
-              placeholder={t("noteOptional")}
-              value={newNote}
-              onChange={(e) => setNewNote(e.target.value)}
-            />
-  
-            <button onClick={handleAddExpenseInCategory}>
-              {t("saveExpense")}
-            </button>
-          </div>
-        </div>
+          {t("total")}: {total.toFixed(2)} {currency}
+        </p>
   
         <div className="category-expense-grid">
           {expenses.map((exp) => (
@@ -223,7 +159,7 @@ const convertAmount = (amount, fromCurrency = "RON") => {
 }
 
 function ExpenseCard({ exp, currency, convertAmount, onDelete, onSave }) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const [amount, setAmount] = useState(exp.amount);
   const [note, setNote] = useState(exp.note || "");
@@ -243,8 +179,8 @@ function ExpenseCard({ exp, currency, convertAmount, onDelete, onSave }) {
       />
 
       <p>
-      {convertAmount(amount, exp.currency).toFixed(2)} {currency}
-            </p>
+        {convertAmount(amount, exp.currency).toFixed(2)} {currency}
+      </p>
 
       <p className="expense-date">
         {t("added")}: {new Date(exp.created_at).toLocaleDateString("ro-RO")}
@@ -261,5 +197,4 @@ function ExpenseCard({ exp, currency, convertAmount, onDelete, onSave }) {
       </div>
     </div>
   );
-
 }

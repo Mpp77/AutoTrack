@@ -1,11 +1,79 @@
 import { useNavigate } from "react-router-dom";
-import { PieChart, MonitorUp, List, Plus, Settings } from "lucide-react";
+import { PieChart, List, Plus, Settings, AlertTriangle, Droplet, CheckCircle, Calendar } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react";
 import "../App.css";
 
 export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  
+  // --- CITIM SETĂRILE PERSONALIZATE ALE MAȘINII ---
+  const carPlate = localStorage.getItem("carPlate") || t("auto", "Auto");
+  const carImage = localStorage.getItem("carImage");
+
+  const [reminders, setReminders] = useState([]);
+
+  useEffect(() => {
+    const calculateReminders = () => {
+      const activeReminders = [];
+      const today = new Date();
+      
+      // ITP
+      const savedItp = localStorage.getItem("itpDate");
+      if (savedItp) {
+        const diff = Math.ceil((new Date(savedItp) - today) / (1000 * 60 * 60 * 24));
+        if (diff <= 30 && diff > 10) {
+          activeReminders.push({ id: 'itp', type: "info", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft", "zile rămase")}` });
+        } else if (diff <= 10 && diff > 0) {
+          activeReminders.push({ id: 'itp', type: "warning", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft", "zile rămase")}` });
+        } else if (diff <= 0) {
+          activeReminders.push({ id: 'itp', type: "warning", text: t("itpExpired", "ITP EXPIRAT!") });
+        }
+      }
+
+      // RCA
+      const savedRca = localStorage.getItem("insuranceDate");
+      if (savedRca) {
+        const diffRca = Math.ceil((new Date(savedRca) - today) / (1000 * 60 * 60 * 24));
+        if (diffRca <= 30 && diffRca > 10) {
+          activeReminders.push({ id: 'rca', type: "info", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft", "zile rămase")}` });
+        } else if (diffRca <= 10 && diffRca > 0) {
+          activeReminders.push({ id: 'rca', type: "warning", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft", "zile rămase")}` });
+        } else if (diffRca <= 0) {
+          activeReminders.push({ id: 'rca', type: "warning", text: t("rcaExpired", "RCA EXPIRAT!") });
+        }
+      }
+
+      // ULEI - CALCUL KM
+      const targetKm = localStorage.getItem("targetKm");
+      if (targetKm) {
+        activeReminders.push({ 
+          id: 'oil-km', 
+          type: "info", 
+          icon: <Droplet size={18} />, 
+          text: `${t("serviceAt", "Revizie la:")} ${targetKm} km` 
+        });
+      }
+
+      // ULEI - CALCUL DATĂ
+      const oilExpiryDate = localStorage.getItem("oilExpiryDate");
+      if (oilExpiryDate) {
+        const diffOil = Math.ceil((new Date(oilExpiryDate) - today) / (1000 * 60 * 60 * 24));
+        if (diffOil <= 30 && diffOil > 10) {
+          activeReminders.push({ id: 'oil-date', type: "info", icon: <Calendar size={18} />, text: `${t("oilChangeIn", "Schimb ulei în:")} ${diffOil} ${t("days", "zile")}` });
+        } else if (diffOil <= 10 && diffOil > 0) {
+          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: `${t("oilChangeIn", "Schimb ulei în:")} ${diffOil} ${t("days", "zile")}` });
+        } else if (diffOil <= 0) {
+          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: t("oilChangeExpired", "Schimb ulei EXPIRAT!") });
+        }
+      }
+
+      setReminders(activeReminders);
+    };
+
+    calculateReminders();
+  }, [t]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -15,89 +83,91 @@ export default function Home() {
   return (
     <div className="home-page">
       <button onClick={handleLogout} className="logout-btn">
-        ← {t("logout")}
+        ← {t("logout", "Ieșire")}
       </button>
 
-      <button
-        onClick={() => navigate("/settings")}
-        className="settings-btn"
-      >
+      <button onClick={() => navigate("/settings")} className="settings-btn">
         <Settings size={22} />
       </button>
 
-      <section className="hero-card">
-        <h1>{t("welcomeTitle")}</h1>
-        <p>{t("welcomeSubtitle")}</p>
+      <div className="dashboard-central">
+        
+        <h2 className="dashboard-greeting">
+          {t("status", "Status")} <span className="highlight">{carPlate}</span>
+        </h2>
 
-        <div className="icon-row">
-          <NeonIcon type="report" />
-          <NeonIcon type="chart" />
-          <NeonIcon type="car" />
-          <NeonIcon type="repair" />
+        {/* Am lăsat doar poza mașinii, fără cercul din fundal */}
+        <div 
+          className="progress-ring-container clickable-ring" 
+          onClick={() => navigate("/reminders")}
+          title={t("configureAlerts", "Configurează alerte")}
+        >
+          <div className="car-icon-center">
+            {carImage ? (
+              <img src={carImage} alt="Car" className="custom-car-photo" />
+            ) : (
+              <NeonCarIcon />
+            )}
+          </div>
         </div>
-      </section>
+        
+        <div className="smart-badges-container">
+          {reminders.length > 0 ? (
+            reminders.map((rem) => (
+              <div 
+                key={rem.id} 
+                className={`smart-badge badge-${rem.type} clickable-badge`}
+                onClick={() => navigate("/reminders")} 
+                title={t("updateAlert", "Actualizează alerta")}
+              >
+                {rem.icon || <AlertTriangle size={18} />}
+                <span>{rem.text}</span>
+              </div>
+            ))
+          ) : (
+            <div 
+              className="smart-badge badge-success clickable-badge"
+              onClick={() => navigate("/reminders")}
+            >
+              <CheckCircle size={18} />
+              <span>{t("nothingToDo", "Nimic de făcut")}</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
+        {t("configureAlerts", "Configurează alerte")} →
+      </button>
 
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
           <PieChart />
-          <span>{t("overview")}</span>
+          <span>{t("overview", "Rapoarte")}</span>
         </button>
-
-        <button className="active" onClick={() => navigate("/add-expense")}>
+        <button onClick={() => navigate("/add-expense")}>
           <Plus />
-          <span>{t("addExpenseShort")}</span>
+          <span>{t("addExpenseShort", "Adaugă")}</span>
         </button>
-
         <button onClick={() => navigate("/expenses")}>
           <List />
-          <span>{t("expenseList")}</span>
+          <span>{t("expenseList", "Lista")}</span>
         </button>
       </nav>
     </div>
   );
 }
 
-function NeonIcon({ type }) {
+function NeonCarIcon() {
   return (
-    <div className="neon-circle">
-      {type === "report" && (
-        <svg viewBox="0 0 120 120" className="neon-svg">
-          <path d="M34 22h42l14 14v62H34z" />
-          <path d="M76 22v18h18" />
-          <path d="M46 48h28M46 60h28M46 72h18" />
-          <path d="M46 92V78M58 92V84M70 92V70" />
-          <circle cx="88" cy="78" r="18" />
-          <path d="M88 60v18l13 10" />
-        </svg>
-      )}
-
-      {type === "chart" && (
-        <MonitorUp strokeWidth={1.7} className="lucide-neon" />
-      )}
-
-      {type === "car" && (
-        <svg viewBox="0 0 140 120" className="neon-svg car-svg">
-          <path d="M30 70l14-22h50l17 22h7c8 0 13 6 13 14v10H14V84c0-8 6-14 14-14z" />
-          <path d="M50 52h18v18H38zM74 52h18l14 18H74z" />
-          <circle cx="42" cy="94" r="10" />
-          <circle cx="100" cy="94" r="10" />
-          <path d="M58 88h28" />
-          <circle cx="94" cy="34" r="22" />
-          <path d="M84 44l20-20M85 27h.1M103 41h.1" />
-        </svg>
-      )}
-
-      {type === "repair" && (
-        <svg viewBox="0 0 120 120" className="neon-svg">
-          <path d="M28 30h64a6 6 0 0 1 6 6v48H36L28 94z" />
-          <path d="M28 42h70" />
-          <circle cx="42" cy="36" r="2" />
-          <circle cx="54" cy="36" r="2" />
-          <circle cx="66" cy="36" r="2" />
-          <path d="M80 54l-26 26M55 54l25 25" />
-          <path d="M34 98h22M38 88h14" />
-        </svg>
-      )}
-    </div>
+    <svg viewBox="0 0 140 120" className="neon-svg-center">
+      <path d="M30 70l14-22h50l17 22h7c8 0 13 6 13 14v10H14V84c0-8 6-14 14-14z" />
+      <path d="M50 52h18v18H38zM74 52h18l14 18H74z" />
+      <circle cx="42" cy="94" r="10" />
+      <circle cx="100" cy="94" r="10" />
+      <path d="M58 88h28" />
+      <circle cx="94" cy="34" r="22" />
+      <path d="M84 44l20-20M85 27h.1M103 41h.1" />
+    </svg>
   );
 }
