@@ -29,7 +29,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -49,6 +50,7 @@ app.options("/api/login", cors());
 app.options("/api/expenses", cors());
 app.options("/api/expenses/:id", cors());
 app.options("/api/reset-pasword", cors());
+app.options("/api/user-settings", cors());
 
 app.post("/api/register", async (req, res) => {
   const { email, password } = req.body;
@@ -204,4 +206,57 @@ app.delete("/api/expenses/:id", auth, async (req, res) => {
 
 app.listen(5001, () => {
   console.log("🚀 Server running on port 5001");
+});
+
+// --- RUTE PENTRU SETĂRI PROFIL ȘI MAȘINĂ ---
+
+// 1. GET: Preia datele mașinii și setările când intri în aplicație
+app.get("/api/user-settings", auth, async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km FROM users WHERE id=$1",
+      [req.user.userId]
+    );
+    res.json(result.rows[0] || {});
+  } catch (error) {
+    console.error("GET SETTINGS ERROR:", error);
+    res.status(500).json({ message: "Failed to get settings" });
+  }
+});
+
+// 2. POST: Salvează/Actualizează datele din pagina de Settings
+app.post("/api/user-settings", auth, async (req, res) => {
+  const { 
+    carPlate, 
+    carImage, 
+    currency, 
+    itpDate, 
+    insuranceDate, 
+    oilDate, 
+    targetKm 
+  } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE users
+       SET car_plate=$1, car_image=$2, currency=$3, itp_date=$4, insurance_date=$5, oil_date=$6, target_km=$7
+       WHERE id=$8 
+       RETURNING car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km`,
+      [
+        carPlate || null, 
+        carImage || null, 
+        currency || 'RON', 
+        itpDate || null, 
+        insuranceDate || null, 
+        oilDate || null, 
+        targetKm || null, 
+        req.user.userId
+      ]
+    );
+
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("UPDATE SETTINGS ERROR:", error);
+    res.status(500).json({ message: "Failed to update settings" });
+  }
 });
