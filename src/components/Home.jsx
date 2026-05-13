@@ -16,7 +16,6 @@ export default function Home() {
   // O variabilă care ne anunță când serverul a terminat de trimis datele
   const [cloudDataLoaded, setCloudDataLoaded] = useState(false);
 
-  // 1. Efectul care DESCARCĂ datele din Cloud
   useEffect(() => {
     const fetchCloudSettings = async () => {
       const token = localStorage.getItem("token");

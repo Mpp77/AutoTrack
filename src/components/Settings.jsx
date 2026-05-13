@@ -25,13 +25,35 @@ export default function Settings() {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCarImage(reader.result);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      
+      img.onload = () => {
+        // Creăm un canvas invizibil pentru a redimensiona poza
+        const canvas = document.createElement("canvas");
+        
+        // Tăiem poza la 400px
+        const MAX_WIDTH = 400; 
+        const scaleSize = MAX_WIDTH / img.width;
+        
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleSize;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Comprimăm la 70% calitate
+        const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+        
+        // Salvăm în state
+        setCarImage(compressedBase64); 
       };
-      reader.readAsDataURL(file);
-    }
+    };
   };
 
   const handleSave = async () => {
