@@ -1440,34 +1440,29 @@ height: clamp(105px, 12vw, 180px);
 /* =========================
    ADAPTARE LAPTOP vs TELEFON (ZONA CENTRALĂ)
 ========================= */
-
 .dashboard-central {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  /* SETAREA PENTRU LAPTOP: Elementele stau frumos aliniate mai sus, cu puțin spațiu */
-  justify-content: flex-start;
-  margin-top: 8vh; 
+  width: 100%;
 }
 
-.dashboard-greeting {
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: clamp(24px, 5vw, 32px); 
-  font-weight: 800;
-  text-align: center;
-  color: white;
-  letter-spacing: -0.5px;
-  margin-bottom: 15px; 
+/* Pe Laptop (Ecrane mari): Îl lăsăm mai sus, să arate natural */
+@media (min-width: 769px) {
+  .dashboard-central {
+    justify-content: flex-start;
+    margin-top: 8vh;
+  }
 }
 
-/* SETAREA DOAR PENTRU TELEFON (Se activează singură pe ecrane mici) */
+/* Pe Telefon (Ecrane mici): Îl forțăm în centrul spațiului disponibil */
 @media (max-width: 768px) {
   .dashboard-central {
-    /* Pe telefon tragem elementele exact în centrul ecranului */
-    justify-content: center; 
-    margin-top: 0;
+    margin-top: auto !important;
+    margin-bottom: 12vh !important; /* Compensează vizual spațiul ocupat de meniul de jos */
+    justify-content: center !important;
   }
 }
 
