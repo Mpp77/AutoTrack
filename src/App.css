@@ -1437,12 +1437,19 @@ height: clamp(105px, 12vw, 180px);
    SMART DASHBOARD (GAMIFICARE)
 ========================= */
 
+/* =========================
+   ADAPTARE LAPTOP vs TELEFON (ZONA CENTRALĂ)
+========================= */
+
 .dashboard-central {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: clamp(20px, 4vh, 50px);
-  padding: 0 20px;
+  gap: 20px;
+  /* SETAREA PENTRU LAPTOP: Elementele stau frumos aliniate mai sus, cu puțin spațiu */
+  justify-content: flex-start;
+  margin-top: 8vh; 
 }
 
 .dashboard-greeting {
@@ -1450,9 +1457,18 @@ height: clamp(105px, 12vw, 180px);
   font-size: clamp(24px, 5vw, 32px); 
   font-weight: 800;
   text-align: center;
-  margin-bottom: 15px !important;
   color: white;
   letter-spacing: -0.5px;
+  margin-bottom: 15px; 
+}
+
+/* SETAREA DOAR PENTRU TELEFON (Se activează singură pe ecrane mici) */
+@media (max-width: 768px) {
+  .dashboard-central {
+    /* Pe telefon tragem elementele exact în centrul ecranului */
+    justify-content: center; 
+    margin-top: 0;
+  }
 }
 
 .dashboard-greeting .highlight {
@@ -1611,10 +1627,6 @@ height: clamp(105px, 12vw, 180px);
    REGLAJE SPATIALE HOME PAGE
 ========================= */
 
-/* Tragem blocul central mai sus */
-.dashboard-central {
-  margin-top: 10px !important; /* Înainte era mult prea mare */
-}
 
 /* Micșorăm spațiul dintre "Status Auto" și cerc */
 .dashboard-greeting {
