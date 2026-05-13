@@ -97,6 +97,10 @@
   "carPlate": "Număr Înmatriculare",
   "carPhoto": "Poză Mașină (Opțional)",
   "settings": "Setări Profil",
-  "settingsSaved": "Setări salvate cu succes!"
+  "settingsSaved": "Setări salvate cu succes!",
+
+  "changePhoto": "Schimbă poza",
+"removePhoto": "Șterge poza",
+"confirmDeletePhoto": "Sigur vrei să ștergi poza mașinii?"
 
 }

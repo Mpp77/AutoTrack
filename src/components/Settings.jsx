@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Camera, Type, Globe, Coins } from "lucide-react";
+import { Camera, Type, Globe, Coins, Car } from "lucide-react";
 import "../App.css";
 
 export default function Settings() {
@@ -100,6 +100,13 @@ export default function Settings() {
     }
   };
 
+  const handleRemoveImage = () => {
+    if (window.confirm(t("confirmDeletePhoto", "Sigur vrei să ștergi poza mașinii?"))) {
+      setCarImage(""); // Ștergem din starea aplicației
+      localStorage.removeItem("carImage"); // Ștergem din memoria locală
+    }
+  };
+
   return (
     <div className="settings-page">
       <button onClick={() => navigate("/home")} className="back-home-btn">
@@ -144,7 +151,7 @@ export default function Settings() {
         {/* 3. SETARE NUMĂR ÎNMATRICULARE */}
         <div className="settings-row">
           <label>
-            <Type size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> 
+            <Car size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> 
             {t("carPlate", "Număr Înmatriculare")}
           </label>
           <input 
@@ -156,6 +163,7 @@ export default function Settings() {
           />
         </div>
 
+        {/* 4. SETARE POZĂ MAȘINĂ */}
         {/* 4. SETARE POZĂ MAȘINĂ */}
         <div className="settings-row">
           <label>
@@ -169,12 +177,33 @@ export default function Settings() {
             onChange={handleImageUpload} 
             style={{ padding: "12px", cursor: "pointer", height: "auto", minHeight: "52px" }}
           />
+          
           {carImage && (
-            <img 
-              src={carImage} 
-              alt="Preview" 
-              className="settings-photo-preview"
-            />
+            <div style={{ textAlign: 'center', marginTop: '15px' }}>
+              <img 
+                src={carImage} 
+                alt="Preview" 
+                className="settings-photo-preview"
+                style={{ marginBottom: '10px' }}
+              />
+              <button 
+                onClick={handleRemoveImage}
+                style={{
+                  display: 'block',
+                  margin: '0 auto',
+                  background: 'rgba(255, 68, 68, 0.2)',
+                  border: '1px solid #ff4444',
+                  color: '#ff4444',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  fontWeight: '700',
+                  cursor: 'pointer'
+                }}
+              >
+                {t("removePhoto", "Șterge poza")}
+              </button>
+            </div>
           )}
         </div>
 

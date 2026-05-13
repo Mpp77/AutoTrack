@@ -98,6 +98,9 @@
   "carPlate": "License Plate",
   "carPhoto": "Car Photo (Optional)",
   "settings": "Settings",
-  "settingsSaved": "Settings successfully saved!"
+  "settingsSaved": "Settings successfully saved!",
 
+"changePhoto": "Change photo",
+"removePhoto": "Remove photo",
+"confirmDeletePhoto": "Are you sure you want to delete the car photo?"
 }
