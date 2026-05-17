@@ -133,40 +133,33 @@ export default function ExpenseOverview() {
         <h1>{t("expenseOverview")}</h1>
 
         <div className="filters-row">
-          {/* TRUCUL AICI: Inputul este "text" până când dai click pe el (onFocus), apoi devine "date" */}
-          <input
-            type={startDate ? "date" : "text"}
-            placeholder={t("startDate", "De la data...")}
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => { if (!startDate) e.target.type = "text"; }}
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="filter-input"
-          />
+  {/* Fixat obligatoriu pe "date" pentru a opri tastatura de iPhone */}
+  <input
+    type="date"
+    value={startDate}
+    onChange={(e) => setStartDate(e.target.value)}
+    className="filter-input"
+  />
 
-          <input
-            type={endDate ? "date" : "text"}
-            placeholder={t("endDate", "Până la data...")}
-            onFocus={(e) => (e.target.type = "date")}
-            onBlur={(e) => { if (!endDate) e.target.type = "text"; }}
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="filter-input"
-          />
+  <input
+    type="date"
+    value={endDate}
+    onChange={(e) => setEndDate(e.target.value)}
+    className="filter-input"
+  />
 
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="filter-input"
-          >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat === "All" ? t("allCategories") : t(cat, cat)}
-              </option>
-            ))}
-          </select>
-        </div>
-
+  <select
+    value={selectedCategory}
+    onChange={(e) => setSelectedCategory(e.target.value)}
+    className="filter-input"
+  >
+    {categories.map((cat) => (
+      <option key={cat} value={cat}>
+        {cat === "All" ? t("allCategories") : t(cat, cat)}
+      </option>
+    ))}
+  </select>
+</div>
         <p className="overview-total">
           {t("total")}: {totalSpent.toFixed(2)} {currency}
         </p>
