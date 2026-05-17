@@ -1768,27 +1768,52 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /* =======================================================
-   OBLIGATORIU: FIX PENTRU MOBIL (Tăiere interfață & Scroll)
+   FIX DEFINITIV PENTRU ÎNCADRARE ȘI SCROLL PE MOBIL
    ======================================================= */
-@media (max-width: 480px) {
-  /* Forțăm pagina de setări să respire, adăugând un spațiu gol generos la bază */
-  .settings-page {
-    min-height: 100vh !important;
-    height: auto !important;
-    overflow-y: auto !important;
-    display: block !important; /* Dezactivează flex ca să permită scroll-ul nativ fluid */
-    padding: 20px 14px calc(env(safe-area-inset-bottom) + 50px) !important; 
-    box-sizing: border-box;
+   @media (max-width: 480px) {
+    /* Resetăm containerul paginii pentru a elimina orice blocaj de înălțime */
+    .settings-page {
+      min-height: 100vh !important;
+      height: auto !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      padding: 12px 12px calc(env(safe-area-inset-bottom) + 30px) !important;
+      box-sizing: border-box;
+      overflow-y: auto !important;
+    }
+  
+    /* Controlăm cardul independent să nu mai fie mai înalt decât ecranul */
+    .digital-talon-card.page-version {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 16px 14px !important;
+      margin: 8px auto 0 !important;
+      box-sizing: border-box;
+      
+      /* Dacă ecranul e foarte mic, lăsăm cardul să își facă scroll intern pentru a nu tăia butonul */
+      display: flex;
+      flex-direction: column;
+    }
+  
+    /* Compactăm puțin spațiile dintre rânduri pe mobil ca să urce interfața mai sus */
+    .talon-row {
+      margin-bottom: 8px !important;
+    }
+  
+    .talon-grid {
+      gap: 8px !important;
+    }
+  
+    .talon-input-field {
+      padding: 6px 8px !important;
+      font-size: 13px !important;
+    }
+  
+    /* Forțăm butonul de salvare să aibă o margine clară de siguranță la bază */
+    .save-btn-neon {
+      margin-top: 16px !important;
+      margin-bottom: 12px !important;
+      padding: 12px !important; /* Îl face ușor mai compact pe ecranul telefonului */
+    }
   }
-
-  /* Ajustăm cardul să nu mai stea sufocat pe marginile telefonului */
-  .digital-talon-card.page-version {
-    width: 96% !important;
-    padding: 14px 12px !important;
-    margin: 12px auto !important;
-  }
-
-  .talon-grid {
-    gap: 8px !important; /* Micșorăm spațiul dintre coloane ca să nu se înghesuie placeholder-ele */
-  }
-}
