@@ -17,6 +17,10 @@ body {
   display: block;
 }
 
+button {
+  cursor: pointer !important;
+}
+
 /* =========================
    HOME PAGE
 ========================= */
@@ -196,7 +200,8 @@ body {
 }
 
 .progress-ring {
-  transform: scale(0.92) rotate(-90deg) !important;  transform-origin: center;
+  transform: scale(0.92) rotate(-90deg) !important;  
+  transform-origin: center;
   overflow: visible;
 }
 
@@ -352,30 +357,46 @@ body {
   box-shadow: 0 0 15px rgba(50, 205, 50, 0.4);
 }
 
-/* Stil nou pentru butonul de alerte */
+/* =========================
+   BARA DE ACTIUNI (ALERTE & TALON)
+========================= */
+
+.home-action-row {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom) + 115px) !important; 
+  z-index: 998;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  width: max-content;
+}
+
 .edit-reminders-link {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  margin: 15px auto 0 !important; /* Îl centrează sub pastila de revizie */
-  padding: 8px 20px !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(141, 164, 200, 0.3) !important;
-  border-radius: 999px !important;
-  color: #8da4c8 !important;
+  padding: 8px 22px !important;
+  background: rgba(3, 16, 42, 0.7) !important;
+  border: 1px solid rgba(80, 141, 255, 0.4) !important;
+  border-radius: 12px !important;
+  color: #7eefff !important;
   font-size: 13px !important;
-  font-weight: 600 !important;
+  font-weight: 700;
   text-decoration: none !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2) !important;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.2s ease;
-  width: fit-content;
 }
 
-.edit-reminders-link {
-  display: inline-flex !important; /* Esențial pentru alinierea iconiței cu textul */
-  align-items: center !important;
-  justify-content: center !important;
-  /* Restul stilurilor rămân la fel */
+.edit-reminders-link:hover {
+  background: rgba(141, 164, 200, 0.15) !important;
+  color: #ffffff !important;
+  border-color: rgba(126, 239, 255, 0.6) !important;
 }
 
 /* =========================
@@ -430,18 +451,6 @@ body {
     0 0 28px rgba(0, 207, 255, 0.72);
 }
 
-
-.alerts-action-container {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom) + 110px) !important; 
-  z-index: 998;
-}
-.edit-reminders-link {
-  padding: 8px 24px !important; 
-  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2) !important;
-}
 /* =========================
    AUTH / LOGIN PAGE
 ========================= */
@@ -710,10 +719,8 @@ body {
   box-sizing: border-box;
   cursor: pointer;
   box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.2);
-  
-  /* REPARATIE TOUCH RAPID */
-  pointer-events: auto !important; /* Forțează browserul să trimită click-ul direct la input */
-  touch-action: manipulation; /* Elimină întârzierea de 300ms pe care o pune iOS la touch */
+  pointer-events: auto !important; 
+  touch-action: manipulation; 
 }
 
 .filter-input option {
@@ -721,19 +728,18 @@ body {
   color: white;
 }
 
-/* Forțăm zona de text din interior să nu blocheze click-ul */
 .filter-input::-webkit-date-and-time-value {
   color: #ffffff !important;
   min-height: 24px;
   text-align: center;
   line-height: 24px;
-  pointer-events: none !important; /* Textul din interior devine "fantomă", deci click-ul cade pe caseta mare */
+  pointer-events: none !important; 
 }
 
 .filter-input::-webkit-datetime-edit {
   color: #ffffff !important;
   display: inline-flex !important;
-  pointer-events: none !important; /* La fel și pentru bucățile de text (zz/ll/aaaa) */
+  pointer-events: none !important; 
 }
 
 .filter-input::-webkit-calendar-picker-indicator {
@@ -1309,19 +1315,14 @@ input[type="file"]::file-selector-button:hover {
 ========================= */
 
 @media (min-width: 769px) {
-  .progress-ring-container {
-    width: 280px !important; 
-    height: 280px !important;
-  }
-
   .dashboard-central {
     justify-content: center;
     gap: 10px;
   }
 
   .progress-ring-container {
-    width: 220px;
-    height: 220px;
+    width: 220px !important;
+    height: 220px !important;
   }
 
   .custom-car-photo {
@@ -1450,14 +1451,8 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 600px) {
-  .progress-ring-container {
-    width: 230px !important;
-    height: 230px !important;
-    margin-bottom: 6px !important;
-  }
-
-  .alerts-action-container {
-    bottom: calc(env(safe-area-inset-bottom) + 105px) !important;
+  .home-action-row {
+    bottom: calc(env(safe-area-inset-bottom) + 115px) !important;
   }
 
   .dashboard-central {
@@ -1470,13 +1465,14 @@ input[type="file"]::file-selector-button:hover {
   }
 
   .progress-ring-container {
-    width: 185px;
-    height: 185px;
+    width: 230px !important;
+    height: 230px !important;
+    margin-bottom: 6px !important;
   }
 
   .custom-car-photo {
-    width: 175px;
-    height: 175px;
+    width: 175px !important;
+    height: 175px !important;
   }
 
   .smart-badges-container {
@@ -1487,10 +1483,6 @@ input[type="file"]::file-selector-button:hover {
   .smart-badge {
     padding: 8px 16px;
     font-size: 13px;
-  }
-
-  .edit-reminders-link {
-    margin-top: 2px;
   }
 
   .bottom-nav {
@@ -1569,4 +1561,205 @@ input[type="file"]::file-selector-button:hover {
   .remove-photo-btn:active {
     transform: scale(0.95);
   }
+}
+
+/* =========================
+   TALON DIGITAL
+========================= */
+
+.toggle-talon-btn {
+  background: transparent;
+  border: none;
+  color: #8da4c8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 10px auto;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: block;
+}
+
+.toggle-talon-btn:hover {
+  color: #7eefff;
+  background: rgba(126, 239, 255, 0.08);
+}
+
+.digital-talon-card {
+  width: 90%;
+  max-width: 340px;
+  background: linear-gradient(135deg, rgba(6, 24, 57, 0.85) 0%, rgba(3, 14, 36, 0.95) 100%);
+  border: 1px solid rgba(91, 223, 255, 0.25);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px auto;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(0, 191, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: left;
+  animation: fadeInTalon 0.3s ease-out;
+}
+
+@keyframes fadeInTalon {
+  from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.talon-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(141, 164, 200, 0.2);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.talon-country {
+  background: #003399; 
+  color: white;
+  font-weight: 900;
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.talon-title-box h3 {
+  margin: 0;
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.talon-title-box p {
+  margin: 2px 0 0;
+  font-size: 9px;
+  color: #8da4c8;
+  font-weight: 600;
+}
+
+.talon-row {
+  margin-bottom: 10px;
+}
+
+.talon-label {
+  display: block;
+  font-size: 10px;
+  color: #8da4c8;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.talon-value {
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.talon-value-neon {
+  font-size: 16px;
+  color: #7eefff;
+  font-weight: 800;
+  text-shadow: 0 0 8px rgba(126, 239, 255, 0.4);
+}
+
+.vin-text {
+  font-family: 'Courier New', Courier, monospace; 
+  letter-spacing: 1px;
+  color: #ffd700; 
+}
+
+/* Stilul inputurilor din interiorul talonului */
+.talon-input-field {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(91, 223, 255, 0.15) !important;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 700;
+  box-sizing: border-box;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+
+.talon-input-field:focus {
+  outline: none;
+  border-color: rgba(91, 223, 255, 0.6) !important;
+  background: rgba(13, 26, 47, 0.8) !important;
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
+}
+
+/* Zona de butoane din interiorul talonului */
+.talon-actions-inside {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(141, 164, 200, 0.15);
+  padding-top: 12px;
+}
+
+.talon-save-btn, .talon-close-btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.talon-save-btn {
+  background: #7eefff !important;
+  color: #03102a !important;
+}
+
+.talon-save-btn:hover {
+  background: #ffffff !important;
+  box-shadow: 0 0 10px rgba(126, 239, 255, 0.5);
+}
+
+.talon-close-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.talon-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.digital-talon-card.page-version {
+  width: 100% !important;
+  max-width: 450px !important; /* Îl lăsăm puțin mai lat pe pagină dedicată ca să fie super lizibil */
+  margin: 20px auto 0 !important;
+}
+/* Elimină săgețile din input-ul de numere pentru o estetică curată */
+.talon-input-field::-webkit-outer-spin-button,
+.talon-input-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.talon-input-field[type=number] {
+  -moz-appearance: textfield; /* Pentru Firefox */
+}
+
+.talon-input-field::placeholder {
+  text-align: left; /* Sau 'center', dacă vrei ca sugestiile să apară exact pe mijloc */
+  opacity: 0.4;
+  font-weight: 500;
+}
+
+.talon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px; /* Spațiu fin între coloane */
 }

@@ -8,6 +8,7 @@ import ExpenseListPage from "./components/ExpenseListPage";
 import CategoryPage from "./components/categoryPage";
 import Settings from "./components/Settings";
 import RemindersPage from "./components/RemindersPage";
+import TalonPage from "./components/talonPage";
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
       <Route path="/expenses" element={<ExpenseListPage />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/reminders" element={<RemindersPage />} />
-
+      <Route path="/talon" element={<TalonPage />} />
       <Route path="/category/:category" element={<CategoryPage />} />
 
       <Route path="*" element={<Navigate to="/" />} />

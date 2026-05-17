@@ -102,6 +102,21 @@
   "changePhoto": "Schimbă poza",
 "chooseFile": "Alege poza",
  "removePhoto": "Șterge poza",
-"confirmDeletePhoto": "Sigur vrei să ștergi poza mașinii?"
+"confirmDeletePhoto": "Sigur vrei să ștergi poza mașinii?",
+
+"roadTollIn": "Rovinietă:",
+"roadTollExpired": "ROVINIETĂ EXPIRATĂ!",
+
+"digitalTalonTitle": "TALON DIGITAL AUTO",
+"digitalTalonSub": "SPECIFICAȚII TEHNICE MAȘINĂ",
+"talonPlate": "A. Nr. înmatriculare:",
+"talonModel": "D.1. Marcă / Model:",
+"talonVin": "E. Serie șasiu (VIN):",
+"talonEngineSize": "P.1. Capacitate (Motor):",
+"talonHp": "P.2. Putere (CP):",
+"talonEngineCode": "P.5. Cod Motor:",
+"talonYear": "B. An Fabr:",
+"talonTyres": "L. Anvelope / Cauciucuri:",
+"talonSaved": "Datele talonului au fost salvate cu succes!"
 
 }

@@ -102,5 +102,20 @@
 "changePhoto": "Change photo",
 "chooseFile": "Choose photo", 
 "removePhoto": "Remove photo",
-"confirmDeletePhoto": "Are you sure you want to delete the car photo?"
+"confirmDeletePhoto": "Are you sure you want to delete the car photo?",
+
+"roadTollIn": "Road Toll:",
+"roadTollExpired": "ROAD TOLL EXPIRED!",
+
+"digitalTalonTitle": "DIGITAL CAR DOCS",
+"digitalTalonSub": "VEHICLE TECHNICAL SPECIFICATIONS",
+"talonPlate": "A. License Plate:",
+"talonModel": "D.1. Make / Model:",
+"talonVin": "E. Chassis Number (VIN):",
+"talonEngineSize": "P.1. Engine Size:",
+"talonHp": "P.2. Power (HP):",
+"talonEngineCode": "P.5. Engine Code:",
+"talonYear": "B. Year of Mfg:",
+"talonTyres": "L. Tyre Sizes:",
+"talonSaved": "Car details saved successfully!"
 }

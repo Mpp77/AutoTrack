@@ -11,6 +11,9 @@ export default function RemindersPage() {
   const [itpDate, setItpDate] = useState(localStorage.getItem("itpDate") || "");
   const [insuranceDate, setInsuranceDate] = useState(localStorage.getItem("insuranceDate") || "");
   
+  // ADAUGĂ STAREA PENTRU ROVINIETĂ
+  const [roadTollDate, setRoadTollDate] = useState(localStorage.getItem("roadTollDate") || "");
+  
   // Stările pentru Ulei (Exact cele 3 cerute de tine)
   const [lastChangeKm, setLastChangeKm] = useState(localStorage.getItem("lastChangeKm") || "");
   const [intervalKm, setIntervalKm] = useState(localStorage.getItem("intervalKm") || "");
@@ -19,6 +22,10 @@ export default function RemindersPage() {
   const handleSave = () => {
     localStorage.setItem("itpDate", itpDate);
     localStorage.setItem("insuranceDate", insuranceDate);
+    
+    // SALVEAZĂ ROVINIETA ÎN LOCALSTORAGE
+    localStorage.setItem("roadTollDate", roadTollDate);
+    
     localStorage.setItem("lastChangeKm", lastChangeKm);
     localStorage.setItem("intervalKm", intervalKm);
     localStorage.setItem("lastChangeDate", lastChangeDate);
@@ -60,6 +67,8 @@ export default function RemindersPage() {
             className="filter-input" 
             value={itpDate} 
             onChange={(e) => setItpDate(e.target.value)} 
+            autoComplete="off"
+            inputMode="none"
           />
         </div>
 
@@ -70,6 +79,21 @@ export default function RemindersPage() {
             className="filter-input" 
             value={insuranceDate} 
             onChange={(e) => setInsuranceDate(e.target.value)} 
+            autoComplete="off"
+            inputMode="none"
+          />
+        </div>
+
+        {/* SECȚIUNEA NOUĂ PENTRU ROVINIETĂ */}
+        <div className="settings-row">
+          <label><Bell size={18} /> {t("roadTollExpiryDate", "Data Expirare Rovinietă")}</label>
+          <input 
+            type="date" 
+            className="filter-input" 
+            value={roadTollDate} 
+            onChange={(e) => setRoadTollDate(e.target.value)} 
+            autoComplete="off"
+            inputMode="none"
           />
         </div>
 
@@ -96,6 +120,8 @@ export default function RemindersPage() {
               className="filter-input" 
               value={lastChangeDate} 
               onChange={(e) => setLastChangeDate(e.target.value)} 
+              autoComplete="off"
+              inputMode="none"
             />
           </div>
         </div>

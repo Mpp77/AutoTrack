@@ -15,6 +15,9 @@ export default function Home() {
   // O variabilă care ne anunță când serverul a terminat de trimis datele
   const [cloudDataLoaded, setCloudDataLoaded] = useState(false);
 
+  // 1. La începutul componentei tale Home(), adaugă această stare:
+const [showTalon, setShowTalon] = useState(false);
+
   useEffect(() => {
     const fetchCloudSettings = async () => {
       const token = localStorage.getItem("token");
@@ -40,6 +43,7 @@ export default function Home() {
             localStorage.setItem("insuranceDate", data.insurance_date || "");
             localStorage.setItem("oilExpiryDate", data.oil_date || "");
             localStorage.setItem("targetKm", data.target_km || "");
+            localStorage.setItem("roadTollDate", data.road_toll_date || "");
 
             // Forțăm state-ul să se schimbe ACUM
             setCarPlate(data.car_plate || t("auto", "Auto"));
@@ -86,6 +90,32 @@ export default function Home() {
           activeReminders.push({ id: 'rca', type: "warning", text: t("rcaExpired", "RCA EXPIRAT!") });
         }
       }
+
+//Rovinieta
+const savedRoadToll = localStorage.getItem("roadTollDate");
+if (savedRoadToll) {
+  const diffRoadToll = Math.ceil((new Date(savedRoadToll) - today) / (1000 * 60 * 60 * 24));
+  
+  if (diffRoadToll <= 30 && diffRoadToll > 10) {
+    activeReminders.push({ 
+      id: 'roadToll', 
+      type: "info", 
+      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft", "zile rămase")}` 
+    });
+  } else if (diffRoadToll <= 10 && diffRoadToll > 0) {
+    activeReminders.push({ 
+      id: 'roadToll', 
+      type: "warning", 
+      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft", "zile rămase")}` 
+    });
+  } else if (diffRoadToll <= 0) {
+    activeReminders.push({ 
+      id: 'roadToll', 
+      type: "warning", 
+      text: t("roadTollExpired", "ROVINIETĂ EXPIRATĂ!") 
+    });
+  }
+}
 
       // ULEI - CALCUL KM
       const targetKm = localStorage.getItem("targetKm");
@@ -177,19 +207,22 @@ export default function Home() {
         </div>
       </div>
 
+{/* ÎNTREGUL POP-UP VECHI DE TALON A FOST ELIMINAT DE AICI */}
      
-{/* Butonul mutat deasupra navigației */}
-<div className="alerts-action-container">
+      {/* Cele două butoane separate aliniate perfect stânga-dreapta */}
+      <div className="home-action-row">
         <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
-          <Bell size={14} style={{ marginRight: '8px' }} />
-          {t("configureAlerts", "Configurează alerte")}
+          <Bell size={14} style={{ marginRight: '6px' }} />
+          <span>{t("configureAlertsShort", "Alerte")}</span>
+        </button>
+
+        {/* Butonul de Talon acum trimite direct către pagina dedicată /talon */}
+        <button className="edit-reminders-link" onClick={() => navigate("/talon")}>
+          <span>🪪 Talon</span>
         </button>
       </div>
 
-      <nav className="bottom-nav">
-        {/* ... cele 3 butoane existente ... */}
-      </nav>
-
+      {/* Navigația de jos */}
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
           <PieChart />
