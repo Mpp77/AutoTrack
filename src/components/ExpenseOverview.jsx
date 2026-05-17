@@ -133,12 +133,14 @@ export default function ExpenseOverview() {
         <h1>{t("expenseOverview")}</h1>
 
         <div className="filters-row">
-  {/* Fixat obligatoriu pe "date" pentru a opri tastatura de iPhone */}
   <input
     type="date"
     value={startDate}
     onChange={(e) => setStartDate(e.target.value)}
     className="filter-input"
+    /* REPARATIE SPECIFICĂ PENTRU IPHONE BROWSER */
+    autoComplete="off"
+    inputMode="none" /* Împiedică complet deschiderea tastaturii cu litere */
   />
 
   <input
@@ -146,6 +148,8 @@ export default function ExpenseOverview() {
     value={endDate}
     onChange={(e) => setEndDate(e.target.value)}
     className="filter-input"
+    autoComplete="off"
+    inputMode="none"
   />
 
   <select
