@@ -208,7 +208,7 @@ if (savedRoadToll) {
               onClick={() => navigate("/reminders")}
             >
               <CheckCircle size={18} />
-              <span>{t("nothingToDo", "Nimic de făcut")}</span>
+              <span>Nimic de făcut</span>
             </div>
           )}
         </div>
