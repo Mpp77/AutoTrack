@@ -10,11 +10,11 @@ export default function RemindersPage() {
 
   const [itpDate, setItpDate] = useState(localStorage.getItem("itpDate") || "");
   const [insuranceDate, setInsuranceDate] = useState(localStorage.getItem("insuranceDate") || "");
-  
-  // ADAUGĂ STAREA PENTRU ROVINIETĂ
   const [roadTollDate, setRoadTollDate] = useState(localStorage.getItem("roadTollDate") || "");
   
-  // Stările pentru Ulei (Exact cele 3 cerute de tine)
+  // ADAUGĂ STAREA PENTRU PERMIS
+  const [licenseDate, setLicenseDate] = useState(localStorage.getItem("licenseDate") || "");
+  
   const [lastChangeKm, setLastChangeKm] = useState(localStorage.getItem("lastChangeKm") || "");
   const [intervalKm, setIntervalKm] = useState(localStorage.getItem("intervalKm") || "");
   const [lastChangeDate, setLastChangeDate] = useState(localStorage.getItem("lastChangeDate") || "");
@@ -22,15 +22,15 @@ export default function RemindersPage() {
   const handleSave = () => {
     localStorage.setItem("itpDate", itpDate);
     localStorage.setItem("insuranceDate", insuranceDate);
-    
-    // SALVEAZĂ ROVINIETA ÎN LOCALSTORAGE
     localStorage.setItem("roadTollDate", roadTollDate);
+    
+    // SALVEAZĂ DATA PERMISULUI ÎN LOCALSTORAGE
+    localStorage.setItem("licenseDate", licenseDate);
     
     localStorage.setItem("lastChangeKm", lastChangeKm);
     localStorage.setItem("intervalKm", intervalKm);
     localStorage.setItem("lastChangeDate", lastChangeDate);
 
-    // MATEMATICA PENTRU KM: Adunăm Km la schimb + Intervalul
     if (lastChangeKm && intervalKm) {
       const targetKm = parseInt(lastChangeKm) + parseInt(intervalKm);
       localStorage.setItem("targetKm", targetKm.toString());
@@ -38,7 +38,6 @@ export default function RemindersPage() {
       localStorage.removeItem("targetKm");
     }
 
-    // MATEMATICA PENTRU DATĂ: Luăm data schimbului și adunăm 1 AN
     if (lastChangeDate) {
       const date = new Date(lastChangeDate);
       date.setFullYear(date.getFullYear() + 1);
@@ -84,7 +83,6 @@ export default function RemindersPage() {
           />
         </div>
 
-        {/* SECȚIUNEA NOUĂ PENTRU ROVINIETĂ */}
         <div className="settings-row">
           <label><Bell size={18} /> {t("roadTollExpiryDate", "Data Expirare Rovinietă")}</label>
           <input 
@@ -92,6 +90,19 @@ export default function RemindersPage() {
             className="filter-input" 
             value={roadTollDate} 
             onChange={(e) => setRoadTollDate(e.target.value)} 
+            autoComplete="off"
+            inputMode="none"
+          />
+        </div>
+
+        {/* SECȚIUNEA NOUĂ PENTRU PERMIS DE CONDUCERE */}
+        <div className="settings-row">
+          <label><Calendar size={18} /> {t("licenseExpiryDate", "Data Expirare Permis Conducere")}</label>
+          <input 
+            type="date" 
+            className="filter-input" 
+            value={licenseDate} 
+            onChange={(e) => setLicenseDate(e.target.value)} 
             autoComplete="off"
             inputMode="none"
           />

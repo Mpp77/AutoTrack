@@ -93,6 +93,9 @@
   "oilChangeIn": "Oil change in:",
   "oilChangeExpired": "Oil change EXPIRED (1 Year)!",
   "serviceAt": "Service at:",
+  "licenseExpiryLabel": "Driving License Expiry Date:",
+"drivingLicense": "Driving License",
+"licenseAlert": "Your driving license expires soon!",
 
   "carPlate": "License Plate",
   "carPhoto": "Car Photo (Optional)",

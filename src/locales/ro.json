@@ -94,6 +94,9 @@
   "serviceOverdue": "Revizie DEPĂȘITĂ cu",
   "oilChangeIn": "Schimb ulei în:",
   "oilChangeExpired": "Schimb ulei EXPIRAT (1 An)!",
+  "licenseExpiryLabel": "Expirare Permis Conducere:",
+"drivingLicense": "Permis de Conducere",
+"licenseAlert": "Permisul tău de conducere expiră în curând!",
 
   "carPlate": "Număr Înmatriculare",
   "carPhoto": "Poză Mașină (Opțional)",
