@@ -1451,18 +1451,25 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 600px) {
-  /* Fixăm bara de acțiuni deasupra meniului exclusiv pe mobil */
-  .home-action-row {
-    position: fixed !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    bottom: calc(env(safe-area-inset-bottom) + 150px) !important;
-        margin: 0 !important;
-    display: flex !important;
-    justify-content: center !important;
-    width: max-content !important;
-    z-index: 998;
-  }
+ /* Le scoatem din modul fixed și le legăm direct de conținutul central ca să nu mai fie împrăștiate */
+ .home-action-row {
+  position: relative !important;
+  left: auto !important;
+  transform: none !important;
+  bottom: auto !important;
+  margin: 20px auto 0 !important; /* Adaugă un spațiu curat de 20px direct sub textul verde */
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  z-index: 10;
+}
+
+/* Compactăm spațiul dintre mașină și textul verde */
+.smart-badges-container {
+  max-width: 290px;
+  gap: 7px;
+  margin: 15px auto 0 !important;
+}
 
   .dashboard-central {
     justify-content: center;
