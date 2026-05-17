@@ -1452,16 +1452,20 @@ input[type="file"]::file-selector-button:hover {
 
 @media (max-width: 600px) {
  /* Le scoatem din modul fixed și le legăm direct de conținutul central ca să nu mai fie împrăștiate */
- .home-action-row {
-  position: relative !important;
-  left: auto !important;
-  transform: none !important;
+/* Aliniere compactă direct sub textul verde, fără să mai fie împrăștiate jos */
+.home-action-row {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  /* Folosim top procentual pentru a le bloca direct sub elementele de sus */
+  top: 70% !important; 
   bottom: auto !important;
-  margin: 20px auto 0 !important; /* Adaugă un spațiu curat de 20px direct sub textul verde */
+  margin: 0 !important;
   display: flex !important;
+  gap: 16px !important;
   justify-content: center !important;
-  width: 100% !important;
-  z-index: 10;
+  width: max-content !important;
+  z-index: 998;
 }
 
 /* Compactăm spațiul dintre mașină și textul verde */
