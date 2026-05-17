@@ -1736,11 +1736,14 @@ input[type="file"]::file-selector-button:hover {
   background: rgba(255, 255, 255, 0.2) !important;
 }
 
+/* Versiunea de pagină completă - Optimizată pentru ecrane mari */
 .digital-talon-card.page-version {
   width: 100% !important;
-  max-width: 450px !important; /* Îl lăsăm puțin mai lat pe pagină dedicată ca să fie super lizibil */
-  margin: 20px auto 0 !important;
+  max-width: 420px !important; 
+  margin: 16px auto 0 !important;
+  box-sizing: border-box;
 }
+
 /* Elimină săgețile din input-ul de numere pentru o estetică curată */
 .talon-input-field::-webkit-outer-spin-button,
 .talon-input-field::-webkit-inner-spin-button {
@@ -1749,11 +1752,11 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .talon-input-field[type=number] {
-  -moz-appearance: textfield; /* Pentru Firefox */
+  -moz-appearance: textfield; 
 }
 
 .talon-input-field::placeholder {
-  text-align: left; /* Sau 'center', dacă vrei ca sugestiile să apară exact pe mijloc */
+  text-align: left; 
   opacity: 0.4;
   font-weight: 500;
 }
@@ -1761,5 +1764,31 @@ input[type="file"]::file-selector-button:hover {
 .talon-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px; /* Spațiu fin între coloane */
+  gap: 12px; 
+}
+
+/* =======================================================
+   OBLIGATORIU: FIX PENTRU MOBIL (Tăiere interfață & Scroll)
+   ======================================================= */
+@media (max-width: 480px) {
+  /* Forțăm pagina de setări să respire, adăugând un spațiu gol generos la bază */
+  .settings-page {
+    min-height: 100vh !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    display: block !important; /* Dezactivează flex ca să permită scroll-ul nativ fluid */
+    padding: 20px 14px calc(env(safe-area-inset-bottom) + 50px) !important; 
+    box-sizing: border-box;
+  }
+
+  /* Ajustăm cardul să nu mai stea sufocat pe marginile telefonului */
+  .digital-talon-card.page-version {
+    width: 96% !important;
+    padding: 14px 12px !important;
+    margin: 12px auto !important;
+  }
+
+  .talon-grid {
+    gap: 8px !important; /* Micșorăm spațiul dintre coloane ca să nu se înghesuie placeholder-ele */
+  }
 }
