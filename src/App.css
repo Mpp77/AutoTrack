@@ -704,17 +704,16 @@ body {
   border: 1px solid rgba(91, 223, 255, 0.5);
   background: rgba(13, 26, 47, 0.9) !important;
   color: #ffffff !important;
-  font-size: 16px !important; /* Esențial pe iOS pentru a preveni zoom-ul automat */
+  font-size: 16px !important;
   font-weight: 700;
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
   box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.2);
   
-  /* FORȚARE APPLE / IOS CORECTĂ: Reactivăm aspectul nativ al sistemului */
-  display: block !important;
-  -webkit-appearance: listbox !important; /* Forțează iOS să deschidă selectorul lui, nu tastatura */
-  appearance: auto !important;
+  /* REPARATIE TOUCH RAPID */
+  pointer-events: auto !important; /* Forțează browserul să trimită click-ul direct la input */
+  touch-action: manipulation; /* Elimină întârzierea de 300ms pe care o pune iOS la touch */
 }
 
 .filter-input option {
@@ -722,18 +721,19 @@ body {
   color: white;
 }
 
-/* Forțăm textul din interior să fie vizibil în Safari */
+/* Forțăm zona de text din interior să nu blocheze click-ul */
 .filter-input::-webkit-date-and-time-value {
   color: #ffffff !important;
   min-height: 24px;
   text-align: center;
-  display: block !important;
+  line-height: 24px;
+  pointer-events: none !important; /* Textul din interior devine "fantomă", deci click-ul cade pe caseta mare */
 }
 
-/* Curățăm restul elementelor interne care pot bloca touch-ul */
 .filter-input::-webkit-datetime-edit {
   color: #ffffff !important;
   display: inline-flex !important;
+  pointer-events: none !important; /* La fel și pentru bucățile de text (zz/ll/aaaa) */
 }
 
 .filter-input::-webkit-calendar-picker-indicator {
