@@ -601,10 +601,24 @@ button {
 }
 
 @media (max-width: 600px) {
+  /* Scoatem butoanele mici din poziția fixă ca să nu mai calce pe alerte */
   .home-action-row {
-    /* Sincronizăm aceeași valoare și pentru ecranele mici de telefon */
-    bottom: calc(env(safe-area-inset-bottom) + 108px) !important; 
-    margin-bottom: 0 !important;
+    position: relative !important;
+    left: auto !important;
+    transform: none !important;
+    bottom: auto !important;
+    margin: 20px auto 100px !important; /* Adăugăm 100px jos ca să lăsăm loc pentru meniul albastru */
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    z-index: 998;
+  }
+
+  /* Containerul de alerte active/pastila verde */
+  .smart-badges-container {
+    max-width: 300px;
+    gap: 7px;
+    margin: 15px auto 0 !important; /* Îi dăm o așezare curată pe centru */
   }
 
   .dashboard-central {
@@ -625,11 +639,6 @@ button {
   .custom-car-photo {
     width: 175px !important;
     height: 175px !important;
-  }
-
-  .smart-badges-container {
-    max-width: 300px;
-    gap: 7px;
   }
 
   .smart-badge {
