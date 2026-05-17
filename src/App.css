@@ -365,12 +365,14 @@ button {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(env(safe-area-inset-bottom) + 115px) !important; 
+  /* Ridicăm de la 88px la 108px ca să iasă complet de sub meniu */
+  bottom: calc(env(safe-area-inset-bottom) + 108px) !important; 
   z-index: 998;
   display: flex;
   gap: 16px;
   justify-content: center;
   width: max-content;
+  transition: bottom 0.3s ease;
 }
 
 .edit-reminders-link {
@@ -409,8 +411,9 @@ button {
   transform: translateX(-50%);
   width: calc(100% - 28px);
   max-width: 780px;
-  bottom: 12px !important;
-    padding: 8px;
+  /* Ridicăm meniul o idee mai sus de marginea fizică a ecranului */
+  bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+  padding: 8px;
   border-radius: clamp(22px, 3vw, 42px);
   display: flex;
   gap: 8px;
@@ -449,6 +452,267 @@ button {
   box-shadow:
     inset 0 0 24px rgba(157, 244, 255, 0.28),
     0 0 28px rgba(0, 207, 255, 0.72);
+}
+
+/* Asigurăm protecția împotriva suprapunerilor pentru containerele de alerte active */
+.smart-badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 12px !important; /* Împinge curat în jos conținutul, fără să calce butoanele */
+}
+
+/* =========================
+   MEDIA QUERIES & RESPONSIVENESS
+========================= */
+
+@media (min-width: 769px) {
+  .dashboard-central {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .progress-ring-container {
+    width: 220px !important;
+    height: 220px !important;
+  }
+
+  .custom-car-photo {
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .bottom-nav {
+    bottom: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .filters-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .filter-input {
+    width: 100%;
+    max-width: 280px;
+    min-height: 48px;
+    font-size: 0.95rem;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .overview-page {
+    min-height: 100vh;
+    padding: 22px 16px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .overview-page .back-btn {
+    align-self: flex-start;
+    margin-left: 0;
+    margin-bottom: 24px;
+  }
+
+  .overview-card {
+    width: calc(100vw - 24px);
+    max-width: calc(100vw - 24px);
+    margin: 0 auto;
+    padding: 28px 14px 30px;
+    overflow: hidden;
+  }
+
+  .overview-card h1 {
+    font-size: 34px;
+    margin-bottom: 34px;
+  }
+
+  .overview-total {
+    font-size: 34px;
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    margin: 20px auto 0;
+    padding-bottom: 30px;
+    overflow: visible;
+  }
+
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+
+  .recharts-legend-wrapper {
+    width: 100%;
+    left: 0;
+  }
+
+  .recharts-default-legend {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .recharts-pie-label-text,
+  .recharts-text {
+    font-size: 11px !important;
+    white-space: pre-line !important;
+  }
+
+  .overview-card .text-center,
+  .overview-card p {
+    color: #b9f7ff !important;
+    -webkit-text-fill-color: #b9f7ff !important;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .legend-row {
+    padding: 12px 14px;
+  }
+
+  .legend-label,
+  .legend-value {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 650px) {
+  .category-card {
+    padding: 20px;
+  }
+
+  .category-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-action-row {
+    /* Sincronizăm aceeași valoare și pentru ecranele mici de telefon */
+    bottom: calc(env(safe-area-inset-bottom) + 108px) !important; 
+    margin-bottom: 0 !important;
+  }
+
+  .dashboard-central {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .dashboard-greeting {
+    margin-bottom: 2px;
+  }
+
+  .progress-ring-container {
+    width: 230px !important;
+    height: 230px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .custom-car-photo {
+    width: 175px !important;
+    height: 175px !important;
+  }
+
+  .smart-badges-container {
+    max-width: 300px;
+    gap: 7px;
+  }
+
+  .smart-badge {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .bottom-nav {
+    bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+  }
+
+  .hero-card {
+    width: 100%;
+    padding: 48px 16px 70px;
+    margin-top: 24px;
+  }
+
+  .hero-card h1 {
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  .hero-card p {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+
+  .icon-row {
+    gap: 8px;
+    justify-content: space-between;
+  }
+
+  .neon-circle {
+    width: 78px;
+    height: 78px;
+  }
+
+  .settings-btn {
+    width: 52px;
+    height: 52px;
+    top: 22px;
+    right: 16px;
+  }
+
+  .custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(91, 223, 255, 0.5);
+    background: rgba(13, 26, 47, 0.75);
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: inset 0 0 14px rgba(0, 191, 255, 0.16), 0 0 18px rgba(0, 191, 255, 0.18);
+    transition: all 0.2s ease;
+  }
+  
+  .custom-file-upload:hover {
+    filter: brightness(1.2);
+    border-color: rgba(91, 223, 255, 0.8);
+  }
+  
+  .remove-photo-btn {
+    display: block;
+    margin: 0 auto;
+    background: rgba(255, 68, 68, 0.2);
+    border: 1px solid #ff4444;
+    color: #ff4444;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .remove-photo-btn:active {
+    transform: scale(0.95);
+  }
 }
 
 /* =========================
@@ -1673,7 +1937,6 @@ input[type="file"]::file-selector-button:hover {
   color: #ffd700; 
 }
 
-/* Stilul inputurilor din interiorul talonului */
 .talon-input-field {
   width: 100%;
   background: rgba(255, 255, 255, 0.05) !important;
@@ -1695,7 +1958,6 @@ input[type="file"]::file-selector-button:hover {
   box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
 }
 
-/* Zona de butoane din interiorul talonului */
 .talon-actions-inside {
   display: flex;
   gap: 10px;
@@ -1735,7 +1997,6 @@ input[type="file"]::file-selector-button:hover {
   background: rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Versiunea de pagină completă - Optimizată pentru ecrane mari */
 .digital-talon-card.page-version {
   width: 100% !important;
   max-width: 420px !important; 
@@ -1743,7 +2004,6 @@ input[type="file"]::file-selector-button:hover {
   box-sizing: border-box;
 }
 
-/* Elimină săgețile din input-ul de numere pentru o estetică curată */
 .talon-input-field::-webkit-outer-spin-button,
 .talon-input-field::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1764,6 +2024,48 @@ input[type="file"]::file-selector-button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px; 
+}
+
+@media (max-width: 480px) {
+  .settings-page {
+    min-height: 100vh !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 12px 12px calc(env(safe-area-inset-bottom) + 30px) !important;
+    box-sizing: border-box;
+    overflow-y: auto !important;
+  }
+
+  .digital-talon-card.page-version {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 14px !important;
+    margin: 8px auto 0 !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .talon-row {
+    margin-bottom: 8px !important;
+  }
+
+  .talon-grid {
+    gap: 8px !important;
+  }
+
+  .talon-input-field {
+    padding: 6px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .save-btn-neon {
+    margin-top: 16px !important;
+    margin-bottom: 12px !important;
+    padding: 12px !important; 
+  }
 }
 
 /* =======================================================
