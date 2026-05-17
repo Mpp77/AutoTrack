@@ -32,10 +32,9 @@ const [showTalon, setShowTalon] = useState(false);
 
         if (response.ok) {
           const data = await response.json();
-          console.log("DATE PRIMITE DE LA SERVER:", data); // Verifică asta în consola laptopului (F12)
+          console.log("DATE PRIMITE DE LA SERVER:", data);
 
           if (data) {
-            // Suprascriem TOT ce avem local cu datele proaspete de pe server
             localStorage.setItem("carPlate", data.car_plate || "");
             localStorage.setItem("carImage", data.car_image || "");
             localStorage.setItem("currency", data.currency || "RON");
@@ -44,8 +43,16 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("oilExpiryDate", data.oil_date || "");
             localStorage.setItem("targetKm", data.target_km || "");
             localStorage.setItem("roadTollDate", data.road_toll_date || "");
+            localStorage.setItem("licenseDate", data.license_date || "");
 
-            // Forțăm state-ul să se schimbe ACUM
+            localStorage.setItem("carModel", data.car_model || "");
+            localStorage.setItem("vin", data.vin || "");
+            localStorage.setItem("engineCode", data.engine_code || "");
+            localStorage.setItem("carYear", data.car_year || "");
+            localStorage.setItem("engineSize", data.engine_size || "");
+            localStorage.setItem("hp", data.hp || "");
+            localStorage.setItem("tyres", data.tyres || "");
+
             setCarPlate(data.car_plate || t("auto", "Auto"));
             setCarImage(data.car_image || null);
             setCloudDataLoaded(true);

@@ -1768,10 +1768,9 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /* =======================================================
-   FIX DEFINITIV PENTRU ÎNCADRARE ȘI SCROLL PE MOBIL
+   FIX PENTRU ÎNCADRARE ȘI SCROLL PE MOBIL
    ======================================================= */
    @media (max-width: 480px) {
-    /* Resetăm containerul paginii pentru a elimina orice blocaj de înălțime */
     .settings-page {
       min-height: 100vh !important;
       height: auto !important;
@@ -1783,7 +1782,6 @@ input[type="file"]::file-selector-button:hover {
       overflow-y: auto !important;
     }
   
-    /* Controlăm cardul independent să nu mai fie mai înalt decât ecranul */
     .digital-talon-card.page-version {
       width: 100% !important;
       max-width: 100% !important;
@@ -1791,12 +1789,10 @@ input[type="file"]::file-selector-button:hover {
       margin: 8px auto 0 !important;
       box-sizing: border-box;
       
-      /* Dacă ecranul e foarte mic, lăsăm cardul să își facă scroll intern pentru a nu tăia butonul */
       display: flex;
       flex-direction: column;
     }
   
-    /* Compactăm puțin spațiile dintre rânduri pe mobil ca să urce interfața mai sus */
     .talon-row {
       margin-bottom: 8px !important;
     }
@@ -1810,10 +1806,9 @@ input[type="file"]::file-selector-button:hover {
       font-size: 13px !important;
     }
   
-    /* Forțăm butonul de salvare să aibă o margine clară de siguranță la bază */
     .save-btn-neon {
       margin-top: 16px !important;
       margin-bottom: 12px !important;
-      padding: 12px !important; /* Îl face ușor mai compact pe ecranul telefonului */
+      padding: 12px !important; 
     }
   }

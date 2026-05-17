@@ -16,7 +16,8 @@ export default function TalonPage() {
   const [hp, setHp] = useState(localStorage.getItem("hp") || "");
   const [tyres, setTyres] = useState(localStorage.getItem("tyres") || "");
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    // 1. Salvăm mai întâi local ca să se vadă instant
     localStorage.setItem("carModel", carModel);
     localStorage.setItem("vin", vin);
     localStorage.setItem("engineCode", engineCode);
@@ -24,6 +25,37 @@ export default function TalonPage() {
     localStorage.setItem("engineSize", engineSize);
     localStorage.setItem("hp", hp);
     localStorage.setItem("tyres", tyres);
+    
+    // 2. Trimitem datele către serverul tău din cloud
+    const token = localStorage.getItem("token");
+    if (token) {
+      const API_URL = "https://autotrack-hxdk.onrender.com/api";
+      try {
+        const response = await fetch(`${API_URL}/user-settings`, {
+          method: "POST", // sau PUT, în funcție de cum e configurat backend-ul tău pentru update
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            // Trimitem cheile exact în formatul pe care îl așteaptă baza ta de date (snake_case sau camelCase)
+            car_model: carModel,
+            vin: vin,
+            engine_code: engineCode,
+            car_year: carYear,
+            engine_size: engineSize,
+            hp: hp,
+            tyres: tyres
+          })
+        });
+
+        if (!response.ok) {
+          console.error("Serverul a returnat o eroare la salvarea talonului");
+        }
+      } catch (error) {
+        console.error("Eroare la conexiunea cu serverul pentru talon:", error);
+      }
+    }
     
     alert(t("talonSaved", "Datele talonului au fost salvate cu succes!"));
     navigate("/home");
