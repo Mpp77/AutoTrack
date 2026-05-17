@@ -35,8 +35,8 @@ const [showTalon, setShowTalon] = useState(false);
           console.log("DATE PRIMITE DE LA SERVER:", data);
 
           if (data) {
-            localStorage.setItem("carPlate", data.car_plate || "");
-            localStorage.setItem("carImage", data.car_image || "");
+            localStorage.setItem("carPlate", data.car_plate || "TM 14 MXP");
+            if (data.car_image) localStorage.setItem("carImage", data.car_image);
             localStorage.setItem("currency", data.currency || "RON");
             localStorage.setItem("itpDate", data.itp_date || "");
             localStorage.setItem("insuranceDate", data.insurance_date || "");

@@ -210,11 +210,17 @@ app.listen(5001, () => {
 
 // --- RUTE PENTRU SETĂRI PROFIL ȘI MAȘINĂ ---
 
-// 1. GET: Preia datele mașinii și setările când intri în aplicație
+// --- RUTE PENTRU SETĂRI PROFIL ȘI MAȘINĂ COMPLET CORECTATE ---
+
+// 1. GET: Preia ABSOLUT TOATE DATELE mașinii când intri în aplicație
 app.get("/api/user-settings", auth, async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km FROM users WHERE id=$1",
+      `SELECT 
+        car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km, 
+        road_toll_date, license_date, car_model, vin, engine_code, car_year, engine_size, hp, tyres 
+       FROM users 
+       WHERE id=$1`,
       [req.user.userId]
     );
     res.json(result.rows[0] || {});
@@ -224,32 +230,53 @@ app.get("/api/user-settings", auth, async (req, res) => {
   }
 });
 
-// 2. POST: Salvează/Actualizează datele din pagina de Settings
+// 2. POST: Salvează/Actualizează inteligent fără să mai șteargă câmpurile vechi
 app.post("/api/user-settings", auth, async (req, res) => {
   const { 
-    carPlate, 
-    carImage, 
-    currency, 
-    itpDate, 
-    insuranceDate, 
-    oilDate, 
-    targetKm 
+    carPlate, carImage, currency, itpDate, insuranceDate, oilDate, targetKm,
+    roadTollDate, licenseDate, carModel, vin, engineCode, carYear, engineSize, hp, tyres
   } = req.body;
 
   try {
+    // Folosim COALESCE: dacă o valoare lipsește din cerere, se păstrează ce era deja în baza de date!
     const result = await pool.query(
       `UPDATE users
-       SET car_plate=$1, car_image=$2, currency=$3, itp_date=$4, insurance_date=$5, oil_date=$6, target_km=$7
-       WHERE id=$8 
-       RETURNING car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km`,
+       SET 
+         car_plate = COALESCE($1, car_plate), 
+         car_image = COALESCE($2, car_image), 
+         currency = COALESCE($3, currency), 
+         itp_date = COALESCE($4, itp_date), 
+         insurance_date = COALESCE($5, insurance_date), 
+         oil_date = COALESCE($6, oil_date), 
+         target_km = COALESCE($7, target_km),
+         road_toll_date = COALESCE($8, road_toll_date),
+         license_date = COALESCE($9, license_date),
+         car_model = COALESCE($10, car_model),
+         vin = COALESCE($11, vin),
+         engine_code = COALESCE($12, engine_code),
+         car_year = COALESCE($13, car_year),
+         engine_size = COALESCE($14, engine_size),
+         hp = COALESCE($15, hp),
+         tyres = COALESCE($16, tyres)
+       WHERE id=$17 
+       RETURNING *`,
       [
-        carPlate || null, 
-        carImage || null, 
-        currency || 'RON', 
+        carPlate !== undefined ? carPlate : null, 
+        carImage !== undefined ? carImage : null, 
+        currency || null, 
         itpDate || null, 
         insuranceDate || null, 
         oilDate || null, 
-        targetKm || null, 
+        targetKm || null,
+        roadTollDate || null,
+        licenseDate || null,
+        carModel || null,
+        vin || null,
+        engineCode || null,
+        carYear || null,
+        engineSize || null,
+        hp || null,
+        tyres || null,
         req.user.userId
       ]
     );

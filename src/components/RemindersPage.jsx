@@ -19,14 +19,11 @@ export default function RemindersPage() {
   const [intervalKm, setIntervalKm] = useState(localStorage.getItem("intervalKm") || "");
   const [lastChangeDate, setLastChangeDate] = useState(localStorage.getItem("lastChangeDate") || "");
 
-  const handleSave = () => {
+  const handleSave = async () => {
     localStorage.setItem("itpDate", itpDate);
     localStorage.setItem("insuranceDate", insuranceDate);
     localStorage.setItem("roadTollDate", roadTollDate);
-    
-    // SALVEAZĂ DATA PERMISULUI ÎN LOCALSTORAGE
     localStorage.setItem("licenseDate", licenseDate);
-    
     localStorage.setItem("lastChangeKm", lastChangeKm);
     localStorage.setItem("intervalKm", intervalKm);
     localStorage.setItem("lastChangeDate", lastChangeDate);
@@ -46,10 +43,37 @@ export default function RemindersPage() {
       localStorage.removeItem("oilExpiryDate");
     }
 
+    const token = localStorage.getItem("token");
+    if (token) {
+      const API_URL = "https://autotrack-hxdk.onrender.com/api";
+      try {
+        const response = await fetch(`${API_URL}/user-settings`, {
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            itp_date: itpDate,
+            insurance_date: insuranceDate,
+            road_toll_date: roadTollDate,
+            license_date: licenseDate,
+            oil_date: lastChangeDate, 
+            target_km: localStorage.getItem("targetKm") || ""
+          })
+        });
+
+        if (!response.ok) {
+          console.error("Eroare la salvarea alertelor pe server");
+        }
+      } catch (error) {
+        console.error("Eroare de rețea la salvarea alertelor:", error);
+      }
+    }
+
     alert(t("remindersSaved", "Remindere salvate cu succes!"));
     navigate("/home");
   };
-
   return (
     <div className="settings-page">
       <button onClick={() => navigate("/home")} className="back-home-btn">
