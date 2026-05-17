@@ -696,22 +696,26 @@ body {
 }
 
 .filter-input {
+  position: relative; /* Esențial pentru a putea extinde zona de click a calendarului */
   width: 100%;
   min-width: 0;
-  min-height: 52px;
-  padding: 12px 14px;
+  min-height: 54px; /* Puțin mai înalt pentru a fi mai ușor de atins cu degetul */
+  padding: 14px;
   border-radius: 14px;
   border: 1px solid rgba(91, 223, 255, 0.5);
-  background: rgba(13, 26, 47, 0.75) !important;
+  background: rgba(13, 26, 47, 0.9) !important; /* Mai opac ca să fie textul clar */
   color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  font-size: 1rem;
+  
+  /* REPARATIE MOBIL: Eliminăm forțarea textului webkit care bloca selectoarele pe iOS/Android */
+  -webkit-text-fill-color: initial !important; 
+  
+  font-size: 16px !important; /* Previne zoom-ul automat enervant pe ecranele de iPhone */
   font-weight: 700;
   text-align: center;
   box-sizing: border-box;
-  box-shadow:
-    inset 0 0 14px rgba(0, 191, 255, 0.16),
-    0 0 18px rgba(0, 191, 255, 0.18);
+  cursor: pointer; /* Schimbă cursorul în mână pe laptop */
+  box-shadow: inset 0 0 10px rgba(0, 191, 255, 0.2);
+  transition: all 0.2s ease;
 }
 
 .filter-input option {
@@ -721,7 +725,7 @@ body {
 
 .filter-input::-webkit-datetime-edit {
   color: white !important;
-  display: flex;
+  display: inline-flex !important; 
   justify-content: center;
   align-items: center;
 }
@@ -731,7 +735,15 @@ body {
 }
 
 .filter-input::-webkit-calendar-picker-indicator {
-  filter: invert(1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0; 
+  cursor: pointer;
 }
 
 /* =========================
