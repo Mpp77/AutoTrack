@@ -22,20 +22,30 @@ const COLORS = [
 ];
 
 export default function ExpenseOverview() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const [allExpenses, setAllExpenses] = useState([]);
   const [chartData, setChartData] = useState([]);
-  
-  // Starea inițială este complet goală ("") ca să afișeze tot istoricul!
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";
   const exchangeRate = 0.19;
+
+  const formatDisplayDate = (date) => {
+    if (!date) return "";
+
+    return new Date(`${date}T12:00:00`).toLocaleDateString(
+      i18n.language === "ro" ? "ro-RO" : "en-GB",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }
+    );
+  };
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -57,16 +67,15 @@ export default function ExpenseOverview() {
   useEffect(() => {
     let filtered = [...allExpenses];
 
-    // Aplicăm filtrele doar dacă utilizatorul a selectat o dată
     if (startDate) {
       filtered = filtered.filter(
-        (exp) => new Date(exp.created_at) >= new Date(startDate)
+        (exp) => new Date(exp.created_at) >= new Date(`${startDate}T00:00:00`)
       );
     }
 
     if (endDate) {
       filtered = filtered.filter(
-        (exp) => new Date(exp.created_at) <= new Date(endDate + "T23:59:59")
+        (exp) => new Date(exp.created_at) <= new Date(`${endDate}T23:59:59`)
       );
     }
 
@@ -87,6 +96,7 @@ export default function ExpenseOverview() {
       } else if (exp.currency === "EUR" && selectedCurrency === "RON") {
         amount = amount / exchangeRate;
       }
+
       if (!cat) return acc;
 
       acc[cat] = (acc[cat] || 0) + amount;
@@ -120,8 +130,8 @@ export default function ExpenseOverview() {
     RON: "Lei",
     EUR: "€",
   };
-  
-  const currency = currencySymbols[localStorage.getItem("currency")] || "Lei";
+
+  const currency = currencySymbols[selectedCurrency] || "Lei";
 
   return (
     <div className="overview-page">
@@ -133,34 +143,37 @@ export default function ExpenseOverview() {
         <h1>{t("expenseOverview")}</h1>
 
         <div className="filters-row">
+          <div className="date-box">
+            <span>{startDate ? formatDisplayDate(startDate) : t("fromDate")}</span>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+          </div>
 
-        <input
-  type="date"
-  value={startDate}
-  onChange={(e) => setStartDate(e.target.value)}
-  className="filter-input date-input"
-  placeholder={t("fromDate")}
-/>
-<input
-  type="date"
-  value={endDate}
-  onChange={(e) => setEndDate(e.target.value)}
-  className="filter-input date-input"
-  placeholder={t("toDate")}
-/>
+          <div className="date-box">
+            <span>{endDate ? formatDisplayDate(endDate) : t("toDate")}</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+          </div>
 
-  <select
-    value={selectedCategory}
-    onChange={(e) => setSelectedCategory(e.target.value)}
-    className="filter-input"
-  >
-    {categories.map((cat) => (
-      <option key={cat} value={cat}>
-        {cat === "All" ? t("allCategories") : t(cat, cat)}
-      </option>
-    ))}
-  </select>
-</div>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="filter-input"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat === "All" ? t("allCategories") : t(cat, cat)}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <p className="overview-total">
           {t("total")}: {totalSpent.toFixed(2)} {currency}
         </p>
@@ -178,7 +191,9 @@ export default function ExpenseOverview() {
                     dataKey="value"
                     label={false}
                     labelLine={false}
-                    onClick={(_, index) => navigate(`/category/${chartData[index].name}`)}
+                    onClick={(_, index) =>
+                      navigate(`/category/${chartData[index].name}`)
+                    }
                   >
                     {chartData.map((entry, index) => (
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
@@ -187,7 +202,8 @@ export default function ExpenseOverview() {
 
                   <Tooltip
                     formatter={(value, name) => [
-                      `${Number(value).toFixed(2)} ${currency}`, t(name, name),
+                      `${Number(value).toFixed(2)} ${currency}`,
+                      t(name, name),
                     ]}
                   />
                 </PieChart>
@@ -215,8 +231,8 @@ export default function ExpenseOverview() {
             </>
           ) : (
             <p className="no-data-text">
-  {t("noData", "No expenses recorded yet.")}
-</p>
+              {t("noData", "No expenses recorded yet.")}
+            </p>
           )}
         </div>
       </div>
