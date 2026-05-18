@@ -1829,3 +1829,33 @@ input[type="file"]::file-selector-button:hover {
     padding: 12px !important; 
   }
 }
+
+.date-field {
+  position: relative;
+  width: 100%;
+}
+
+.date-field .date-input {
+  width: 100%;
+  color: transparent;
+}
+
+.date-field .date-input:focus,
+.date-field .date-input:valid {
+  color: white;
+}
+
+.date-label {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.date-label.filled {
+  display: none;
+}

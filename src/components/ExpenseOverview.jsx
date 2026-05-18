@@ -134,33 +134,33 @@ export default function ExpenseOverview() {
 
         <div className="filters-row">
 
-        <input
-          type={startDate ? "date" : "text"}
-          value={startDate}
-          placeholder={t("fromDate")}
-          onFocus={(e) => (e.target.type = "date")}
-          onBlur={(e) => {
-            if (!startDate) e.target.type = "text";
-          }}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="filter-input"
-          autoComplete="off"
-          inputMode="none"
-        />
+        <div className="date-field">
+  <span className={startDate ? "date-label filled" : "date-label"}>
+    {t("fromDate")}
+  </span>
+  <input
+    type="date"
+    value={startDate}
+    onChange={(e) => setStartDate(e.target.value)}
+    className="filter-input date-input"
+    autoComplete="off"
+    inputMode="none"
+  />
+</div>
 
-        <input
-          type={endDate ? "date" : "text"}
-          value={endDate}
-          placeholder={t("toDate")}
-          onFocus={(e) => (e.target.type = "date")}
-          onBlur={(e) => {
-            if (!endDate) e.target.type = "text";
-          }}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="filter-input"
-          autoComplete="off"
-          inputMode="none"
-        />
+<div className="date-field">
+  <span className={endDate ? "date-label filled" : "date-label"}>
+    {t("toDate")}
+  </span>
+  <input
+    type="date"
+    value={endDate}
+    onChange={(e) => setEndDate(e.target.value)}
+    className="filter-input date-input"
+    autoComplete="off"
+    inputMode="none"
+  />
+</div>
 
   <select
     value={selectedCategory}
