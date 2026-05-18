@@ -8,7 +8,8 @@ import ExpenseListPage from "./components/ExpenseListPage";
 import CategoryPage from "./components/categoryPage";
 import Settings from "./components/Settings";
 import RemindersPage from "./components/RemindersPage";
-import TalonPage from "./components/talonPage";
+import TalonPage from "./components/TalonPage";
+
 
 export default function App() {
   return (
