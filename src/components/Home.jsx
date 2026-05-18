@@ -43,11 +43,13 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("roadTollDate", data.road_toll_date || "");
             localStorage.setItem("licenseDate", data.license_date || "");
           
+            // Sincronizăm căsuțele de Mentenanță cu datele din PostgreSQL
             localStorage.setItem("lastChangeDate", data.oil_date || ""); 
             localStorage.setItem("targetKm", data.target_km || "");
             localStorage.setItem("lastChangeKm", data.last_change_km || "");
             localStorage.setItem("intervalKm", data.interval_km || "");
           
+            // CALCULĂM CORECT EXPIRAREA (+1 AN FAȚĂ DE DATA SCHIMBULUI)
             if (data.oil_date) {
               const date = new Date(data.oil_date);
               date.setFullYear(date.getFullYear() + 1);
@@ -56,6 +58,7 @@ const [showTalon, setShowTalon] = useState(false);
               localStorage.removeItem("oilExpiryDate");
             }
           
+            // Datele pentru Talon
             localStorage.setItem("carModel", data.car_model || "");
             localStorage.setItem("vin", data.vin || "");
             localStorage.setItem("engineCode", data.engine_code || "");

@@ -61,21 +61,21 @@ export default function RemindersPage() {
             licenseDate: licenseDate,
             oil_date: lastChangeDate,         
             target_km: calculatedTargetKm,
-            lastChangeKm: lastChangeKm, // Trimitem kilometrii inițiali
-            intervalKm: intervalKm      // Trimitem intervalul dorit
+            lastChangeKm: lastChangeKm, 
+            intervalKm: intervalKm      
           })
         });
   
-        if (!response.ok) {
+        if (response.ok) {
+          alert(t("remindersSaved", "Remindere salvate cu succes!"));
+          navigate("/home");
+        } else {
           console.error("Eroare la salvarea alertelor pe server");
         }
       } catch (error) {
         console.error("Eroare de rețea la salvarea alertelor:", error);
       }
     }
-  
-    alert(t("remindersSaved", "Remindere salvate cu succes!"));
-    navigate("/home");
   };
 
   return (
