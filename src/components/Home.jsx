@@ -38,26 +38,33 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("carPlate", data.car_plate || "TM 14 MXP");
             if (data.car_image) localStorage.setItem("carImage", data.car_image);
             localStorage.setItem("currency", data.currency || "RON");
-            localStorage.setItem("itpDate", data.itp_date || "");
-            localStorage.setItem("insuranceDate", data.insurance_date || "");
-            localStorage.setItem("roadTollDate", data.road_toll_date || "");
-            localStorage.setItem("licenseDate", data.license_date || "");
-          
-            // Curățăm și formatăm corect data primită de la PostgreSQL (taie timestamp-ul dacă există)
-            let formattedOilDate = "";
-            if (data.oil_date) {
-              formattedOilDate = new Date(data.oil_date).toISOString().split('T')[0];
-            }
+            
+            // Formatăm corect toate datele calendaristice ca să fie înțelese de input-urile HTML (YYYY-MM-DD)
+            const formatToInputDate = (rawDate) => {
+              if (!rawDate) return "";
+              try {
+                return new Date(rawDate).toISOString().split('T')[0];
+              } catch (e) {
+                return "";
+              }
+            };
 
-            // Sincronizăm căsuțele de Mentenanță cu datele din PostgreSQL
-            localStorage.setItem("lastChangeDate", formattedOilDate); 
+            localStorage.setItem("itpDate", formatToInputDate(data.itp_date));
+            localStorage.setItem("insuranceDate", formatToInputDate(data.insurance_date));
+            localStorage.setItem("roadTollDate", formatToInputDate(data.road_toll_date));
+            localStorage.setItem("licenseDate", formatToInputDate(data.license_date));
+          
+            // REPARAT: Curățăm data de ulei pentru a fi perfect compatibilă cu <input type="date" />
+            const cleanOilDate = formatToInputDate(data.oil_date);
+            localStorage.setItem("lastChangeDate", cleanOilDate); 
+            
             localStorage.setItem("targetKm", data.target_km || "");
             localStorage.setItem("lastChangeKm", data.last_change_km || "");
             localStorage.setItem("intervalKm", data.interval_km || "");
           
             // CALCULĂM CORECT EXPIRAREA (+1 AN FAȚĂ DE DATA SCHIMBULUI)
-            if (formattedOilDate) {
-              const date = new Date(formattedOilDate);
+            if (cleanOilDate) {
+              const date = new Date(cleanOilDate);
               date.setFullYear(date.getFullYear() + 1);
               localStorage.setItem("oilExpiryDate", date.toISOString());
             } else {
