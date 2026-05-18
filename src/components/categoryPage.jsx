@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { API_URL } from "../api";
+import { API_URL, fetchCurrentExchangeRate } from "../api"; // Import corect pentru API-ul live
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -10,9 +10,11 @@ export default function CategoryPage() {
 
   const [expenses, setExpenses] = useState([]);
   const [message, setMessage] = useState("");
+  
+  // Starea pentru rata de schimb (salvăm direct valoarea de siguranță inițială)
+  const [eurToRonRate, setEurToRonRate] = useState(4.97);
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";
-  const exchangeRate = 0.19;
 
   const currencySymbols = {
     RON: "Lei",
@@ -21,13 +23,16 @@ export default function CategoryPage() {
 
   const currency = currencySymbols[selectedCurrency] || "Lei";
 
+  // Logica de conversie automată bazată pe cursul primit de la API
   const convertAmount = (amount, fromCurrency = "RON") => {
     let convertedAmount = parseFloat(amount) || 0;
 
     if (fromCurrency === "RON" && selectedCurrency === "EUR") {
-      convertedAmount = convertedAmount * exchangeRate;
+      // Din RON în EUR -> Împărțim la valoarea unui euro (ex: 200 RON / 4.97)
+      convertedAmount = convertedAmount / eurToRonRate;
     } else if (fromCurrency === "EUR" && selectedCurrency === "RON") {
-      convertedAmount = convertedAmount / exchangeRate;
+      // Din EUR în RON -> Înmulțim cu valoarea unui euro (ex: 50 EUR * 4.97)
+      convertedAmount = convertedAmount * eurToRonRate;
     }
 
     return convertedAmount;
@@ -61,9 +66,22 @@ export default function CategoryPage() {
     }
   };
 
+  // useEffect-ul sincronizează apelul API pentru cursul live înainte de a aduce cheltuielile
   useEffect(() => {
-    fetchExpenses();
-  }, [category]);
+    const getLiveRateAndExpenses = async () => {
+      try {
+        const liveRate = await fetchCurrentExchangeRate();
+        setEurToRonRate(liveRate);
+      } catch (err) {
+        console.error("Nu s-a putut încărca rata live, rămâne la fallback-ul de 4.97", err);
+      }
+      
+      // După ce avem rata pregătită, tragem datele din baza de date
+      await fetchExpenses();
+    };
+
+    getLiveRateAndExpenses();
+  }, [category, selectedCurrency]);
 
   const total = expenses.reduce(
     (sum, exp) => sum + convertAmount(exp.amount, exp.currency),

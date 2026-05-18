@@ -8,7 +8,7 @@ import {
 } from "recharts";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../api";
+import { API_URL, fetchCurrentExchangeRate } from "../api"; // Importul API-ului live
 import "../App.css";
 
 const COLORS = [
@@ -32,7 +32,9 @@ export default function ExpenseOverview() {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";
-  const exchangeRate = 0.19;
+  
+  // Rata inițială de fallback (0.19) în caz că serverul de internet nu răspunde instant
+  const [eurToRonRate, setEurToRonRate] = useState(0.19);
 
   const formatDisplayDate = (date) => {
     if (!date) return "";
@@ -48,20 +50,38 @@ export default function ExpenseOverview() {
   };
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      const token = localStorage.getItem("token");
+    const fetchExpensesAndRate = async () => {
+      try {
+        // 1. Preluăm cursul live de pe internet (care vine ca ~4.97)
+        const liveRate = await fetchCurrentExchangeRate();
+        
+        // 2. O transformăm matematic ca să se potrivească perfect cu semnele tale (1 / 4.97 = ~0.20)
+        if (liveRate && !isNaN(liveRate) && liveRate > 0) {
+          setEurToRonRate(1 / Number(liveRate));
+        }
+      } catch (error) {
+        console.error("Eroare la curs live, se folosește fallback-ul de 0.19", error);
+        setEurToRonRate(0.19);
+      }
 
-      const res = await fetch(`${API_URL}/expenses`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${API_URL}/expenses`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      const data = await res.json();
-      setAllExpenses(data);
+        const data = await res.json();
+        if (res.ok && Array.isArray(data)) {
+          setAllExpenses(data);
+        }
+      } catch (err) {
+        console.error("Eroare la preluarea cheltuielilor:", err);
+      }
     };
 
-    fetchExpenses();
+    fetchExpensesAndRate();
   }, []);
 
   useEffect(() => {
@@ -91,10 +111,14 @@ export default function ExpenseOverview() {
       const cat = exp.category?.trim();
       let amount = parseFloat(exp.amount || 0);
 
+      // Folosim valoarea dinamică curentă (eurToRonRate) sau 0.19 dacă încă se încarcă
+      const currentRate = eurToRonRate || 0.19;
+
+      // Păstrăm logica ta originală neschimbată
       if (exp.currency === "RON" && selectedCurrency === "EUR") {
-        amount = amount * exchangeRate;
+        amount = amount * currentRate;
       } else if (exp.currency === "EUR" && selectedCurrency === "RON") {
-        amount = amount / exchangeRate;
+        amount = amount / currentRate;
       }
 
       if (!cat) return acc;
@@ -109,7 +133,7 @@ export default function ExpenseOverview() {
         value,
       }))
     );
-  }, [allExpenses, startDate, endDate, selectedCategory, selectedCurrency]);
+  }, [allExpenses, startDate, endDate, selectedCategory, selectedCurrency, eurToRonRate]);
 
   const categories = [
     "All",
