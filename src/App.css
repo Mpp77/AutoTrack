@@ -1841,25 +1841,22 @@ input[type="file"]::file-selector-button:hover {
   position: relative;
   z-index: 2;
   background: transparent;
-  text-align: center;
 }
 
+.date-field .date-input:focus,
 .date-field .date-input.filled {
   color: white;
 }
 
 .date-label {
   position: absolute;
-  left: 50%;
+  left: 28px;
   top: 50%;
-  transform: translate(-50%, -50%);
-  color: rgba(255,255,255,0.75);
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.7);
   font-weight: 700;
-  font-size: 18px;
   pointer-events: none;
   z-index: 1;
-  white-space: nowrap;
-  font-family: inherit;
 }
 
 .date-label.hidden {
