@@ -40,12 +40,21 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("currency", data.currency || "RON");
             localStorage.setItem("itpDate", data.itp_date || "");
             localStorage.setItem("insuranceDate", data.insurance_date || "");
-            localStorage.setItem("oilExpiryDate", data.oil_date || ""); 
+            localStorage.setItem("roadTollDate", data.road_toll_date || "");
+            localStorage.setItem("licenseDate", data.license_date || "");
+          
+            localStorage.setItem("lastChangeDate", data.oil_date || ""); 
             localStorage.setItem("targetKm", data.target_km || "");
             localStorage.setItem("lastChangeKm", data.last_change_km || "");
             localStorage.setItem("intervalKm", data.interval_km || "");
-            localStorage.setItem("roadTollDate", data.road_toll_date || "");
-            localStorage.setItem("licenseDate", data.license_date || "");
+          
+            if (data.oil_date) {
+              const date = new Date(data.oil_date);
+              date.setFullYear(date.getFullYear() + 1);
+              localStorage.setItem("oilExpiryDate", date.toISOString());
+            } else {
+              localStorage.removeItem("oilExpiryDate");
+            }
           
             localStorage.setItem("carModel", data.car_model || "");
             localStorage.setItem("vin", data.vin || "");

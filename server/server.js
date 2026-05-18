@@ -235,10 +235,9 @@ app.get("/api/user-settings", auth, async (req, res) => {
 });
 
 app.post("/api/user-settings", auth, async (req, res) => {
-  // Prindem variabilele exact așa cum le trimit ambele pagini
   const { 
     carPlate, carImage, currency, itpDate, insuranceDate, roadTollDate, licenseDate,
-    oil_date, target_km, // Schimbat aici din camelCase în snake_case ca să se potrivească cu RemindersPage!
+    oil_date, target_km, lastChangeKm, intervalKm, // Adăugate corect aici
     carModel, vin, engineCode, carYear, engineSize, hp, tyres
   } = req.body;
 
@@ -261,8 +260,10 @@ app.post("/api/user-settings", auth, async (req, res) => {
          car_year = COALESCE($13, car_year),
          engine_size = COALESCE($14, engine_size),
          hp = COALESCE($15, hp),
-         tyres = COALESCE($16, tyres)
-       WHERE id=$17 
+         tyres = COALESCE($16, tyres),
+         last_change_km = COALESCE($17, last_change_km), -- Salvăm prima căsuță
+         interval_km = COALESCE($18, interval_km)        -- Salvăm a doua căsuță
+       WHERE id=$19 
        RETURNING *`,
       [
         carPlate !== undefined ? carPlate : null, 
@@ -270,8 +271,8 @@ app.post("/api/user-settings", auth, async (req, res) => {
         currency || null, 
         itpDate || null, 
         insuranceDate || null, 
-        oil_date || null,      // Trimitem parametrul corect corelat ($6)
-        target_km || null,     // Trimitem parametrul corect corelat ($7)
+        oil_date || null,      
+        target_km || null,     
         roadTollDate || null,
         licenseDate || null,
         carModel || null,
@@ -281,7 +282,9 @@ app.post("/api/user-settings", auth, async (req, res) => {
         engineSize || null,
         hp || null,
         tyres || null,
-        req.user.userId
+        lastChangeKm || null, // Parametrul $17
+        intervalKm || null,   // Parametrul $18
+        req.user.userId       // Parametrul $19
       ]
     );
 

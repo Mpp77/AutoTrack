@@ -27,14 +27,15 @@ export default function RemindersPage() {
     localStorage.setItem("lastChangeKm", lastChangeKm);
     localStorage.setItem("intervalKm", intervalKm);
     localStorage.setItem("lastChangeDate", lastChangeDate);
-
+  
+    let calculatedTargetKm = "";
     if (lastChangeKm && intervalKm) {
-      const targetKm = parseInt(lastChangeKm) + parseInt(intervalKm);
-      localStorage.setItem("targetKm", targetKm.toString());
+      calculatedTargetKm = (parseInt(lastChangeKm) + parseInt(intervalKm)).toString();
+      localStorage.setItem("targetKm", calculatedTargetKm);
     } else {
       localStorage.removeItem("targetKm");
     }
-
+  
     if (lastChangeDate) {
       const date = new Date(lastChangeDate);
       date.setFullYear(date.getFullYear() + 1);
@@ -42,7 +43,7 @@ export default function RemindersPage() {
     } else {
       localStorage.removeItem("oilExpiryDate");
     }
-
+  
     const token = localStorage.getItem("token");
     if (token) {
       const API_URL = "https://autotrack-hxdk.onrender.com/api";
@@ -54,15 +55,17 @@ export default function RemindersPage() {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            itpDate: itpDate,                 // Potrivit cu server.js
-            insuranceDate: insuranceDate,     // Potrivit cu server.js
-            roadTollDate: roadTollDate,       // Potrivit cu server.js
-            licenseDate: licenseDate,         // Potrivit cu server.js
-            oil_date: lastChangeDate,         // Aceasta va fi prinsă de oil_date-ul proaspăt mapat pe server
-            target_km: localStorage.getItem("targetKm") || ""
+            itpDate: itpDate,
+            insuranceDate: insuranceDate,
+            roadTollDate: roadTollDate,
+            licenseDate: licenseDate,
+            oil_date: lastChangeDate,         
+            target_km: calculatedTargetKm,
+            lastChangeKm: lastChangeKm, // Trimitem kilometrii inițiali
+            intervalKm: intervalKm      // Trimitem intervalul dorit
           })
         });
-
+  
         if (!response.ok) {
           console.error("Eroare la salvarea alertelor pe server");
         }
@@ -70,10 +73,11 @@ export default function RemindersPage() {
         console.error("Eroare de rețea la salvarea alertelor:", error);
       }
     }
-
+  
     alert(t("remindersSaved", "Remindere salvate cu succes!"));
     navigate("/home");
   };
+
   return (
     <div className="settings-page">
       <button onClick={() => navigate("/home")} className="back-home-btn">
