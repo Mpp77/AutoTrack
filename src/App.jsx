@@ -10,7 +10,6 @@ import Settings from "./components/Settings";
 import RemindersPage from "./components/RemindersPage";
 import TalonPage from "./components/TalonPage";
 
-
 export default function App() {
   return (
     <Routes>
