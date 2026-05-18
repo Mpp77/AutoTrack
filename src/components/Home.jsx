@@ -43,15 +43,21 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("roadTollDate", data.road_toll_date || "");
             localStorage.setItem("licenseDate", data.license_date || "");
           
+            // Curățăm și formatăm corect data primită de la PostgreSQL (taie timestamp-ul dacă există)
+            let formattedOilDate = "";
+            if (data.oil_date) {
+              formattedOilDate = new Date(data.oil_date).toISOString().split('T')[0];
+            }
+
             // Sincronizăm căsuțele de Mentenanță cu datele din PostgreSQL
-            localStorage.setItem("lastChangeDate", data.oil_date || ""); 
+            localStorage.setItem("lastChangeDate", formattedOilDate); 
             localStorage.setItem("targetKm", data.target_km || "");
             localStorage.setItem("lastChangeKm", data.last_change_km || "");
             localStorage.setItem("intervalKm", data.interval_km || "");
           
             // CALCULĂM CORECT EXPIRAREA (+1 AN FAȚĂ DE DATA SCHIMBULUI)
-            if (data.oil_date) {
-              const date = new Date(data.oil_date);
+            if (formattedOilDate) {
+              const date = new Date(formattedOilDate);
               date.setFullYear(date.getFullYear() + 1);
               localStorage.setItem("oilExpiryDate", date.toISOString());
             } else {

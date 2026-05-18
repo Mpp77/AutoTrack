@@ -265,25 +265,25 @@ app.post("/api/user-settings", auth, async (req, res) => {
          interval_km = COALESCE($18, interval_km)
        WHERE id=$19 
        RETURNING *`,
-      [
+       [
         carPlate !== undefined && carPlate !== "" ? carPlate : null, 
         carImage !== undefined && carImage !== "" ? carImage : null, 
         currency || null, 
-        itpDate && itpDate !== "" ? itpDate : null, 
-        insuranceDate && insuranceDate !== "" ? insuranceDate : null, 
-        oil_date && oil_date !== "" ? oil_date : null, // REPARAT: Nu mai suprascrie cu null dacă e string gol întâmplător     
-        target_km && target_km !== "" ? target_km : null,     
-        roadTollDate && roadTollDate !== "" ? roadTollDate : null,
-        licenseDate && licenseDate !== "" ? licenseDate : null,
-        carModel || null,
-        vin || null,
-        engineCode || null,
-        carYear || null,
-        engineSize || null,
-        hp || null,
-        tyres || null,
-        lastChangeKm && lastChangeKm !== "" ? lastChangeKm : null, 
-        intervalKm && intervalKm !== "" ? intervalKm : null,   
+        itpDate !== undefined && itpDate !== "" ? itpDate : null, 
+        insuranceDate !== undefined && insuranceDate !== "" ? insuranceDate : null, 
+        oil_date !== undefined && oil_date !== "" ? oil_date : null, // Salvează doar dacă este trimis explicit valid      
+        target_km !== undefined && target_km !== "" ? target_km : null,     
+        roadTollDate !== undefined && roadTollDate !== "" ? roadTollDate : null,
+        licenseDate !== undefined && licenseDate !== "" ? licenseDate : null,
+        carModel !== undefined ? carModel : null,
+        vin !== undefined ? vin : null,
+        engineCode !== undefined ? engineCode : null,
+        carYear !== undefined ? carYear : null,
+        engineSize !== undefined ? engineSize : null,
+        hp !== undefined ? hp : null,
+        tyres !== undefined ? tyres : null,
+        lastChangeKm !== undefined && lastChangeKm !== "" ? lastChangeKm : null, 
+        intervalKm !== undefined && intervalKm !== "" ? intervalKm : null,   
         req.user.userId       
       ]
     );
