@@ -1833,30 +1833,39 @@ input[type="file"]::file-selector-button:hover {
 .date-field {
   position: relative;
   width: 100%;
+  max-width: 280px;
 }
 
 .date-field .date-input {
   width: 100%;
-  color: transparent;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
   position: relative;
   z-index: 2;
-  background: transparent;
+  background: transparent !important;
+  text-align: center;
 }
 
-.date-field .date-input:focus,
-.date-field .date-input.filled {
-  color: white;
+.date-field .date-input.filled,
+.date-field .date-input:focus {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 .date-label {
   position: absolute;
-  left: 28px;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
-  color: rgba(255,255,255,0.7);
-  font-weight: 700;
+  transform: translate(-50%, -50%);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 900;
+  font-size: 18px;
   pointer-events: none;
-  z-index: 1;
+  z-index: 3;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(126, 239, 255, 0.45);
 }
 
 .date-label.hidden {
