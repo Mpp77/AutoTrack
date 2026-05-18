@@ -1372,11 +1372,10 @@ input[type="file"]::file-selector-button:hover {
   }
 
   .overview-card {
-    width: calc(100vw - 24px);
-    max-width: calc(100vw - 24px);
+    width: min(100%, 980px);
     margin: 0 auto;
-    padding: 28px 14px 30px;
-    overflow: hidden;
+    padding: 28px 18px 30px;
+    box-sizing: border-box;
   }
 
   .overview-card h1 {
@@ -1848,8 +1847,14 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .date-input {
-  width: 100%;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
+  text-align: center;
+}
+
+.date-input::placeholder {
+  color: #ffffff !important;
+  opacity: 0.9;
+  font-weight: 800;
   text-align: center;
 }
