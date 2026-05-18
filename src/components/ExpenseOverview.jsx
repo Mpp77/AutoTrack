@@ -135,30 +135,28 @@ export default function ExpenseOverview() {
         <div className="filters-row">
 
         <div className="date-field">
-  <span className={startDate ? "date-label filled" : "date-label"}>
+  <span className={startDate ? "date-label hidden" : "date-label"}>
     {t("fromDate")}
   </span>
   <input
     type="date"
     value={startDate}
     onChange={(e) => setStartDate(e.target.value)}
-    className="filter-input date-input"
+    className={`filter-input date-input ${startDate ? "filled" : ""}`}
     autoComplete="off"
-    inputMode="none"
   />
 </div>
 
 <div className="date-field">
-  <span className={endDate ? "date-label filled" : "date-label"}>
+  <span className={endDate ? "date-label hidden" : "date-label"}>
     {t("toDate")}
   </span>
   <input
     type="date"
     value={endDate}
     onChange={(e) => setEndDate(e.target.value)}
-    className="filter-input date-input"
+    className={`filter-input date-input ${endDate ? "filled" : ""}`}
     autoComplete="off"
-    inputMode="none"
   />
 </div>
 

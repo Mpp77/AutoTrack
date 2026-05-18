@@ -1838,10 +1838,13 @@ input[type="file"]::file-selector-button:hover {
 .date-field .date-input {
   width: 100%;
   color: transparent;
+  position: relative;
+  z-index: 2;
+  background: transparent;
 }
 
 .date-field .date-input:focus,
-.date-field .date-input:valid {
+.date-field .date-input.filled {
   color: white;
 }
 
@@ -1850,12 +1853,12 @@ input[type="file"]::file-selector-button:hover {
   left: 28px;
   top: 50%;
   transform: translateY(-50%);
-  color: white;
+  color: rgba(255,255,255,0.7);
   font-weight: 700;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 
-.date-label.filled {
+.date-label.hidden {
   display: none;
 }
