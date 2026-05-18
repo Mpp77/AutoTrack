@@ -266,15 +266,15 @@ app.post("/api/user-settings", auth, async (req, res) => {
        WHERE id=$19 
        RETURNING *`,
        [
-        carPlate !== undefined && carPlate !== "" ? carPlate : null, 
-        carImage !== undefined && carImage !== "" ? carImage : null, 
-        currency || null, 
-        itpDate !== undefined && itpDate !== "" ? itpDate : null, 
-        insuranceDate !== undefined && insuranceDate !== "" ? insuranceDate : null, 
-        oil_date !== undefined && oil_date !== "" ? oil_date : null, // Salvează doar dacă este trimis explicit valid      
-        target_km !== undefined && target_km !== "" ? target_km : null,     
-        roadTollDate !== undefined && roadTollDate !== "" ? roadTollDate : null,
-        licenseDate !== undefined && licenseDate !== "" ? licenseDate : null,
+        carPlate !== undefined && carPlate !== "" ? carPlate : null,
+        carImage !== undefined && carImage !== "" ? carImage : null,
+        currency || null,
+        itpDate ? new Date(itpDate).toISOString().split("T")[0] : null,
+        insuranceDate ? new Date(insuranceDate).toISOString().split("T")[0] : null,
+        oil_date ? new Date(oil_date).toISOString().split("T")[0] : null,
+        target_km !== undefined && target_km !== "" ? Number(target_km) : null,
+        roadTollDate ? new Date(roadTollDate).toISOString().split("T")[0] : null,
+        licenseDate ? new Date(licenseDate).toISOString().split("T")[0] : null,
         carModel !== undefined ? carModel : null,
         vin !== undefined ? vin : null,
         engineCode !== undefined ? engineCode : null,
@@ -282,9 +282,9 @@ app.post("/api/user-settings", auth, async (req, res) => {
         engineSize !== undefined ? engineSize : null,
         hp !== undefined ? hp : null,
         tyres !== undefined ? tyres : null,
-        lastChangeKm !== undefined && lastChangeKm !== "" ? lastChangeKm : null, 
-        intervalKm !== undefined && intervalKm !== "" ? intervalKm : null,   
-        req.user.userId       
+        lastChangeKm !== undefined && lastChangeKm !== "" ? Number(lastChangeKm) : null,
+        intervalKm !== undefined && intervalKm !== "" ? Number(intervalKm) : null,
+        req.user.userId
       ]
     );
 
