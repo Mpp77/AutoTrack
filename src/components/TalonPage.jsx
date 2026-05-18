@@ -7,7 +7,6 @@ export default function TalonPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  // Încărcăm stările din localStorage
   const [carModel, setCarModel] = useState(localStorage.getItem("carModel") || "");
   const [vin, setVin] = useState(localStorage.getItem("vin") || "");
   const [engineCode, setEngineCode] = useState(localStorage.getItem("engineCode") || "");
@@ -32,20 +31,20 @@ export default function TalonPage() {
       const API_URL = "https://autotrack-hxdk.onrender.com/api";
       try {
         const response = await fetch(`${API_URL}/user-settings`, {
-          method: "POST", // sau PUT, în funcție de cum e configurat backend-ul tău pentru update
+          method: "POST", 
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            carModel: carModel,       // Schimbat în camelCase ca să corespundă cu server.js
+            carModel: carModel,       
             vin: vin,
-            engineCode: engineCode,   // Schimbat în camelCase
-            carYear: carYear,         // Schimbat în camelCase
-            engineSize: engineSize,   // Schimbat în camelCase
+            engineCode: engineCode,   
+            carYear: carYear,         
+            engineSize: engineSize,   
             hp: hp,
             tyres: tyres,
-            carPlate: localStorage.getItem("carPlate") // Trimitem și numărul pentru siguranță
+            carPlate: localStorage.getItem("carPlate")
           })
         });
 

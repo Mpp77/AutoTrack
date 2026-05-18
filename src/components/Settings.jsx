@@ -8,7 +8,6 @@ export default function Settings() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
-  // --- SETĂRILE TALE VECHI (Monedă) ---
   const [currency, setCurrency] = useState(
     localStorage.getItem("currency") || "RON"
   );
@@ -19,7 +18,6 @@ export default function Settings() {
     localStorage.setItem("currency", value);
   };
 
-  // --- SETĂRILE NOI (Mașină) ---
   const [carPlate, setCarPlate] = useState(localStorage.getItem("carPlate") || "");
   const [carImage, setCarImage] = useState(localStorage.getItem("carImage") || "");
 
@@ -34,10 +32,8 @@ export default function Settings() {
       img.src = event.target.result;
       
       img.onload = () => {
-        // Creăm un canvas invizibil pentru a redimensiona poza
         const canvas = document.createElement("canvas");
         
-        // Tăiem poza la 400px
         const MAX_WIDTH = 400; 
         const scaleSize = MAX_WIDTH / img.width;
         
@@ -47,10 +43,8 @@ export default function Settings() {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // Comprimăm la 70% calitate
         const compressedBase64 = canvas.toDataURL("image/jpeg", 0.7);
         
-        // Salvăm în state
         setCarImage(compressedBase64); 
       };
     };
@@ -102,8 +96,8 @@ export default function Settings() {
 
   const handleRemoveImage = () => {
     if (window.confirm(t("confirmDeletePhoto", "Sigur vrei să ștergi poza mașinii?"))) {
-      setCarImage(""); // Ștergem din starea aplicației
-      localStorage.removeItem("carImage"); // Ștergem din memoria locală
+      setCarImage(""); 
+      localStorage.removeItem("carImage"); 
     }
   };
 

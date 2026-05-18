@@ -7,15 +7,12 @@ export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
-  // Folosim state pentru a putea actualiza imaginea și numărul imediat ce vin de pe server
   const [carPlate, setCarPlate] = useState(localStorage.getItem("carPlate") || t("auto", "Auto"));
   const [carImage, setCarImage] = useState(localStorage.getItem("carImage"));
   const [reminders, setReminders] = useState([]);
   
-  // O variabilă care ne anunță când serverul a terminat de trimis datele
   const [cloudDataLoaded, setCloudDataLoaded] = useState(false);
 
-  // 1. La începutul componentei tale Home(), adaugă această stare:
 const [showTalon, setShowTalon] = useState(false);
 
   useEffect(() => {
@@ -39,7 +36,6 @@ const [showTalon, setShowTalon] = useState(false);
             if (data.car_image) localStorage.setItem("carImage", data.car_image);
             localStorage.setItem("currency", data.currency || "RON");
             
-            // Formatăm corect toate datele calendaristice ca să fie înțelese de input-urile HTML (YYYY-MM-DD)
             const formatToInputDate = (rawDate) => {
               if (!rawDate) return "";
               try {
@@ -54,7 +50,6 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("roadTollDate", formatToInputDate(data.road_toll_date));
             localStorage.setItem("licenseDate", formatToInputDate(data.license_date));
           
-            // REPARAT: Curățăm data de ulei pentru a fi perfect compatibilă cu <input type="date" />
             const cleanOilDate = formatToInputDate(data.oil_date);
             localStorage.setItem("lastChangeDate", cleanOilDate); 
             
@@ -62,7 +57,6 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("lastChangeKm", data.last_change_km || "");
             localStorage.setItem("intervalKm", data.interval_km || "");
           
-            // CALCULĂM CORECT EXPIRAREA (+1 AN FAȚĂ DE DATA SCHIMBULUI)
             if (cleanOilDate) {
               const date = new Date(cleanOilDate);
               date.setFullYear(date.getFullYear() + 1);
@@ -93,7 +87,6 @@ const [showTalon, setShowTalon] = useState(false);
     fetchCloudSettings();
   }, []);
 
-  // 2. Efectul care CALCULEAZĂ Reminderele (se rulează din nou după ce cloudDataLoaded devine true)
   useEffect(() => {
     const calculateReminders = () => {
       const activeReminders = [];
@@ -179,7 +172,7 @@ if (savedRoadToll) {
     };
 
     calculateReminders();
-  }, [t, cloudDataLoaded]); // Array de dependențe: se re-rulează dacă vin date noi din cloud
+  }, [t, cloudDataLoaded]); 
 
   const handleLogout = () => {
     localStorage.removeItem("token");

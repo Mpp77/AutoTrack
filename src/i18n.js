@@ -10,14 +10,14 @@ i18n
       en: { translation: en },
       ro: { translation: ro },
     },
-    lng: localStorage.getItem("language") || "en", // 🔹 limba curentă la pornire
+    lng: localStorage.getItem("language") || "en", //limba curentă la pornire
     fallbackLng: "en",
     interpolation: {
       escapeValue: false,
     },
   });
 
-// 🔹 actualizează automat localStorage când se schimbă limba
+//actualizează automat localStorage când se schimbă limba
 i18n.on("languageChanged", (lng) => {
   localStorage.setItem("language", lng);
 });

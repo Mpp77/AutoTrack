@@ -1451,13 +1451,11 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 600px) {
- /* Le scoatem din modul fixed și le legăm direct de conținutul central ca să nu mai fie împrăștiate */
-/* Aliniere compactă direct sub textul verde, fără să mai fie împrăștiate jos */
+
 .home-action-row {
   position: absolute !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
-  /* Folosim top procentual pentru a le bloca direct sub elementele de sus */
   top: 70% !important; 
   bottom: auto !important;
   margin: 0 !important;
@@ -1484,7 +1482,6 @@ input[type="file"]::file-selector-button:hover {
     margin-bottom: 2px;
   }
 
-  /* Micșorăm discret elementele centrale ca să nu facă overflow pe înălțime */
   .progress-ring-container {
     width: 190px !important;
     height: 190px !important;

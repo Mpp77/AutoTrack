@@ -60,8 +60,8 @@ export default function Dashboard() {
 <div className="w-full max-w-4xl flex justify-start mt-10 mb-6">
     <button
     onClick={() => {
-      localStorage.removeItem("token"); // 🔥 logout
-      navigate("/"); // sau "/login"
+      localStorage.removeItem("token"); 
+      navigate("/");
     }}
     className="px-5 py-2 rounded-xl font-semibold text-white
     bg-gradient-to-r from-[#007bff] to-[#00bfff]
