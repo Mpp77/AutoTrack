@@ -38,14 +38,14 @@ export default function TalonPage() {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            // Trimitem cheile exact în formatul pe care îl așteaptă baza ta de date (snake_case sau camelCase)
-            car_model: carModel,
+            carModel: carModel,       // Schimbat în camelCase ca să corespundă cu server.js
             vin: vin,
-            engine_code: engineCode,
-            car_year: carYear,
-            engine_size: engineSize,
+            engineCode: engineCode,   // Schimbat în camelCase
+            carYear: carYear,         // Schimbat în camelCase
+            engineSize: engineSize,   // Schimbat în camelCase
             hp: hp,
-            tyres: tyres
+            tyres: tyres,
+            carPlate: localStorage.getItem("carPlate") // Trimitem și numărul pentru siguranță
           })
         });
 

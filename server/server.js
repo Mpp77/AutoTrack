@@ -233,7 +233,7 @@ app.get("/api/user-settings", auth, async (req, res) => {
 // 2. POST: Salvează/Actualizează inteligent fără să mai șteargă câmpurile vechi
 app.post("/api/user-settings", auth, async (req, res) => {
   const { 
-    carPlate, carImage, currency, itpDate, insuranceDate, oilDate, targetKm,
+    carPlate, carImage, currency, itpDate, insuranceDate, oil_date, target_km, // Ajustat conform frontend-ului
     roadTollDate, licenseDate, carModel, vin, engineCode, carYear, engineSize, hp, tyres
   } = req.body;
 
@@ -266,8 +266,8 @@ app.post("/api/user-settings", auth, async (req, res) => {
         currency || null, 
         itpDate || null, 
         insuranceDate || null, 
-        oilDate || null, 
-        targetKm || null,
+        oil_date || null, // Folosim direct parametrul mapat corect de la Mentenanță
+        target_km || null,
         roadTollDate || null,
         licenseDate || null,
         carModel || null,

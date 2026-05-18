@@ -54,11 +54,11 @@ export default function RemindersPage() {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            itp_date: itpDate,
-            insurance_date: insuranceDate,
-            road_toll_date: roadTollDate,
-            license_date: licenseDate,
-            oil_date: lastChangeDate, 
+            itpDate: itpDate,                 // Potrivit cu server.js
+            insuranceDate: insuranceDate,     // Potrivit cu server.js
+            roadTollDate: roadTollDate,       // Potrivit cu server.js
+            licenseDate: licenseDate,         // Potrivit cu server.js
+            oil_date: lastChangeDate,         // Aceasta va fi prinsă de oil_date-ul proaspăt mapat pe server
             target_km: localStorage.getItem("targetKm") || ""
           })
         });
