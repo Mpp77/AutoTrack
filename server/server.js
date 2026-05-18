@@ -237,7 +237,7 @@ app.get("/api/user-settings", auth, async (req, res) => {
 app.post("/api/user-settings", auth, async (req, res) => {
   const { 
     carPlate, carImage, currency, itpDate, insuranceDate, roadTollDate, licenseDate,
-    oil_date, target_km, lastChangeKm, intervalKm, // Adăugate corect aici
+    oil_date, target_km, lastChangeKm, intervalKm, 
     carModel, vin, engineCode, carYear, engineSize, hp, tyres
   } = req.body;
 
@@ -261,20 +261,20 @@ app.post("/api/user-settings", auth, async (req, res) => {
          engine_size = COALESCE($14, engine_size),
          hp = COALESCE($15, hp),
          tyres = COALESCE($16, tyres),
-         last_change_km = COALESCE($17, last_change_km), -- Salvăm prima căsuță
-         interval_km = COALESCE($18, interval_km)        -- Salvăm a doua căsuță
+         last_change_km = COALESCE($17, last_change_km),
+         interval_km = COALESCE($18, interval_km)
        WHERE id=$19 
        RETURNING *`,
       [
-        carPlate !== undefined ? carPlate : null, 
-        carImage !== undefined ? carImage : null, 
+        carPlate !== undefined && carPlate !== "" ? carPlate : null, 
+        carImage !== undefined && carImage !== "" ? carImage : null, 
         currency || null, 
-        itpDate || null, 
-        insuranceDate || null, 
-        oil_date || null,      
-        target_km || null,     
-        roadTollDate || null,
-        licenseDate || null,
+        itpDate && itpDate !== "" ? itpDate : null, 
+        insuranceDate && insuranceDate !== "" ? insuranceDate : null, 
+        oil_date && oil_date !== "" ? oil_date : null, // REPARAT: Nu mai suprascrie cu null dacă e string gol întâmplător     
+        target_km && target_km !== "" ? target_km : null,     
+        roadTollDate && roadTollDate !== "" ? roadTollDate : null,
+        licenseDate && licenseDate !== "" ? licenseDate : null,
         carModel || null,
         vin || null,
         engineCode || null,
@@ -282,9 +282,9 @@ app.post("/api/user-settings", auth, async (req, res) => {
         engineSize || null,
         hp || null,
         tyres || null,
-        lastChangeKm || null, // Parametrul $17
-        intervalKm || null,   // Parametrul $18
-        req.user.userId       // Parametrul $19
+        lastChangeKm && lastChangeKm !== "" ? lastChangeKm : null, 
+        intervalKm && intervalKm !== "" ? intervalKm : null,   
+        req.user.userId       
       ]
     );
 

@@ -137,33 +137,40 @@ export default function RemindersPage() {
         </div>
 
         <div className="settings-row">
-          <label><Gauge size={18} /> {t("oilChangeDetails", "Detalii Schimb Ulei")}</label>
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <input 
-              type="number" 
-              placeholder={t("lastOilChangeKm", "Km la ultimul schimb (ex: 260000)")}
-              className="filter-input" 
-              value={lastChangeKm} 
-              onChange={(e) => setLastChangeKm(e.target.value)} 
-            />
-            <input 
-              type="number" 
-              placeholder={t("oilChangeInterval", "Interval (peste câți km? ex: 15000)")}
-              className="filter-input" 
-              value={intervalKm} 
-              onChange={(e) => setIntervalKm(e.target.value)} 
-            />
-            <label style={{ fontSize: '14px', marginTop: '5px' }}>{t("lastOilChangeDate", "Data ultimului schimb:")}</label>
-            <input 
-              type="date" 
-              className="filter-input" 
-              value={lastChangeDate} 
-              onChange={(e) => setLastChangeDate(e.target.value)} 
-              autoComplete="off"
-              inputMode="none"
-            />
-          </div>
-        </div>
+  <label><Gauge size={18} /> {t("oilChangeDetails", "Detalii Schimb Ulei")}</label>
+  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+    
+    {/* 1. CĂSUȚA PENTRU KM ACTUAlI */}
+    <input 
+      type="number" 
+      placeholder={t("lastOilChangeKm", "Km la ultimul schimb (ex: 260000)")}
+      className="filter-input" 
+      value={lastChangeKm} 
+      onChange={(e) => setLastChangeKm(e.target.value)} 
+    />
+    
+    {/* 2. CĂSUȚA PENTRU INTERVAL INTERMÉDIAR */}
+    <input 
+      type="number" 
+      placeholder={t("oilChangeInterval", "Interval (peste câți km? ex: 15000)")}
+      className="filter-input" 
+      value={intervalKm} 
+      onChange={(e) => setIntervalKm(e.target.value)} 
+    />
+    
+    {/* 3. ETICHETA ȘI CĂSUȚA PENTRU DATĂ */}
+    <label style={{ fontSize: '14px', marginTop: '5px' }}>{t("lastOilChangeDate", "Data ultimului schimb:")}</label>
+    <input 
+      type="date" 
+      className="filter-input" 
+      value={lastChangeDate} 
+      onChange={(e) => setLastChangeDate(e.target.value)} 
+      autoComplete="off"
+      inputMode="none"
+    />
+    
+  </div>
+</div>
 
         <button onClick={handleSave} className="save-btn-neon">
           {t("saveConfig", "Salvează Configurația")}
