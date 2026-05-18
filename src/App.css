@@ -1468,13 +1468,6 @@ input[type="file"]::file-selector-button:hover {
   z-index: 998;
 }
 
-/* Compactăm spațiul dintre mașină și textul verde */
-.smart-badges-container {
-  max-width: 290px;
-  gap: 7px;
-  margin: 15px auto 0 !important;
-}
-
   .dashboard-central {
     justify-content: center;
     gap: 8px;
