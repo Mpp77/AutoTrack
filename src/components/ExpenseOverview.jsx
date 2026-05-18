@@ -133,24 +133,34 @@ export default function ExpenseOverview() {
         <h1>{t("expenseOverview")}</h1>
 
         <div className="filters-row">
-  <input
-    type="date"
-    value={startDate}
-    onChange={(e) => setStartDate(e.target.value)}
-    className="filter-input"
-    /* REPARATIE SPECIFICĂ PENTRU IPHONE BROWSER */
-    autoComplete="off"
-    inputMode="none" /* Împiedică complet deschiderea tastaturii cu litere */
-  />
 
-  <input
-    type="date"
-    value={endDate}
-    onChange={(e) => setEndDate(e.target.value)}
-    className="filter-input"
-    autoComplete="off"
-    inputMode="none"
-  />
+        <input
+          type={startDate ? "date" : "text"}
+          value={startDate}
+          placeholder={t("fromDate")}
+          onFocus={(e) => (e.target.type = "date")}
+          onBlur={(e) => {
+            if (!startDate) e.target.type = "text";
+          }}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="filter-input"
+          autoComplete="off"
+          inputMode="none"
+        />
+
+        <input
+          type={endDate ? "date" : "text"}
+          value={endDate}
+          placeholder={t("toDate")}
+          onFocus={(e) => (e.target.type = "date")}
+          onBlur={(e) => {
+            if (!endDate) e.target.type = "text";
+          }}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="filter-input"
+          autoComplete="off"
+          inputMode="none"
+        />
 
   <select
     value={selectedCategory}

@@ -120,5 +120,8 @@
 "talonEngineCode": "P.5. Engine Code:",
 "talonYear": "B. Year of Mfg:",
 "talonTyres": "L. Tyre Sizes:",
-"talonSaved": "Car details saved successfully!"
+"talonSaved": "Car details saved successfully!",
+
+"fromDate": "From date",
+"toDate": "To date"
 }

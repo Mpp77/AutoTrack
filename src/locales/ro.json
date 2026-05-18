@@ -120,6 +120,9 @@
 "talonEngineCode": "P.5. Cod Motor:",
 "talonYear": "B. An Fabr:",
 "talonTyres": "L. Anvelope / Cauciucuri:",
-"talonSaved": "Datele talonului au fost salvate cu succes!"
+"talonSaved": "Datele talonului au fost salvate cu succes!",
+
+"fromDate": "De la data",
+"toDate": "Până la data"
 
 }
