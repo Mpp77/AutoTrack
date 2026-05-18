@@ -212,33 +212,37 @@ app.listen(5001, () => {
 
 // --- RUTE PENTRU SETĂRI PROFIL ȘI MAȘINĂ COMPLET CORECTATE ---
 
-// 1. GET: Preia ABSOLUT TOATE DATELE mașinii când intri în aplicație
 app.get("/api/user-settings", auth, async (req, res) => {
   try {
     const result = await pool.query(
-      `SELECT 
-        car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km, 
-        road_toll_date, license_date, car_model, vin, engine_code, car_year, engine_size, hp, tyres 
+      `SELECT car_plate, car_image, currency, itp_date, insurance_date, oil_date, target_km, 
+              road_toll_date, license_date, car_model, vin, engine_code, car_year, engine_size, 
+              hp, tyres, last_change_km, interval_km 
        FROM users 
-       WHERE id=$1`,
+       WHERE id = $1`,
       [req.user.userId]
     );
-    res.json(result.rows[0] || {});
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(result.rows[0]);
   } catch (error) {
     console.error("GET SETTINGS ERROR:", error);
-    res.status(500).json({ message: "Failed to get settings" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// 2. POST: Salvează/Actualizează inteligent fără să mai șteargă câmpurile vechi
 app.post("/api/user-settings", auth, async (req, res) => {
+  // Prindem exact variabilele așa cum le trimite Frontend-ul (atât din TalonPage cât și din RemindersPage)
   const { 
-    carPlate, carImage, currency, itpDate, insuranceDate, oil_date, target_km, // Ajustat conform frontend-ului
-    roadTollDate, licenseDate, carModel, vin, engineCode, carYear, engineSize, hp, tyres
+    carPlate, carImage, currency, itpDate, insuranceDate, roadTollDate, licenseDate,
+    oil_date, target_km, lastChangeKm, intervalKm, // Câmpurile corecte de mentenanță
+    carModel, vin, engineCode, carYear, engineSize, hp, tyres
   } = req.body;
 
   try {
-    // Folosim COALESCE: dacă o valoare lipsește din cerere, se păstrează ce era deja în baza de date!
     const result = await pool.query(
       `UPDATE users
        SET 
@@ -257,8 +261,10 @@ app.post("/api/user-settings", auth, async (req, res) => {
          car_year = COALESCE($13, car_year),
          engine_size = COALESCE($14, engine_size),
          hp = COALESCE($15, hp),
-         tyres = COALESCE($16, tyres)
-       WHERE id=$17 
+         tyres = COALESCE($16, tyres),
+         last_change_km = COALESCE($17, last_change_km), -- Dacă ai aceste coloane în baza de date
+         interval_km = COALESCE($18, interval_km)        -- ca să rețină și km vechi
+       WHERE id=$19 
        RETURNING *`,
       [
         carPlate !== undefined ? carPlate : null, 
@@ -266,17 +272,19 @@ app.post("/api/user-settings", auth, async (req, res) => {
         currency || null, 
         itpDate || null, 
         insuranceDate || null, 
-        oil_date || null, // Folosim direct parametrul mapat corect de la Mentenanță
+        oil_date || null, // Luat direct din req.body ca string/date
         target_km || null,
         roadTollDate || null,
         licenseDate || null,
         carModel || null,
         vin || null,
         engineCode || null,
-        carYear || null,
+        carYear ? parseInt(carYear) : null,
         engineSize || null,
-        hp || null,
+        hp ? parseInt(hp) : null,
         tyres || null,
+        lastChangeKm || null,
+        intervalKm || null,
         req.user.userId
       ]
     );

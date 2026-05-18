@@ -40,8 +40,10 @@ const [showTalon, setShowTalon] = useState(false);
             localStorage.setItem("currency", data.currency || "RON");
             localStorage.setItem("itpDate", data.itp_date || "");
             localStorage.setItem("insuranceDate", data.insurance_date || "");
-            localStorage.setItem("oilExpiryDate", data.oil_date || ""); // Aceasta este corectă, asigură-te că nu e suprascrisă altundeva în fișier greșit!
+            localStorage.setItem("oilExpiryDate", data.oil_date || ""); 
             localStorage.setItem("targetKm", data.target_km || "");
+            localStorage.setItem("lastChangeKm", data.last_change_km || "");
+            localStorage.setItem("intervalKm", data.interval_km || "");
             localStorage.setItem("roadTollDate", data.road_toll_date || "");
             localStorage.setItem("licenseDate", data.license_date || "");
           
