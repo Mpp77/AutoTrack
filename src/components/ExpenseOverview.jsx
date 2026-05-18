@@ -156,7 +156,6 @@ export default function ExpenseOverview() {
   />
 </div>
 
-
   <select
     value={selectedCategory}
     onChange={(e) => setSelectedCategory(e.target.value)}
