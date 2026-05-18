@@ -1468,6 +1468,7 @@ input[type="file"]::file-selector-button:hover {
   z-index: 998;
 }
 
+
   .dashboard-central {
     justify-content: center;
     gap: 8px;
@@ -1823,92 +1824,44 @@ input[type="file"]::file-selector-button:hover {
   }
 }
 
-/* =========================
-DATE OVERVIEW PAGE
-========================= */
-
 .date-field {
+  position: relative;
   width: 100%;
   max-width: 280px;
 }
 
-.date-input {
+.date-field .date-input {
   width: 100%;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
   text-align: center;
 }
 
-.date-label,
+.date-field .date-input.filled,
+.date-field .date-input:focus {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.date-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+  font-weight: 900;
+  font-size: 18px;
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+  text-shadow: 0 0 10px rgba(126, 239, 255, 0.45);
+}
+
 .date-label.hidden {
-  display: none !important;
-}
-
-
-/* =========================
-   RESPONSIVE SPACING CLEANUP
-========================= */
-
-/* Laptop / desktop */
-@media (min-width: 1024px) {
-  .auth-page,
-  .overview-page,
-  .add-expense-page,
-  .list-page,
-  .category-page,
-  .settings-page {
-    padding-top: 28px;
-  }
-
-  .auth-card,
-  .overview-card,
-  .add-expense-card,
-  .list-card,
-  .category-card,
-  .settings-card {
-    margin-top: 18px;
-  }
-}
-
-/* Tabletă */
-@media (min-width: 769px) and (max-width: 1023px) {
-  .auth-page,
-  .overview-page,
-  .add-expense-page,
-  .list-page,
-  .category-page,
-  .settings-page {
-    padding: 22px;
-  }
-
-  .auth-card,
-  .overview-card,
-  .add-expense-card,
-  .list-card,
-  .category-card,
-  .settings-card {
-    margin-top: 18px;
-    padding: 34px 28px;
-  }
-}
-
-/* Telefon */
-@media (max-width: 768px) {
-  .auth-page,
-  .overview-page,
-  .add-expense-page,
-  .list-page,
-  .category-page,
-  .settings-page {
-    padding-top: 14px !important;
-  }
-
-  .auth-card,
-  .overview-card,
-  .add-expense-card,
-  .list-card,
-  .category-card,
-  .settings-card {
-    margin-top: 12px !important;
-  }
+  display: none;
 }
