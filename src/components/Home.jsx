@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { PieChart, List, Plus, Settings, AlertTriangle, Droplet, CheckCircle, Calendar, Bell } from "lucide-react";import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import "../App.css";
-import { useTranslation } from 'react-i18next';
 
 export default function Home() {
   const navigate = useNavigate();
