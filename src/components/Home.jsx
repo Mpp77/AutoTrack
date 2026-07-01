@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { PieChart, List, Plus, Settings, AlertTriangle, Droplet, CheckCircle, Calendar, Bell } from "lucide-react";import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import "../App.css";
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -224,12 +225,13 @@ if (savedRoadToll) {
             ))
           ) : (
             <div 
-              className="smart-badge badge-success clickable-badge"
-              onClick={() => navigate("/reminders")}
-            >
-              <CheckCircle size={18} />
-              <span>Nimic de făcut</span>
-            </div>
+    className="smart-badge badge-success clickable-badge"
+    onClick={() => navigate("/reminders")}
+  >
+    <CheckCircle size={18} />
+    {/* AICI ESTE MODIFICAREA: */}
+    <span>{t("nothing_to_do")}</span> 
+  </div>
           )}
         </div>
       </div>
