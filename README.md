@@ -1,16 +1,55 @@
-# React + Vite
+# AutoTrack - Management of Car Expenses
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  A full-stack application (PWA) for the centralized management of car expenses, documents, and maintenance alerts.
 
-Currently, two official plugins are available:
+## 1. Project Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  AutoTrack solves the problem of manual car expense management by providing a centralized solution featuring "offline-first" capabilities and automated logic for maintenance alerts.
+PDF
 
-## React Compiler
+  Technologies used:
+* **Frontend:** React, Vite, React Router, Recharts, i18next (RO/EN)
+* **Backend:** Node.js, Express, JWT Authentication
+* **Database:** PostgreSQL (Neon)
+* **Technologies:** PWA (Service Workers for Offline-First Experience)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 2. Build steps
 
-## Expanding the ESLint configuration
+  Make sure you have [Node.js](https://nodejs.org/) installed (v18+).
+  
+1. Clone the repository:
+   ```bash
+   git clone <URL_REPO>
+   cd AutoTrack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. Install the dependencies for the frontend and server:
+    ```bash
+     npm install
+     cd server && npm install
+
+4. Create a .env file in the server folder with the necessary variables:
+    ```bash
+    DATABASE_URL=...
+    JWT_SECRET=...
+    
+
+## 3. Installation and launch steps
+
+  Launching the database: Ensure the PostgreSQL instance is configured.
+
+1. Starting the server (Backend):
+
+    ```bash
+    cd server
+    npm run dev
+    ```
+
+2. Starting the application (Frontend):
+
+    ```bash
+    npm run dev
+    ```
+
+3. Access:
+Open the browser at <http://localhost:5173>.
+
