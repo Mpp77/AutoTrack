@@ -17,7 +17,7 @@ You can access the application directly here: https://auto-track-sooty.vercel.ap
   
 ## 2. Repository Address
 
-* **Repository URL:** https://github.com/Mpp77/AutoTrack
+* Repository URL: https://github.com/Mpp77/AutoTrack
 
 ## 3. Build steps
 
@@ -50,13 +50,21 @@ The application runs on two different ports for development:
 1. Launching the Backend (API):
 From the server directory, run:
     ```bash
-    npm start
+    cd server
+     ```
+    
+     ```bash
+    node server.js
     ```
 
 2. Launching the Frontend:
 From the project's root directory, run:
     ```bash
     npm run dev
+    ```
+    
+    ```bash
+    o
     ```
 
 3. Access:
