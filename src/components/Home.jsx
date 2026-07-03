@@ -228,29 +228,24 @@ if (savedRoadToll) {
     onClick={() => navigate("/reminders")}
   >
     <CheckCircle size={18} />
-    {/* AICI ESTE MODIFICAREA: */}
     <span>{t("nothing_to_do")}</span> 
   </div>
           )}
         </div>
       </div>
 
-{/* ÎNTREGUL POP-UP VECHI DE TALON A FOST ELIMINAT DE AICI */}
      
-      {/* Cele două butoane separate aliniate perfect stânga-dreapta */}
       <div className="home-action-row">
         <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
           <Bell size={14} style={{ marginRight: '6px' }} />
           <span>{t("configureAlertsShort", "Alerte")}</span>
         </button>
 
-        {/* Butonul de Talon acum trimite direct către pagina dedicată /talon */}
         <button className="edit-reminders-link" onClick={() => navigate("/talon")}>
           <span>🪪 Talon</span>
         </button>
       </div>
 
-      {/* Navigația de jos */}
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
           <PieChart />

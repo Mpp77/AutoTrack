@@ -52,10 +52,10 @@ export default function ExpenseOverview() {
   useEffect(() => {
     const fetchExpensesAndRate = async () => {
       try {
-        // 1. Preluăm cursul live de pe internet (care vine ca ~4.97)
+        // 1. preluare curs live de pe internet (care vine ca ~4.97)
         const liveRate = await fetchCurrentExchangeRate();
         
-        // 2. O transformăm matematic ca să se potrivească perfect cu semnele tale (1 / 4.97 = ~0.20)
+        // 2. O transformăm matematic ca să se potrivească perfect cu semnele  (1 / 4.97 = ~0.20)
         if (liveRate && !isNaN(liveRate) && liveRate > 0) {
           setEurToRonRate(1 / Number(liveRate));
         }
@@ -114,7 +114,6 @@ export default function ExpenseOverview() {
       // Folosim valoarea dinamică curentă (eurToRonRate) sau 0.19 dacă încă se încarcă
       const currentRate = eurToRonRate || 0.19;
 
-      // Păstrăm logica ta originală neschimbată
       if (exp.currency === "RON" && selectedCurrency === "EUR") {
         amount = amount * currentRate;
       } else if (exp.currency === "EUR" && selectedCurrency === "RON") {

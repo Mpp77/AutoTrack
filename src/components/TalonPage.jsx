@@ -25,7 +25,7 @@ export default function TalonPage() {
     localStorage.setItem("hp", hp);
     localStorage.setItem("tyres", tyres);
     
-    // 2. Trimitem datele către serverul tău din cloud
+    // 2. Trimitem datele către serverul din cloud
     const token = localStorage.getItem("token");
     if (token) {
       const API_URL = "https://autotrack-hxdk.onrender.com/api";

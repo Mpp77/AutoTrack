@@ -10,14 +10,12 @@ export default function ExpenseList() {
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";
   
-  // Modificat înapoi la 0.19 ca valoare de pornire/fallback
   const [eurToRonRate, setEurToRonRate] = useState(0.19);
 
   useEffect(() => {
     const loadRateAndExpenses = async () => {
       try {
         const liveRate = await fetchCurrentExchangeRate();
-        // API-ul returnează ~4.97 (EUR->RON). Nouă ne trebuie invers pentru logica ta: 1 / 4.97 = ~0.20
         setEurToRonRate(1 / liveRate);
       } catch (error) {
         console.error("Eroare la curs live, se folosește fallback 0.19", error);
@@ -53,7 +51,6 @@ export default function ExpenseList() {
     if (!acc[cat]) acc[cat] = { total: 0 };
     let amount = parseFloat(exp.amount) || 0;
 
-    // RESTAURAT: Logica ta matematică originală cu înmulțire/împărțire
     if (exp.currency === "RON" && selectedCurrency === "EUR") {
       amount = amount * eurToRonRate; 
     } else if (exp.currency === "EUR" && selectedCurrency === "RON") {

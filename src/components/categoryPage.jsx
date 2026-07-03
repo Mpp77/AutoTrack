@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { API_URL, fetchCurrentExchangeRate } from "../api"; // Import corect pentru API-ul live
+import { API_URL, fetchCurrentExchangeRate } from "../api"; // Import pentru API-ul live
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -11,7 +11,6 @@ export default function CategoryPage() {
   const [expenses, setExpenses] = useState([]);
   const [message, setMessage] = useState("");
   
-  // Starea pentru rata de schimb (salvăm direct valoarea de siguranță inițială)
   const [eurToRonRate, setEurToRonRate] = useState(4.97);
 
   const selectedCurrency = localStorage.getItem("currency") || "RON";

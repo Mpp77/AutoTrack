@@ -170,7 +170,7 @@ export default function Settings() {
       type="file" 
       accept="image/*" 
       onChange={handleImageUpload} 
-      style={{ display: 'none' }} /* Ascundem inputul de sistem care e în engleză */
+      style={{ display: 'none' }} 
     />
     <span>{t("chooseFile", "Alege poza")}</span>
   </label>
