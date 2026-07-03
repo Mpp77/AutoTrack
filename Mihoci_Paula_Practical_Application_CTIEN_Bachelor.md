@@ -40,9 +40,9 @@ You can access the application directly here: https://auto-track-sooty.vercel.ap
 4. Environment variable configuration:
 
   In the server directory, create an ```.env ``` file with the following variables required for the Neon database connection and token security:
-  
-      DATABASE_URL=<enter_neon_connection_string_here>
-      JWT_SECRET=<enter_token_secret_key_here>
+
+      DATABASE_URL= <enter_neon_connection_string_here>
+      JWT_SECRET= <enter_token_secret_key_here>
     
 ## 4. Installation and launch steps
 
