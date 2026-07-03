@@ -38,35 +38,30 @@ You can access the application directly here: https://auto-track-sooty.vercel.ap
      npm install
 
 4. Environment variable configuration:
-  In the server directory, create an .env file with the following variables required for the Neon database connection and token security:
-    ```bash
-    DATABASE_URL=<enter_neon_connection_string_here>
-    JWT_SECRET=<enter_token_secret_key_here>
+
+  In the server directory, create an ```.env ``` file with the following variables required for the Neon database connection and token security:
+  
+      DATABASE_URL=<enter_neon_connection_string_here>
+      JWT_SECRET=<enter_token_secret_key_here>
     
 ## 4. Installation and launch steps
 
 The application runs on two different ports for development:
 
 1. Launching the Backend (API):
-From the server directory, run:
-    ```bash
+
+  From the server directory, run:
+  
     cd server
-     ```
-    
-     ```bash
     node server.js
-    ```
 
 2. Launching the Frontend:
-From the project's root directory, run:
-    ```bash
-    npm run dev
-    ```
-    
-    ```bash
-    o
-    ```
 
+  From the project's root directory, run:
+  
+    npm run dev
+    
+    
 3. Access:
 Open the browser at <http://localhost:5173>.
 
