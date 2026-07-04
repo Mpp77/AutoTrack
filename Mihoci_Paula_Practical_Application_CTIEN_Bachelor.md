@@ -1,13 +1,13 @@
 # AutoTrack - Management of Car Expenses
 
-  A full-stack application (PWA) for the centralized management of car expenses, documents, and maintenance alerts.
+  A full-stack application for the centralized management of car expenses, documents, and maintenance alerts.
 
   **Live Application:**
 You can access the application directly here: https://auto-track-sooty.vercel.app/
 
 ## 1. Project Description
 
-  AutoTrack solves the problem of manually managing vehicle expenses by offering a centralized solution with "offline-first" capabilities (via PWA) and automated logic for maintenance alerts.
+   The application is optimized for modern web browsers and supports "Add to Home Screen" functionality, allowing users to access it as a standalone application on both mobile and desktop devices.
 
   Technologies used:
 * **Frontend:** React, Vite, React Router, Recharts (for graphs), i18next (RO/EN)
