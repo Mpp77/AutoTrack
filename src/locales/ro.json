@@ -127,5 +127,7 @@
 "toDate": "Până la data",
 "viewDetails": "Vezi detalii ",
 "daysLeft": "Zile ramase",
-"configureAlertsShort": "Alerte"
+"configureAlertsShort": "Alerte",
+
+  "roadTollExpiryLabel": "Data Expirare Rovinietă:"
 }

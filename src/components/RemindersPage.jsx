@@ -65,7 +65,7 @@ export default function RemindersPage() {
         });
   
         if (response.ok) {
-          alert(t("remindersSaved", "Remindere salvate cu succes!"));
+          alert(t("remindersSaved"));
           navigate("/home");
         } else {
           console.error("Eroare la salvarea alertelor pe server");
@@ -83,10 +83,10 @@ export default function RemindersPage() {
       </button>
 
       <div className="settings-card">
-        <h1>{t("maintenance", "Mentenanță")}</h1>
+        <h1>{t("maintenance")}</h1>
 
         <div className="settings-row">
-          <label><Calendar size={18} /> {t("itpExpiryDate", "Data Expirare ITP")}</label>
+          <label><Calendar size={18} /> {t("itpExpiryDate")}</label>
           <input 
             type="date" 
             className="filter-input" 
@@ -98,7 +98,7 @@ export default function RemindersPage() {
         </div>
 
         <div className="settings-row">
-          <label><Bell size={18} /> {t("insuranceExpiryDate", "Data Expirare Asigurare")}</label>
+          <label><Bell size={18} /> {t("insuranceExpiryDate")}</label>
           <input 
             type="date" 
             className="filter-input" 
@@ -110,7 +110,7 @@ export default function RemindersPage() {
         </div>
 
         <div className="settings-row">
-          <label><Bell size={18} /> {t("roadTollExpiryDate", "Data Expirare Rovinietă")}</label>
+          <label><Bell size={18} /> {t("RoadTollExpiryDate")}</label>
           <input 
             type="date" 
             className="filter-input" 
@@ -122,7 +122,7 @@ export default function RemindersPage() {
         </div>
 
         <div className="settings-row">
-          <label><Calendar size={18} /> {t("licenseExpiryDate", "Data Expirare Permis Conducere")}</label>
+          <label><Calendar size={18} /> {t("LicenseExpiryDate")}</label>
           <input 
             type="date" 
             className="filter-input" 
@@ -134,12 +134,12 @@ export default function RemindersPage() {
         </div>
 
         <div className="settings-row">
-          <label><Gauge size={18} /> {t("oilChangeDetails", "Detalii Schimb Ulei")}</label>
+          <label><Gauge size={18} /> {t("oilChangeDetails")}</label>
           <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             
             <input 
               type="number" 
-              placeholder={t("lastOilChangeKm", "Km la ultimul schimb (ex: 260000)")}
+              placeholder={t("lastOilChangeKm")}
               className="filter-input" 
               value={lastChangeKm} 
               onChange={(e) => setLastChangeKm(e.target.value)} 
@@ -147,13 +147,13 @@ export default function RemindersPage() {
             
             <input 
               type="number" 
-              placeholder={t("oilChangeInterval", "Interval (peste câți km? ex: 15000)")}
+              placeholder={t("oilChangeInterval")}
               className="filter-input" 
               value={intervalKm} 
               onChange={(e) => setIntervalKm(e.target.value)} 
             />
             
-            <label style={{ fontSize: '14px', marginTop: '5px' }}>{t("lastOilChangeDate", "Data ultimului schimb:")}</label>
+            <label style={{ fontSize: '14px', marginTop: '5px' }}>{t("lastOilChangeDate")}</label>
             <input 
               type="date" 
               className="filter-input" 
@@ -167,7 +167,7 @@ export default function RemindersPage() {
         </div>
 
         <button onClick={handleSave} className="save-btn-neon">
-          {t("saveConfig", "Salvează Configurația")}
+          {t("saveConfig")}
         </button>
       </div>
     </div>
