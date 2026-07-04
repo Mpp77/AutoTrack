@@ -84,8 +84,8 @@ export default function Settings() {
       });
 
       if (response.ok) {
-        alert("Setări salvate cu succes pe server!");
-      } else {
+        alert(t("settingsSaved"));
+            } else {
         alert("Am salvat local, dar a apărut o eroare la salvarea în cloud.");
       }
     } catch (error) {

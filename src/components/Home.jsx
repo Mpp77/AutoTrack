@@ -97,11 +97,11 @@ const [showTalon, setShowTalon] = useState(false);
       if (savedItp) {
         const diff = Math.ceil((new Date(savedItp) - today) / (1000 * 60 * 60 * 24));
         if (diff <= 30 && diff > 10) {
-          activeReminders.push({ id: 'itp', type: "info", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft", "zile rămase")}` });
+          activeReminders.push({ id: 'itp', type: "info", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft")}` });
         } else if (diff <= 10 && diff > 0) {
-          activeReminders.push({ id: 'itp', type: "warning", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft", "zile rămase")}` });
+          activeReminders.push({ id: 'itp', type: "warning", text: `${t("itpIn", "ITP:")} ${diff} ${t("daysLeft")}` });
         } else if (diff <= 0) {
-          activeReminders.push({ id: 'itp', type: "warning", text: t("itpExpired", "ITP EXPIRAT!") });
+          activeReminders.push({ id: 'itp', type: "warning", text: t("itpExpired") });
         }
       }
 
@@ -110,11 +110,11 @@ const [showTalon, setShowTalon] = useState(false);
       if (savedRca) {
         const diffRca = Math.ceil((new Date(savedRca) - today) / (1000 * 60 * 60 * 24));
         if (diffRca <= 30 && diffRca > 10) {
-          activeReminders.push({ id: 'rca', type: "info", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft", "zile rămase")}` });
+          activeReminders.push({ id: 'rca', type: "info", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft")}` });
         } else if (diffRca <= 10 && diffRca > 0) {
-          activeReminders.push({ id: 'rca', type: "warning", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft", "zile rămase")}` });
+          activeReminders.push({ id: 'rca', type: "warning", text: `${t("rcaIn", "RCA:")} ${diffRca} ${t("daysLeft")}` });
         } else if (diffRca <= 0) {
-          activeReminders.push({ id: 'rca', type: "warning", text: t("rcaExpired", "RCA EXPIRAT!") });
+          activeReminders.push({ id: 'rca', type: "warning", text: t("rcaExpired") });
         }
       }
 
@@ -127,19 +127,19 @@ if (savedRoadToll) {
     activeReminders.push({ 
       id: 'roadToll', 
       type: "info", 
-      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft", "zile rămase")}` 
+      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft")}` 
     });
   } else if (diffRoadToll <= 10 && diffRoadToll > 0) {
     activeReminders.push({ 
       id: 'roadToll', 
       type: "warning", 
-      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft", "zile rămase")}` 
+      text: `${t("roadTollIn", "Rovinietă:")} ${diffRoadToll} ${t("daysLeft")}` 
     });
   } else if (diffRoadToll <= 0) {
     activeReminders.push({ 
       id: 'roadToll', 
       type: "warning", 
-      text: t("roadTollExpired", "ROVINIETĂ EXPIRATĂ!") 
+      text: t("roadTollExpired") 
     });
   }
 }
@@ -151,7 +151,7 @@ if (savedRoadToll) {
           id: 'oil-km', 
           type: "info", 
           icon: <Droplet size={18} />, 
-          text: `${t("serviceAt", "Revizie la:")} ${targetKm} km` 
+          text: `${t("serviceAt")} ${targetKm} km` 
         });
       }
 
@@ -160,11 +160,11 @@ if (savedRoadToll) {
       if (oilExpiryDate) {
         const diffOil = Math.ceil((new Date(oilExpiryDate) - today) / (1000 * 60 * 60 * 24));
         if (diffOil <= 30 && diffOil > 10) {
-          activeReminders.push({ id: 'oil-date', type: "info", icon: <Calendar size={18} />, text: `${t("oilChangeIn", "Schimb ulei în:")} ${diffOil} ${t("days", "zile")}` });
+          activeReminders.push({ id: 'oil-date', type: "info", icon: <Calendar size={18} />, text: `${t("oilChangeIn")} ${diffOil} ${t("days")}` });
         } else if (diffOil <= 10 && diffOil > 0) {
-          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: `${t("oilChangeIn", "Schimb ulei în:")} ${diffOil} ${t("days", "zile")}` });
+          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: `${t("oilChangeIn")} ${diffOil} ${t("days")}` });
         } else if (diffOil <= 0) {
-          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: t("oilChangeExpired", "Schimb ulei EXPIRAT!") });
+          activeReminders.push({ id: 'oil-date', type: "warning", icon: <Calendar size={18} />, text: t("oilChangeExpired") });
         }
       }
 
@@ -182,7 +182,7 @@ if (savedRoadToll) {
   return (
     <div className="home-page">
       <button onClick={handleLogout} className="logout-btn">
-        ← {t("logout", "Ieșire")}
+        ← {t("logout")}
       </button>
 
       <button onClick={() => navigate("/settings")} className="settings-btn">
@@ -192,7 +192,7 @@ if (savedRoadToll) {
       <div className="dashboard-central">
         
         <h2 className="dashboard-greeting">
-          {t("status", "Status")} <span className="highlight">{carPlate}</span>
+          {t("status")} <span className="highlight">{carPlate}</span>
         </h2>
 
         <div 
@@ -216,7 +216,7 @@ if (savedRoadToll) {
                 key={rem.id} 
                 className={`smart-badge badge-${rem.type} clickable-badge`}
                 onClick={() => navigate("/reminders")} 
-                title={t("updateAlert", "Actualizează alerta")}
+                title={t("updateAlert")}
               >
                 {rem.icon || <AlertTriangle size={18} />}
                 <span>{rem.text}</span>
@@ -238,7 +238,7 @@ if (savedRoadToll) {
       <div className="home-action-row">
         <button className="edit-reminders-link" onClick={() => navigate("/reminders")}>
           <Bell size={14} style={{ marginRight: '6px' }} />
-          <span>{t("configureAlertsShort", "Alerte")}</span>
+          <span>{t("configureAlertsShort")}</span>
         </button>
 
         <button className="edit-reminders-link" onClick={() => navigate("/talon")}>
@@ -249,15 +249,15 @@ if (savedRoadToll) {
       <nav className="bottom-nav">
         <button onClick={() => navigate("/overview")}>
           <PieChart />
-          <span>{t("overview", "Rapoarte")}</span>
+          <span>{t("overview")}</span>
         </button>
         <button onClick={() => navigate("/add-expense")}>
           <Plus />
-          <span>{t("addExpenseShort", "Adaugă")}</span>
+          <span>{t("addExpenseShort")}</span>
         </button>
         <button onClick={() => navigate("/expenses")}>
           <List />
-          <span>{t("expenseList", "Lista")}</span>
+          <span>{t("expenseList")}</span>
         </button>
       </nav>
     </div>

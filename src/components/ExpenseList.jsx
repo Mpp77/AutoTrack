@@ -81,7 +81,7 @@ export default function ExpenseList() {
         >
           <div className="expense-item-left">
             <p className="expense-item-category">{t(cat, cat)}</p>
-            <p className="expense-item-date">{t("viewDetails", "Vezi detalii")} →</p>
+            <p className="expense-item-date">{t("viewDetails")} →</p>
           </div>
           
           <div className="expense-item-right">

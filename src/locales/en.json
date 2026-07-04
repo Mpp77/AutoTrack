@@ -13,6 +13,7 @@
   "loading": "Signing in...",
   "nothing_to_do": "Nothing to do",
   
+  
 
   "accountCreated": "Account created successfully!",
   "loggedIn": "Logged in successfully!",
@@ -125,5 +126,8 @@
 "talonSaved": "Car details saved successfully!",
 
 "fromDate": "From date",
-"toDate": "To date"
+"toDate": "To date",
+"viewDetails": "View details ",
+"daysLeft": "Days left",
+"configureAlertsShort": "Reminders"
 }

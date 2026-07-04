@@ -72,6 +72,7 @@
   "Rovinieta": "Rovinietă",
   "OtherCategory": "Altă categorie",
 
+
   "maintenance": "Mentenanță",
   "itpExpiryDate": "Data Expirare ITP",
   "insuranceExpiryDate": "Data Expirare Asigurare",
@@ -123,6 +124,8 @@
 "talonSaved": "Datele talonului au fost salvate cu succes!",
 
 "fromDate": "De la data",
-"toDate": "Până la data"
-
+"toDate": "Până la data",
+"viewDetails": "Vezi detalii ",
+"daysLeft": "Zile ramase",
+"configureAlertsShort": "Alerte"
 }
