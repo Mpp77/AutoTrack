@@ -7,7 +7,7 @@ You can access the application directly here: https://auto-track-sooty.vercel.ap
 
 ## 1. Project Description
 
-  AutoTrack solves the problem of manually managing vehicle expenses by offering a centralized solution with automated logic for maintenance alerts.
+  AutoTrack is a Progressive Web App (PWA) that enables the centralized management of vehicle expenses, documents, and maintenance alerts, offering the option to be installed directly on the user's device home screen like a native aplication.
 
   Technologies used:
 * **Frontend:** React, Vite, React Router, Recharts (for graphs), i18next (RO/EN)
